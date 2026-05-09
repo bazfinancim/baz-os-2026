@@ -1,0 +1,16 @@
+==============================
+דוח סטטוס - BAZ EYE
+==============================
+מזהה דוח: baz-eye-20260508045745
+זמן יצירה: 2026-05-08T01:57:45.863757+00:00
+סטטוס מערכת: warning
+סיכום: המסך מציג דשבורד של BAZ OS עם רשימת משימות השקה ('Saturday Launch Checklist') ודוח מערכת מפורט ('System Logs / Master Report').. שתי משימות קריטיות ברשימה נמצאות במצב 'Pending'. ודוחות המערכת מצביעים על שגיאות BAZ EYE ואזהרה קריטית לגבי פקיעת קרדיטים.. המערכת מנוהלת דרך ממשק ווב מקומי (localhost:3000) ומפיקה דוחות ישירים מ-Python.
+מצב קוד / טרמינל: המערכת מפיקה דוחות ישירים מ-Python. מה שמעיד על שימוש בפייתון כלוגיקת הבסיס.. הממשק הגרפי (UI) מוצג בדפדפן דרך URL מקומי (localhost:3000). המעיד על מערכת ווב פעילה.. דוח המערכת מתייחס גם ל'IDE Python' ול'טרמינל'.. מצב ה-'Monitoring Valves' מוגדר כ-'OK' נכון לשעה 4:57:28 [SYSTEM].
+שגיאות שזוהו: שתי משימות ב-'Saturday Launch Checklist' נמצאות במצב 'Pending': 'Google Drive Folder Mapping' ו-'Massive Project Ingestion'., דוחות המערכת מציינים 'BAZ EYE - ERROR' ו-'warning' מרובים הקשורים למשימות ה-'Pending' ועיכוב בהשקה., קיימת התראה קריטית לגבי '5,000 קרדיטים של Hunter יפוגו תוך 48 שעות!' המחייבת טיפול מיידי., הדוח עצמו מצהיר במפורש: 'המערכת מצויה בבעיה במהלך השקתה'.
+רכיבי UI חשובים: דפדפן Google Chrome המציג את ממשק המערכת בכתובת localhost:3000., כותרת עליונה המציגה 'PLASNA CORE | ACTIVE ASSETS: 10'., פאנל 'Saturday Launch Checklist' עם משימות: 'API Keys Handshake' במצב 'Ready', ו-'Google Drive Folder Mapping' ו-'Massive Project Ingestion' במצב 'Pending'., פאנל 'System Logs / Master Report' המכיל דוח מפורט, התראות קריטיות וסטטוסים שונים., כפתורי פעולה: 'Copy to Clipboard', '(History)', 'ציר זמן היסטורי' ו-'פריסה מערכתית עמוקה'.
+פעולה הבאה: 1.. יש לחקור ולפתור את השגיאות והעיכובים הקשורים למשימות 'Google Drive Folder Mapping' ו-'Massive Project Ingestion' ב-'Saturday Launch Checklist' על מנת לאפשר את השלמת תהליך ההשקה.. 2.. יש לטפל באופן מיידי בהתראה הקריטית לגבי פקיעת 5,000 קרדיטים של Hunter תוך 48 שעות.. 3.. יש לבחון לעומק את דוחות המערכת המפורטים כדי לאתר את שורש הבעיה של שגיאות BAZ EYE.
+צילום מסך נשמר כאן: C:\Users\משתמש\Desktop\BAZ_OS_2026\current_screen.png
+פילוסופיה: מקסימום אוטומציה, מינימום חיכוך ידני.
+==============================
+
+CHECKSUM: 31dfe85b07bf0f0a99dea16a89b2680ffe1ad0bb3938dd9be2b3825c17e20dae

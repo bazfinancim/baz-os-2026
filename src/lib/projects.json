@@ -1,0 +1,34 @@
+[
+  {
+    "id": "beni",
+    "name": "האתר של בני",
+    "context": "שותפות שיווק פייסבוק עם אבי וניהול פעילות החברה",
+    "platform": "Base44",
+    "assignedTo": "Alon",
+    "status": "active"
+  },
+  {
+    "id": "avi",
+    "name": "אימפריית אבי",
+    "context": "ניהול על של כל זרועות האימפריה ושליטה מרכזית בבוטים",
+    "platform": "Drive",
+    "assignedTo": "Itay",
+    "status": "active"
+  },
+  {
+    "id": "global-bot-network",
+    "name": "רשת בוטים",
+    "context": "תשתית בוטים גלובלית לניהול אוטומציות, לקוחות ודוחות בזמן אמת",
+    "platform": "Tipur",
+    "assignedTo": "Alon",
+    "status": "pending"
+  },
+  {
+    "id": "invoices-automation",
+    "name": "אוטומציית חשבוניות",
+    "context": "תשתית פיננסים, הפקת חשבוניות וסנכרון לכלי הנהלת חשבונות",
+    "platform": "Drive",
+    "assignedTo": "Itay",
+    "status": "pending integration"
+  }
+]

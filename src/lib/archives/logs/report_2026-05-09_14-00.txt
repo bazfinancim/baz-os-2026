@@ -1,0 +1,16 @@
+==============================
+דוח סטטוס - BAZ EYE
+==============================
+מזהה דוח: baz-eye-20260509170058
+זמן יצירה: 2026-05-09T14:00:58.556693+00:00
+סטטוס מערכת: warning
+סיכום: צילום המסך נשמר. אבל קריאת Gemini נכשלה.
+מצב קוד / טרמינל: Gemini API failed
+שגיאות שזוהו: 400 Unable to process input image. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+רכיבי UI חשובים: current_screen.png נוצר
+פעולה הבאה: לבדוק שה-GOOGLE_API_KEY תקין ושיש גישה לרשת
+צילום מסך נשמר כאן: C:\Users\משתמש\Desktop\BAZ_OS_2026\current_screen.png
+פילוסופיה: מקסימום אוטומציה, מינימום חיכוך ידני.
+==============================
+
+CHECKSUM: c4235d49ae4a7846ccabca35856222572b1b1d69c72519f6df0b2a5267fac484

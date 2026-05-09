@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "id": "beni",
+      "name": "האתר של בני",
+      "englishName": "Beni Website",
+      "summary": "אתר בנייה, מחפש לידים לוואטסאפ",
+      "status": "live"
+    },
+    {
+      "id": "avi",
+      "name": "אימפריית אבי",
+      "englishName": "Avi Digital Empire",
+      "summary": "בעלים של BAZ OS, מנהל אימפריה",
+      "status": "live"
+    },
+    {
+      "id": "global-bot-network",
+      "name": "רשת בוטים",
+      "englishName": "Global Bot Network",
+      "summary": "מערכת בוטים גלובלית לניהול אוטומציות, לקוחות ולידים",
+      "status": "live"
+    }
+  ]
+}

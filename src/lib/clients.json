@@ -1,0 +1,1135 @@
+[
+  {
+    "id": "somer",
+    "name": "Somer",
+    "fuelStatus": 42,
+    "activeProjects": [
+      "Lead Funnel",
+      "WhatsApp Follow-Up",
+      "Invoice Sync"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "or-digital",
+    "name": "Or Digital",
+    "fuelStatus": 78,
+    "activeProjects": [
+      "Meta Campaigns",
+      "Landing Page",
+      "CRM Intake"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "tal-assets",
+    "name": "Tal Assets",
+    "fuelStatus": 18,
+    "activeProjects": [
+      "Drive Archive",
+      "Base44 Portal",
+      "Monthly Reports"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "company-001",
+    "name": "Empire Company 001",
+    "fuelStatus": 71,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-002",
+    "name": "Empire Company 002",
+    "fuelStatus": 72,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-003",
+    "name": "Empire Company 003",
+    "fuelStatus": 73,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-004",
+    "name": "Empire Company 004",
+    "fuelStatus": 74,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-005",
+    "name": "Empire Company 005",
+    "fuelStatus": 75,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-006",
+    "name": "Empire Company 006",
+    "fuelStatus": 76,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-007",
+    "name": "Empire Company 007",
+    "fuelStatus": 77,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-008",
+    "name": "Empire Company 008",
+    "fuelStatus": 78,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-009",
+    "name": "Empire Company 009",
+    "fuelStatus": 79,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-010",
+    "name": "Empire Company 010",
+    "fuelStatus": 80,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-011",
+    "name": "Empire Company 011",
+    "fuelStatus": 81,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-012",
+    "name": "Empire Company 012",
+    "fuelStatus": 82,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-013",
+    "name": "Empire Company 013",
+    "fuelStatus": 83,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-014",
+    "name": "Empire Company 014",
+    "fuelStatus": 84,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-015",
+    "name": "Empire Company 015",
+    "fuelStatus": 85,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-016",
+    "name": "Empire Company 016",
+    "fuelStatus": 86,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-017",
+    "name": "Empire Company 017",
+    "fuelStatus": 87,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "company-018",
+    "name": "Empire Company 018",
+    "fuelStatus": 88,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-019",
+    "name": "Empire Company 019",
+    "fuelStatus": 89,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-020",
+    "name": "Empire Company 020",
+    "fuelStatus": 90,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-021",
+    "name": "Empire Company 021",
+    "fuelStatus": 91,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-022",
+    "name": "Empire Company 022",
+    "fuelStatus": 92,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-023",
+    "name": "Empire Company 023",
+    "fuelStatus": 93,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-024",
+    "name": "Empire Company 024",
+    "fuelStatus": 94,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-025",
+    "name": "Empire Company 025",
+    "fuelStatus": 95,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-026",
+    "name": "Empire Company 026",
+    "fuelStatus": 96,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-027",
+    "name": "Empire Company 027",
+    "fuelStatus": 97,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-028",
+    "name": "Empire Company 028",
+    "fuelStatus": 98,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-029",
+    "name": "Empire Company 029",
+    "fuelStatus": 99,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-030",
+    "name": "Empire Company 030",
+    "fuelStatus": 70,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-031",
+    "name": "Empire Company 031",
+    "fuelStatus": 71,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-032",
+    "name": "Empire Company 032",
+    "fuelStatus": 72,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-033",
+    "name": "Empire Company 033",
+    "fuelStatus": 73,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-034",
+    "name": "Empire Company 034",
+    "fuelStatus": 74,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "company-035",
+    "name": "Empire Company 035",
+    "fuelStatus": 75,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-036",
+    "name": "Empire Company 036",
+    "fuelStatus": 76,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-037",
+    "name": "Empire Company 037",
+    "fuelStatus": 77,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-038",
+    "name": "Empire Company 038",
+    "fuelStatus": 78,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-039",
+    "name": "Empire Company 039",
+    "fuelStatus": 79,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-040",
+    "name": "Empire Company 040",
+    "fuelStatus": 80,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-041",
+    "name": "Empire Company 041",
+    "fuelStatus": 81,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-042",
+    "name": "Empire Company 042",
+    "fuelStatus": 82,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-043",
+    "name": "Empire Company 043",
+    "fuelStatus": 83,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-044",
+    "name": "Empire Company 044",
+    "fuelStatus": 84,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-045",
+    "name": "Empire Company 045",
+    "fuelStatus": 85,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-046",
+    "name": "Empire Company 046",
+    "fuelStatus": 86,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-047",
+    "name": "Empire Company 047",
+    "fuelStatus": 87,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-048",
+    "name": "Empire Company 048",
+    "fuelStatus": 88,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-049",
+    "name": "Empire Company 049",
+    "fuelStatus": 89,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-050",
+    "name": "Empire Company 050",
+    "fuelStatus": 90,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-051",
+    "name": "Empire Company 051",
+    "fuelStatus": 91,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "company-052",
+    "name": "Empire Company 052",
+    "fuelStatus": 92,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-053",
+    "name": "Empire Company 053",
+    "fuelStatus": 93,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-054",
+    "name": "Empire Company 054",
+    "fuelStatus": 94,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-055",
+    "name": "Empire Company 055",
+    "fuelStatus": 95,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-056",
+    "name": "Empire Company 056",
+    "fuelStatus": 96,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-057",
+    "name": "Empire Company 057",
+    "fuelStatus": 97,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-058",
+    "name": "Empire Company 058",
+    "fuelStatus": 98,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-059",
+    "name": "Empire Company 059",
+    "fuelStatus": 99,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-060",
+    "name": "Empire Company 060",
+    "fuelStatus": 70,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-061",
+    "name": "Empire Company 061",
+    "fuelStatus": 71,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-062",
+    "name": "Empire Company 062",
+    "fuelStatus": 72,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-063",
+    "name": "Empire Company 063",
+    "fuelStatus": 73,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-064",
+    "name": "Empire Company 064",
+    "fuelStatus": 74,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-065",
+    "name": "Empire Company 065",
+    "fuelStatus": 75,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-066",
+    "name": "Empire Company 066",
+    "fuelStatus": 76,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-067",
+    "name": "Empire Company 067",
+    "fuelStatus": 77,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-068",
+    "name": "Empire Company 068",
+    "fuelStatus": 78,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "company-069",
+    "name": "Empire Company 069",
+    "fuelStatus": 79,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-070",
+    "name": "Empire Company 070",
+    "fuelStatus": 80,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-071",
+    "name": "Empire Company 071",
+    "fuelStatus": 81,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-072",
+    "name": "Empire Company 072",
+    "fuelStatus": 82,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-073",
+    "name": "Empire Company 073",
+    "fuelStatus": 83,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-074",
+    "name": "Empire Company 074",
+    "fuelStatus": 84,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-075",
+    "name": "Empire Company 075",
+    "fuelStatus": 85,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-076",
+    "name": "Empire Company 076",
+    "fuelStatus": 86,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-077",
+    "name": "Empire Company 077",
+    "fuelStatus": 87,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-078",
+    "name": "Empire Company 078",
+    "fuelStatus": 88,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-079",
+    "name": "Empire Company 079",
+    "fuelStatus": 89,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-080",
+    "name": "Empire Company 080",
+    "fuelStatus": 90,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-081",
+    "name": "Empire Company 081",
+    "fuelStatus": 91,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-082",
+    "name": "Empire Company 082",
+    "fuelStatus": 92,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-083",
+    "name": "Empire Company 083",
+    "fuelStatus": 93,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-084",
+    "name": "Empire Company 084",
+    "fuelStatus": 94,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-085",
+    "name": "Empire Company 085",
+    "fuelStatus": 95,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": true
+  },
+  {
+    "id": "company-086",
+    "name": "Empire Company 086",
+    "fuelStatus": 96,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-087",
+    "name": "Empire Company 087",
+    "fuelStatus": 97,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-088",
+    "name": "Empire Company 088",
+    "fuelStatus": 98,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-089",
+    "name": "Empire Company 089",
+    "fuelStatus": 99,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-090",
+    "name": "Empire Company 090",
+    "fuelStatus": 70,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-091",
+    "name": "Empire Company 091",
+    "fuelStatus": 71,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-092",
+    "name": "Empire Company 092",
+    "fuelStatus": 72,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-093",
+    "name": "Empire Company 093",
+    "fuelStatus": 73,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-094",
+    "name": "Empire Company 094",
+    "fuelStatus": 74,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-095",
+    "name": "Empire Company 095",
+    "fuelStatus": 75,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-096",
+    "name": "Empire Company 096",
+    "fuelStatus": 76,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-097",
+    "name": "Empire Company 097",
+    "fuelStatus": 77,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-098",
+    "name": "Empire Company 098",
+    "fuelStatus": 78,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-099",
+    "name": "Empire Company 099",
+    "fuelStatus": 79,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  },
+  {
+    "id": "company-100",
+    "name": "Empire Company 100",
+    "fuelStatus": 80,
+    "activeProjects": [
+      "Mass Index",
+      "Lead Scan",
+      "Automation Mapping"
+    ],
+    "needsHumanHelp": false
+  }
+]

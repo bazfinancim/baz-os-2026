@@ -1,0 +1,16 @@
+==============================
+דוח סטטוס - BAZ EYE
+==============================
+מזהה דוח: baz-eye-20260509130055
+זמן יצירה: 2026-05-09T10:00:55.533045+00:00
+סטטוס מערכת: warning
+סיכום: BAZ Eye מזהה מסך בקרה של 'Digital Empire Hub' המוצג בדפדפן (localhost:3000). הכולל 'Saturday Launch Checklist' ופלט לוגים/דוחות מערכת.. המערכת מציגה שתי משימות ברשימת ההשקה במצב 'Pending' ושאלת קלט '' בטרמינל.. מצב 'MASTER CONTROL' מוגדר כ-'READY' וסטטוס 'MONITORING VALVES' הוא [OK].
+מצב קוד / טרמינל: {'ide_status': 'אין IDE או עורך קוד גלוי במסך זה.'. 'terminal_status': "טרמינל פעיל תחת הכותרת 'SYSTEM LOGS / MASTER REPORT' המציג פלט לוגים מפורט (כולל 'BAZ EYE') ושאלת קלט ''. המצביעה על המתנה לפקודה או למידע.. הפלט האחרון לפני השאלה הוא 'MONITORING VALVES.... [OK] | 13:00:35 [SYSTEM]'.". 'master_control_status': 'READY'}
+שגיאות שזוהו: שתי משימות ברשימת 'Saturday Launch Checklist' נמצאות במצב 'Pending': 'Google Drive Folder Mapping' ו-'Massive Project Ingestion'., קיימת הודעת 'warning' כללית בלוגים המציינת מצבים ממתינים ודורשת התייחסות.
+רכיבי UI חשובים: כותרת ראשית: 'SATURDAY LAUNCH CHECKLIST' (רשימת שיגור לשבת)., רשימת משימות עם סטטוסים: 'API Keys Handshake' (Ready), 'Google Drive Folder Mapping' (Pending), 'Massive Project Ingestion' (Pending)., לחצני פעולה מרכזיים: 'Copy to Clipboard', 'History' (היסטוריה), 'ציר זמן היסטורי', 'סריקת מערכת עמוקה'., אזור לוגים ודוחות מערכת: 'SYSTEM LOGS / MASTER REPORT', 'דוח מערכת' וכן שאלת קלט ''., חלונית ניווט צדדית עם פריטים כגון 'שלט ראשי', 'דוחות', 'הגדרות' וסרגל סטטוס 'MASTER CONTROL: READY'.
+פעולה הבאה: מומלץ לחקור את הסיבה למצב ה-'Pending' של המשימות 'Google Drive Folder Mapping' ו-'Massive Project Ingestion' ב-'Saturday Launch Checklist'.. יש לספק קלט מתאים לשאלת ה-'' בטרמינל כדי להמשיך את הפעולה הממתינה.. בנוסף. יש לבחון את הודעת ה-'warning' בלוגים לקבלת מידע נוסף על מצב המערכת.
+צילום מסך נשמר כאן: C:\Users\משתמש\Desktop\BAZ_OS_2026\current_screen.png
+פילוסופיה: מקסימום אוטומציה, מינימום חיכוך ידני.
+==============================
+
+CHECKSUM: 58b72d89e294053d3a791b75df5e4a5d309c760bbfa6ad4f57f249d11124d238

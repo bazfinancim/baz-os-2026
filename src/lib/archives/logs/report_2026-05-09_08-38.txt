@@ -1,0 +1,16 @@
+==============================
+דוח סטטוס - BAZ EYE
+==============================
+מזהה דוח: baz-eye-20260509113849
+זמן יצירה: 2026-05-09T08:38:49.367037+00:00
+סטטוס מערכת: warning
+סיכום: דוח תפעולי קצר: מערכת BAZ OS. המוצגת דרך דשבורד ווב בכתובת localhost:3000. נמצאת במצב המתנה (STANDBY MODE) עם חיבורי API ממתינים.. רשימת המשימות להשקה (SATURDAY LAUNCH CHECKLIST) אינה שלמה. וקיימת אי-פעילות ב'Real Valves'.. לוג המערכת מצביע על בעיות אלו.
+מצב קוד / טרמינל: המסך מציג דשבורד של אפליקציית ווב הפועלת על localhost:3000. מה שמעיד על סביבת פיתוח או בדיקה מקומית.. אין IDE או טרמינל גלויים בצילום המסך הראשי. אך קיים אזכור ללוגי 'Python' בלוג המערכת. המצביע על קיום תהליכי בקאנד.
+שגיאות שזוהו: API CONNECTION PENDING (מופיע פעמיים בסרגל העליון), WARNING: STANDBY MODE, SATURDAY LAUNCH CHECKLIST: 'API Keys Handshake [ ]' - סטטוס Pending, SATURDAY LAUNCH CHECKLIST: 'Google Drive Folder Mapping [ ]' - סטטוס Pending, SATURDAY LAUNCH CHECKLIST: 'Massive Project Ingestion [ ]' - סטטוס Pending, Real Valves Active: 0 (מצביע על חוסר פעילות או בעיה בחיבור), לוג המערכת מדווח על 'שגיאות שונות: פרטים ברשימת ה- SATURDAY LAUNCH CHECKLIST עם פריטים כ- 'Pending' (ממתין).' ומציין שהפלט 'Python' נראה חלקי או כ- placeholder.
+רכיבי UI חשובים: סרגל סטטוס עליון: כולל הודעות 'API CONNECTION PENDING' ו-'WARNING: STANDBY MODE', פאנל מידע 'Real Valves Active: 0', פאנל 'Plasma Core | ACTIVE ASSETS: 10' עם אינדיקטור ויזואלי (כדור כחול זוהר), כותרת 'SATURDAY LAUNCH CHECKLIST' ורשימת משימות (API Keys Handshake, Google Drive Folder Mapping, Massive Project Ingestion) עם תיבות סימון ריקות המעידות על סטטוס Pending., כותרת 'SYSTEM LOGS / MASTER REPORT', שורה 'MONITORING VALVES... [OK] | 11:38:29 [SYSTEM]', אזור פלט לוגים עם כותרת 'Python' המציג הודעות סטטוס ושגיאות בפורמט טקסטואלי הניתן לגלילה., כפתורים: 'Copy to Clipboard', '(History)', רכיבי קלט/בחירה: 'ציר זמן היסטורי', 'העתק סריקת מערכת עמוקה', 'ייצוא לוגים', סרגל כתובות בדפדפן המציג 'localhost:3000', לשוניות דפדפן וסמלי הרחבות.
+פעולה הבאה: פעולה הבאה מומלצת: להתחיל בפתרון הבעיות הקשורות ל'API CONNECTION PENDING' ולבצע את ה'API Keys Handshake' המוצג ברשימת ההשקה.. יש לבחון את הלוגים המלאים באופן יסודי יותר (ייתכן שדרש לחיצה על 'ייצוא לוגים' או גישה ישירה לשרת) כדי להבין את השורש ל-'WARNING: STANDBY MODE' ולשאר הפריטים הממתינים.
+צילום מסך נשמר כאן: C:\Users\משתמש\Desktop\BAZ_OS_2026\current_screen.png
+פילוסופיה: מקסימום אוטומציה, מינימום חיכוך ידני.
+==============================
+
+CHECKSUM: 2e54eebe2dcef6af175c7b1ef888704fece87585a8e919de453bf0a9ebe8f4d0

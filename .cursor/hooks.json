@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node --import tsx .cursor/hooks/cursor-api-bridge.ts",
+        "timeout": 10
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": "node --import tsx .cursor/hooks/cursor-api-bridge.ts",
+        "timeout": 10
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node --import tsx .cursor/hooks/cursor-api-bridge.ts",
+        "timeout": 10
+      }
+    ],
+    "afterMCPExecution": [
+      {
+        "command": "node --import tsx .cursor/hooks/cursor-api-bridge.ts",
+        "timeout": 10
+      }
+    ],
+    "afterAgentResponse": [
+      {
+        "command": "node --import tsx .cursor/hooks/cursor-api-bridge.ts",
+        "timeout": 10
+      }
+    ],
+    "stop": [
+      {
+        "command": "node --import tsx .cursor/hooks/cursor-api-bridge.ts",
+        "timeout": 10
+      }
+    ]
+  }
+}

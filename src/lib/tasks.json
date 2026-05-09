@@ -1,0 +1,62 @@
+{
+  "queueName": "Hunter.io Efficiency Run",
+  "protectedMode": true,
+  "createdAt": "2026-05-08T00:50:00.000Z",
+  "tasks": [
+    {
+      "id": "hunter-lead-scan-beni",
+      "type": "lead_scan",
+      "provider": "Hunter.io",
+      "projectId": "beni",
+      "projectName": "האתר של בני",
+      "priority": 1,
+      "status": "queued",
+      "estimatedCredits": 1000,
+      "query": "construction companies Israel decision makers WhatsApp leads site:*.co.il"
+    },
+    {
+      "id": "hunter-lead-scan-avi",
+      "type": "lead_scan",
+      "provider": "Hunter.io",
+      "projectId": "avi",
+      "projectName": "אימפריית אבי",
+      "priority": 2,
+      "status": "queued",
+      "estimatedCredits": 1000,
+      "query": "Israeli SMB founders automation marketing CRM email contacts"
+    },
+    {
+      "id": "hunter-lead-scan-global-bot-network",
+      "type": "lead_scan",
+      "provider": "Hunter.io",
+      "projectId": "global-bot-network",
+      "projectName": "רשת בוטים",
+      "priority": 3,
+      "status": "queued",
+      "estimatedCredits": 1000,
+      "query": "companies using WhatsApp automation chatbot lead generation Israel"
+    },
+    {
+      "id": "hunter-lead-scan-drive-meta-001",
+      "type": "lead_scan",
+      "provider": "Hunter.io",
+      "projectId": "drive-meta-001",
+      "projectName": "Drive Intake - לקוחות שבת",
+      "priority": 4,
+      "status": "queued",
+      "estimatedCredits": 1000,
+      "query": "Google Drive business archive operations managers Israel B2B email"
+    },
+    {
+      "id": "hunter-lead-scan-base44-meta-002",
+      "type": "lead_scan",
+      "provider": "Hunter.io",
+      "projectId": "base44-meta-002",
+      "projectName": "Base44 Intake - נכסי לקוחות",
+      "priority": 5,
+      "status": "queued",
+      "estimatedCredits": 1000,
+      "query": "Base44 no code business applications Israeli companies founders email"
+    }
+  ]
+}

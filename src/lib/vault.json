@@ -1,0 +1,51 @@
+[
+  {
+    "toolName": "Hunter",
+    "apiKey": "HUNTER_KEY_PRIMARY",
+    "expiryDate": "2026-05-10",
+    "creditBalance": 5000,
+    "status": "expiring soon"
+  },
+  {
+    "toolName": "NVIDIA",
+    "apiKey": "NVIDIA_KEY_GPU_FACTORY",
+    "expiryDate": "2026-06-22",
+    "creditBalance": 120000,
+    "status": "active"
+  },
+  {
+    "toolName": "Gemini",
+    "apiKey": "GEMINI_KEY_PRIMARY",
+    "expiryDate": "2026-07-01",
+    "creditBalance": 75000,
+    "status": "active"
+  },
+  {
+    "toolName": "Gemini",
+    "apiKey": "GEMINI_KEY_BACKUP_A",
+    "expiryDate": "2026-07-18",
+    "creditBalance": 55000,
+    "status": "active"
+  },
+  {
+    "toolName": "Gemini",
+    "apiKey": "GEMINI_KEY_BACKUP_B",
+    "expiryDate": "2026-05-13",
+    "creditBalance": 15000,
+    "status": "expiring soon"
+  },
+  {
+    "toolName": "Anthropic",
+    "apiKey": "ANTHROPIC_KEY_PRIMARY",
+    "expiryDate": "2026-06-12",
+    "creditBalance": 62000,
+    "status": "active"
+  },
+  {
+    "toolName": "Meta WhatsApp",
+    "apiKey": "META_WHATSAPP_PRIMARY",
+    "expiryDate": "2026-05-28",
+    "creditBalance": 10000,
+    "status": "low fuel"
+  }
+]

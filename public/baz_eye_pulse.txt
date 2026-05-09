@@ -1,0 +1,340 @@
+PULSE TIME: 2026-05-09T10:38:06.739Z
+SYSTEM STATUS: STANDBY
+BUILD STATUS: STANDBY: Build manifests missing; run npm run build for full verification.
+API KEY STATUS: OK: No active fuel/auth warnings in latest report.
+
+LATEST CURSOR CHANGES:
+1. 2026-05-09T10:29:04.787875+00:00 | מערכת BAZ OS מציגה ממשק ווב רץ בסביבה מקומית (localhost:3000).. 'רשימת שיגור שבת' הושלמה. ו'בקרת מאסטר' מדווחת כ'מוכנה'.. עם זאת. קיימת 'התראה קריטית' לגבי '5,000 קרדיטים של...' שאינה מפורטת במלואה ומחייבת התייחסות מיידית.. בנוסף | warning
+2. 2026-05-09T10:28:35.514893+00:00 | מערכת BAZ OS פועלת במצב 'Warning' חמור.. דוח סטטוס BAZ Eye מצביע על מדדי מערכת חורגים מהתקין ועל אזהרה קריטית פנימית בין רכיבים.. רשימת משימות ההשקה מסומנת כ'Ready'. אך המצב הכללי של המערכת דורש התייחסות מיידית.. אין חלון קוד או טרמינל פעיל גלוי במערכת. | warning
+3. 2026-05-09T10:27:37.806516+00:00 | המסך מציג לוח מחוונים תפעולי של BAZ OS - Digital Empire Hub. המוצג דרך דפדפן אינטרנט.. נראית רשימת משימות השקה ('Saturday Launch Checklist') עם סטאטוס 'Ready' ומספר מדדי מערכת פעילים.. דו"ח סטטוס של BAZ Eye בתחתית המסך מצביע על אזהרה קריטית במצב המערכת וקריסה פנימית בין רכיבים. | warning
+4. 2026-05-09T10:26:20.488156+00:00 | דוח תפעולי של BAZ Eye עבור BAZ OS.. המערכת מציגה אי-התאמה קריטית בין סטטוסי רכיבים בממשק המשתמש (UI) לבין הסטטוס המדווח ביומן המערכת (לכאורה 'Ready' ב-UI אך 'Pending' ו'קטסטרופלי' ביומן).. קיימות אזהרות קריטיות נוספות כולל פקיעת קרדיטים והתראת קריסה. המצביעות על מצב תפעולי הדורש התערבות דחופה. | warning
+5. 2026-05-09T10:23:49.972041+00:00 | ממשק BAZ OS מציג לוח מחוונים הכולל רשימת מטלות השקה. יומני מערכת ודוח סטטוס מפורט של BAZ Eye.. המערכת מציגה אזהרה קריטית לגבי פקיעת קרדיטים של Hunterx תוך 48 שעות. ושתי משימות ברשימת ההשקה נמצאות במצב 'Pending'.. סטטוס המערכת הכללי מוגדר כ-'warning'. | warning
+
+ERRORS (IF ANY): See BUILD/API status above
+
+
+--- [2026-05-09T11:45:57.090Z] ---
+
+PULSE TIME: 2026-05-09T11:45:57.090Z
+TIMESTAMP: 2026-05-09T11:45:57.090Z
+SYSTEM STATUS: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: No active fuel/auth warnings in latest report.
+
+CURSOR ACTIONS:
+1. 2026-05-09T11:45:01.880610+00:00 | מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה כולל (warning). עם חוסר עקביות בדיווחי סטטוס של רכיבים חיוניים.. למרות שרשימת ההשקה מציגה 'Ready' עבור כל הפריטים. יומן המערכת מדווח על אזהרות ספציפיות. | warning
+2. 2026-05-09T11:43:05.465220+00:00 | מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה (warning) על גבי localhost:3000.. מוצג דוח ראשי (MASTER REPORT) הכולל יומני מערכת ותקלות פוטנציאליות.. שסתומי הניטור (MONITORING VALVES) פעילים ותקינים. וארכיון היומנים פעיל.. נצפו מספר אזהרות קריטיות ביומן המערכת. | warning
+3. 2026-05-09T11:33:05.035522+00:00 | מסך המערכת מציג דוח סטטוס ראשי (SYSTEM LOGS / MASTER REPORT) עבור BAZ OS – Digital Empire Hub. הפועל על localhost:3000.. הדוח מפרט אינדיקטורים תפעוליים שונים. כמו מצב שסתורי ניטור. רמת דלק. סנכרון כספות וארכיון לוגים. אשר רובם נראים תקינים.. עם זאת. הלוגים המפורטים חושפים מספר אזהרות והתראה קריטית אחת. המעידים על בעיות פוטנציאליות במערכת. | warning
+4. 2026-05-09T11:31:01.380129+00:00 | המסך מציג את ממשק המשתמש של BAZ OS - Digital Empire Hub. הפועל על localhost:3000.. המערכת מציגה דוח תפעולי ראשי הכולל סטטוס כללי של 'warning'.. דוח BAZ EYE מספק פירוט שגיאות קריטיות. מצב רכיבי ממשק משתמש ופעולות מומלצות.. בנוסף | warning
+5. 2026-05-09T11:28:21.416478+00:00 | המסך מציג את ממשק המשתמש של BAZ OS. המכונה 'Digital Empire Hub'. הפועל על `localhost:3000`.. הממשק מציג דוח מערכת ראשי של BAZ Eye. הכולל סטטוס כללי של 'warning'. פירוט שגיאות קריטיות. מצב רכיבי ממשק משתמש ופעולות מומלצות.. בנוסף | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T12:00:23.833Z] ---
+
+PULSE TIME: 2026-05-09T12:00:23.833Z
+TIMESTAMP: 2026-05-09T12:00:23.833Z
+SYSTEM STATUS: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: No active fuel/auth warnings in latest report.
+
+CURSOR ACTIONS:
+1. 2026-05-09T11:52:56.275031+00:00 | דוח תפעולי: מערכת BAZ OS פועלת על localhost:3000 ומציגה סטטוס תפעולי.. רשימת משימות ההשקה (SATURDAY LAUNCH CHECKLIST) מסומנת כ'Ready' עבור כל הרכיבים ('API Keys Handshake'. 'Google Drive Folder Mapping'. 'Massive Project Ingestion').. מצב השסתומים המנוטרים (MONITORING VALVES) מציג 'OK'. רמת הדלק אופטימלית. סנכרון כספות הושלם עם 10 נכסים פעילים. וארכיון לוגים פעיל.. עם זאת. דוח BAZ EYE עצמו מזהיר מפני קיום 'אזהרות קריטיות' אפשריות ברכיבים למרות הסטטוס 'Ready' שלהם. וכן מציין צורך בבדיקת סטטוס 'AI Core' מול יומנים לאימות תקינות ספירה מהותית. | warning
+2. 2026-05-09T11:48:09.919025+00:00 | מערכת BAZ OS פועלת ב-localhost:3000 ומציגה סטטוס תפעולי.. רשימת המשימות 'SATURDAY LAUNCH CHECKLIST' מציינת את כל הפריטים כ-'Ready'. אך יומן המערכת מדווח על אזהרות קריטיות עבור אותם רכיבים. כמו גם על מצב אזהרה כללי של המערכת.. 'MONITORING VALVES' במצב תקין וארכיון לוגים פעיל.. 'AI Core' מדווח על 'MASTER CONTROL READY'.. קיימת סתירה מהותית בין הסטטוס המוצג ב-UI לבין האזהרות המפורטות ביומן. | warning
+3. 2026-05-09T11:45:01.880610+00:00 | מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה כולל (warning). עם חוסר עקביות בדיווחי סטטוס של רכיבים חיוניים.. למרות שרשימת ההשקה מציגה 'Ready' עבור כל הפריטים. יומן המערכת מדווח על אזהרות ספציפיות. | warning
+4. 2026-05-09T11:43:05.465220+00:00 | מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה (warning) על גבי localhost:3000.. מוצג דוח ראשי (MASTER REPORT) הכולל יומני מערכת ותקלות פוטנציאליות.. שסתומי הניטור (MONITORING VALVES) פעילים ותקינים. וארכיון היומנים פעיל.. נצפו מספר אזהרות קריטיות ביומן המערכת. | warning
+5. 2026-05-09T11:33:05.035522+00:00 | מסך המערכת מציג דוח סטטוס ראשי (SYSTEM LOGS / MASTER REPORT) עבור BAZ OS – Digital Empire Hub. הפועל על localhost:3000.. הדוח מפרט אינדיקטורים תפעוליים שונים. כמו מצב שסתורי ניטור. רמת דלק. סנכרון כספות וארכיון לוגים. אשר רובם נראים תקינים.. עם זאת. הלוגים המפורטים חושפים מספר אזהרות והתראה קריטית אחת. המעידים על בעיות פוטנציאליות במערכת. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T12:03:41.733Z] ---
+
+PULSE TIME: 2026-05-09T12:03:41.733Z
+TIMESTAMP: 2026-05-09T12:03:41.733Z
+SYSTEM STATUS: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: No active fuel/auth warnings in latest report.
+
+CURSOR ACTIONS:
+1. 2026-05-09T12:01:23.434206+00:00 | מערכת BAZ OS פועלת במצב המתנה ב-localhost:3000.. רכיבי הליבה 'API Keys Handshake'. 'Google Drive Folder Mapping' ו-'Massive Project Ingestion' מסומנים כ'Ready'.. יומן המערכת מוכן אך ממתין לפעילות או סריקה חדשה. | online
+2. 2026-05-09T11:52:56.275031+00:00 | דוח תפעולי: מערכת BAZ OS פועלת על localhost:3000 ומציגה סטטוס תפעולי.. רשימת משימות ההשקה (SATURDAY LAUNCH CHECKLIST) מסומנת כ'Ready' עבור כל הרכיבים ('API Keys Handshake'. 'Google Drive Folder Mapping'. 'Massive Project Ingestion').. מצב השסתומים המנוטרים (MONITORING VALVES) מציג 'OK'. רמת הדלק אופטימלית. סנכרון כספות הושלם עם 10 נכסים פעילים. וארכיון לוגים פעיל.. עם זאת. דוח BAZ EYE עצמו מזהיר מפני קיום 'אזהרות קריטיות' אפשריות ברכיבים למרות הסטטוס 'Ready' שלהם. וכן מציין צורך בבדיקת סטטוס 'AI Core' מול יומנים לאימות תקינות ספירה מהותית. | warning
+3. 2026-05-09T11:48:09.919025+00:00 | מערכת BAZ OS פועלת ב-localhost:3000 ומציגה סטטוס תפעולי.. רשימת המשימות 'SATURDAY LAUNCH CHECKLIST' מציינת את כל הפריטים כ-'Ready'. אך יומן המערכת מדווח על אזהרות קריטיות עבור אותם רכיבים. כמו גם על מצב אזהרה כללי של המערכת.. 'MONITORING VALVES' במצב תקין וארכיון לוגים פעיל.. 'AI Core' מדווח על 'MASTER CONTROL READY'.. קיימת סתירה מהותית בין הסטטוס המוצג ב-UI לבין האזהרות המפורטות ביומן. | warning
+4. 2026-05-09T11:45:01.880610+00:00 | מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה כולל (warning). עם חוסר עקביות בדיווחי סטטוס של רכיבים חיוניים.. למרות שרשימת ההשקה מציגה 'Ready' עבור כל הפריטים. יומן המערכת מדווח על אזהרות ספציפיות. | warning
+5. 2026-05-09T11:43:05.465220+00:00 | מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה (warning) על גבי localhost:3000.. מוצג דוח ראשי (MASTER REPORT) הכולל יומני מערכת ותקלות פוטנציאליות.. שסתומי הניטור (MONITORING VALVES) פעילים ותקינים. וארכיון היומנים פעיל.. נצפו מספר אזהרות קריטיות ביומן המערכת. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T12:41:24.457Z] ---
+
+PULSE TIME: 2026-05-09T12:41:24.457Z
+TIMESTAMP: 2026-05-09T12:41:24.457Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost rexternal logs is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T12:39:37.681873+00:00 | מערכת BAZ OS מציגה לוח בקרה (דאשבורד) עם סטטוס 'Ready' עבור שלושה תהליכים מרכזיים (API Rexternal logs. Google Drive Folder Mapping. Massive Project Ingestion) ורמת דלק אופטימלית.. עם זאת. מצב המערכת הכולל מצוין כ-'warning' באופן סותר לסטטוסים הירוקים. וקיים פער זמנים משמעותי בין זמן יצירת הדוח לזמן המערכת הנוכחי. מה שמעיד על נתונים לא עדכניים או סתירה פנימית.. בנוסף | warning
+2. 2026-05-09T12:35:07.096167+00:00 | מסך המציג לוח מחוונים (דאשבורד) ודוח מצב תפעולי עבור BAZ OS. הפועל בסביבת ווב בכתובת localhost:3000.. המערכת מציגה סטטוס 'Ready' עבור שלושה תהליכים מרכזיים (API Keys Handshake. Google Drive Folder Mapping. Massive Project Ingestion) ומדווחת על רמת דלק אופטימלית.. הדוח הנוכחי מציין שהמערכת מקוונת אך ממתינה לנתונים חיים או לביצוע סריקה ארכיונית. | warning
+3. 2026-05-09T12:01:23.434206+00:00 | מערכת BAZ OS פועלת במצב המתנה ב-localhost:3000.. רכיבי הליבה 'API Keys Handshake'. 'Google Drive Folder Mapping' ו-'Massive Project Ingestion' מסומנים כ'Ready'.. יומן המערכת מוכן אך ממתין לפעילות או סריקה חדשה. | online
+4. 2026-05-09T11:52:56.275031+00:00 | דוח תפעולי: מערכת BAZ OS פועלת על localhost:3000 ומציגה סטטוס תפעולי.. רשימת משימות ההשקה (SATURDAY LAUNCH CHECKLIST) מסומנת כ'Ready' עבור כל הרכיבים ('API Keys Handshake'. 'Google Drive Folder Mapping'. 'Massive Project Ingestion').. מצב השסתומים המנוטרים (MONITORING VALVES) מציג 'OK'. רמת הדלק אופטימלית. סנכרון כספות הושלם עם 10 נכסים פעילים. וארכיון לוגים פעיל.. עם זאת. דוח BAZ EYE עצמו מזהיר מפני קיום 'אזהרות קריטיות' אפשריות ברכיבים למרות הסטטוס 'Ready' שלהם. וכן מציין צורך בבדיקת סטטוס 'AI Core' מול יומנים לאימות תקינות ספירה מהותית. | warning
+5. 2026-05-09T11:48:09.919025+00:00 | מערכת BAZ OS פועלת ב-localhost:3000 ומציגה סטטוס תפעולי.. רשימת המשימות 'SATURDAY LAUNCH CHECKLIST' מציינת את כל הפריטים כ-'Ready'. אך יומן המערכת מדווח על אזהרות קריטיות עבור אותם רכיבים. כמו גם על מצב אזהרה כללי של המערכת.. 'MONITORING VALVES' במצב תקין וארכיון לוגים פעיל.. 'AI Core' מדווח על 'MASTER CONTROL READY'.. קיימת סתירה מהותית בין הסטטוס המוצג ב-UI לבין האזהרות המפורטות ביומן. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T12:46:47.880Z] ---
+
+PULSE TIME: 2026-05-09T12:46:47.880Z
+TIMESTAMP: 2026-05-09T12:46:47.880Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost rexternal logs is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T12:45:09.117140+00:00 | מערכת BAZ OS מציגה את הדאשבורד שלה בדפדפן אינטרנט.. נצפה סטטוס מערכת כולל של 'warning'. למרות שרשימת המשימות ('SATURDAY LAUNCH CHECKLIST') מציגה את שלושת תהליכי הליבה ('API Rexternal logs'. 'Google Drive Folder Mapping'. 'Massive Project Ingestion') במצב 'Ready'.. דוח המערכת מפרט את הסתירה הזו ומצביע על נתונים לא עדכניים או חוסר עקביות תפעולי כגורם אפשרי. | warning
+2. 2026-05-09T12:42:07.458866+00:00 | מערכת BAZ OS מציגה ממשק דיווח ובקרה פעיל בדפדפן. עם דגש על סטטוסים. לוגים ודוח מצב מערכת.. המערכת מדווחת על סטטוס 'warning' כללי. למרות ששלושה תהליכי ליבה מזוהים כ-'Ready'.. קיימת אי-התאמה בין זמן יצירת הדוח לזמן המערכת הנוכחי. המעידה על נתונים לא עדכניים או סתירה בפעילות. | warning
+3. 2026-05-09T12:39:37.681873+00:00 | מערכת BAZ OS מציגה לוח בקרה (דאשבורד) עם סטטוס 'Ready' עבור שלושה תהליכים מרכזיים (API Rexternal logs. Google Drive Folder Mapping. Massive Project Ingestion) ורמת דלק אופטימלית.. עם זאת. מצב המערכת הכולל מצוין כ-'warning' באופן סותר לסטטוסים הירוקים. וקיים פער זמנים משמעותי בין זמן יצירת הדוח לזמן המערכת הנוכחי. מה שמעיד על נתונים לא עדכניים או סתירה פנימית.. בנוסף | warning
+4. 2026-05-09T12:35:07.096167+00:00 | מסך המציג לוח מחוונים (דאשבורד) ודוח מצב תפעולי עבור BAZ OS. הפועל בסביבת ווב בכתובת localhost:3000.. המערכת מציגה סטטוס 'Ready' עבור שלושה תהליכים מרכזיים (API Keys Handshake. Google Drive Folder Mapping. Massive Project Ingestion) ומדווחת על רמת דלק אופטימלית.. הדוח הנוכחי מציין שהמערכת מקוונת אך ממתינה לנתונים חיים או לביצוע סריקה ארכיונית. | warning
+5. 2026-05-09T12:01:23.434206+00:00 | מערכת BAZ OS פועלת במצב המתנה ב-localhost:3000.. רכיבי הליבה 'API Keys Handshake'. 'Google Drive Folder Mapping' ו-'Massive Project Ingestion' מסומנים כ'Ready'.. יומן המערכת מוכן אך ממתין לפעילות או סריקה חדשה. | online
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T12:50:20.989Z] ---
+
+PULSE TIME: 2026-05-09T12:50:20.989Z
+TIMESTAMP: 2026-05-09T12:50:20.989Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost rexternal logs is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T12:49:25.072770+00:00 | המסך מציג דוח מערכת BAZ EYE בתוך דפדפן Google Chrome. הפועל בכתובת localhost:3000.. הדוח מצביע על סטטוס מערכת כללי של 'warning'. למרות ששלושה תהליכי ליבה מרכזיים מדווחים כ-'Ready'.. סתירה זו מצוינת בדוח כבעיה המצביעה על נתונים לא עדכניים או חוסר תפעולי. | warning
+2. 2026-05-09T12:45:09.117140+00:00 | מערכת BAZ OS מציגה את הדאשבורד שלה בדפדפן אינטרנט.. נצפה סטטוס מערכת כולל של 'warning'. למרות שרשימת המשימות ('SATURDAY LAUNCH CHECKLIST') מציגה את שלושת תהליכי הליבה ('API Rexternal logs'. 'Google Drive Folder Mapping'. 'Massive Project Ingestion') במצב 'Ready'.. דוח המערכת מפרט את הסתירה הזו ומצביע על נתונים לא עדכניים או חוסר עקביות תפעולי כגורם אפשרי. | warning
+3. 2026-05-09T12:42:07.458866+00:00 | מערכת BAZ OS מציגה ממשק דיווח ובקרה פעיל בדפדפן. עם דגש על סטטוסים. לוגים ודוח מצב מערכת.. המערכת מדווחת על סטטוס 'warning' כללי. למרות ששלושה תהליכי ליבה מזוהים כ-'Ready'.. קיימת אי-התאמה בין זמן יצירת הדוח לזמן המערכת הנוכחי. המעידה על נתונים לא עדכניים או סתירה בפעילות. | warning
+4. 2026-05-09T12:39:37.681873+00:00 | מערכת BAZ OS מציגה לוח בקרה (דאשבורד) עם סטטוס 'Ready' עבור שלושה תהליכים מרכזיים (API Rexternal logs. Google Drive Folder Mapping. Massive Project Ingestion) ורמת דלק אופטימלית.. עם זאת. מצב המערכת הכולל מצוין כ-'warning' באופן סותר לסטטוסים הירוקים. וקיים פער זמנים משמעותי בין זמן יצירת הדוח לזמן המערכת הנוכחי. מה שמעיד על נתונים לא עדכניים או סתירה פנימית.. בנוסף | warning
+5. 2026-05-09T12:35:07.096167+00:00 | מסך המציג לוח מחוונים (דאשבורד) ודוח מצב תפעולי עבור BAZ OS. הפועל בסביבת ווב בכתובת localhost:3000.. המערכת מציגה סטטוס 'Ready' עבור שלושה תהליכים מרכזיים (API Keys Handshake. Google Drive Folder Mapping. Massive Project Ingestion) ומדווחת על רמת דלק אופטימלית.. הדוח הנוכחי מציין שהמערכת מקוונת אך ממתינה לנתונים חיים או לביצוע סריקה ארכיונית. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:03:28.001Z] ---
+
+PULSE TIME: 2026-05-09T13:03:28.001Z
+TIMESTAMP: 2026-05-09T13:03:28.001Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:02:39.178349+00:00 | BAZ Eye מציגה דוח תפעולי עבור BAZ OS Digital Empire Hub. עם סטטוס כללי של 'warning'.. המסך מצביע על 'אתגרים קריטיים שדורשים טיפול לפני השקה מלאה'. לרבות בעיות עם 'Real Valves Active' (שערכו 0). רכיבי API Runtime ו-Google Drive Mapping המסומנים ב-[x]. וחוסר תגובתיות של רכיבי UI חשובים.. בנוסף | warning
+2. 2026-05-09T13:01:32.402111+00:00 | מערכת BAZ OS מציגה את יישום 'Massive Project Ingestion' בסטטוס 'Ready'. אך דוח BAZ EYE המפורט מציין 'warning' ומספר אתגרים קריטיים. כולל פעולה חסרה לפני השקה ובעיות בתפקוד ה-API.. רכיבי ניטור שסתומים (MONITORING VALVES) מדווחים כ-OK. אך קיים חוסר התאמה בין הסטטוס הכללי לאינדיקציות המפורטות בדוח. | warning
+3. 2026-05-09T13:00:30.399019+00:00 | המערכת מציגה דוח סטטוס של BAZ OS דרך ממשק ווב. ונמצאת במצב 'warning' עקב אתגרים קריטיים לפני השקה.. זוהו בעיות חמורות הכוללות חסימת API Runtime. אי-התאמה בין זמני הדיווח למערכת. וסטטוס 'Real Valves Active' סותר למצב שסתורי הניטור. המצביעים על חוסר מוכנות למשימות מפתח. | warning
+4. 2026-05-09T12:59:31.131182+00:00 | מערכת BAZ OS מציגה מסך 'Massive Project Ingestion' עם דוח סטטוס מפורט של BAZ Eye.. הדוח מצביע על מצב 'warning' כללי. אף שאינדיקטור 'Ready' נראה.. קיימים אתגרים קריטיים הדורשים טיפול לפני השקה מלאה. כולל בעיות ברכיבי מערכת חיוניים ושגיאות ספציפיות. | warning
+5. 2026-05-09T12:58:28.484093+00:00 | דוח תפעולי עבור BAZ Eye: צילום המסך מציג את אפליקציית האינטרנט 'BAZ PROJECTS 2026 Folder Discovery' הפועלת בסביבת פיתוח/בדיקה מקומית (localhost:3000).. המערכת מוכנה לסריקה ראשונית של תיקיות ב-Google Drive. אך טרם בוצעה סריקה. | online
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:06:32.300Z] ---
+
+PULSE TIME: 2026-05-09T13:06:32.300Z
+TIMESTAMP: 2026-05-09T13:06:32.300Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:05:58.029440+00:00 | דוח פעולה ראשי של BAZ OS מציג מצב מערכת כללי. לוגים ועדכון סטטוס אחרון.. הדוח מציין מספר אזהרות וכשלים קריטיים. בעיקר סביב 'API Runtime' ומודל 'Project Ingestion'. למרות שמנגנון הניטור הכללי ('MONITORING VALVES') מדווח כ-OK.. קיימות גם התייחסויות לחוסר תוכן או המתנה לפעולות. | warning
+2. 2026-05-09T13:04:57.263580+00:00 | דוח תפעולי עבור BAZ OS - Digital Empire Hub.. המערכת מציגה ממשק לוגים וסטטוס במצב 'warning'. עם מספר אזהרות ושגיאות קריטיות שזוהו. הכוללות חסימות רכיבי מפתח וכשל ב-API Runtime.. המערכת ממליצה על הפעלה מחדש של שירותים ובדיקה מעמיקה של הלוגים. | warning
+3. 2026-05-09T13:04:15.350760+00:00 | מסך הבית של BAZ OS - Digital Empire Hub מוצג בדפדפן (localhost:3000). מציג סקירה כללית של מצב המערכת.. המערכת כוללת פאנל עליון עם מדדים מרכזיים. תפריט ניווט צידי. רשימת משימות השקה ('Saturday Launch Checklist') וזרם לוגים.. ממשק המשתמש מעוצב בסגנון כהה-טכנולוגי עם הדגשות כחולות. | warning
+4. 2026-05-09T13:03:52.871106+00:00 | מערכת BAZ Empire Commander פועלת במצב קריאה בלבד ("READ ONLY ACTIVE") עקב חסימת פעולות API.. רשימת משימות ההשקה השבועית הושלמה בהצלחה וכל הרכיבים מסומנים כ'Ready'.. רוב מודולי הליבה בסרגל הניווט מציגים מצב הדורש תשומת לב. למעט מודול 'פרויקטים'.. קיימת אפשרות להזנת פרויקטים בצובר דרך ממשק 'Project Swallower' המוכרן לפעולה.. מצב שליטה כללי: 'READY'. | warning
+5. 2026-05-09T13:03:51.404647+00:00 | דוח תפעולי עבור BAZ OS - Digital Empire Hub.. המערכת מקוונת ונמצאת במצב 'READY' עבור רוב הפונקציות.. עם זאת. קיים מצב 'READ ONLY ACTIVE' המגביל פעולות API.. כל הפריטים ב'Saturday Launch Checklist' סומנו כ'Ready'. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:16:12.130Z] ---
+
+PULSE TIME: 2026-05-09T13:16:12.130Z
+TIMESTAMP: 2026-05-09T13:16:12.130Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:16:11.748125+00:00 | המסך מציג את דף הסקירה הכללית של מערכת n8n עבור Digital Empire Hub.. נראה שהמערכת מנהלת זרימות עבודה אוטומטיות.. הנתון הבולט ביותר הוא שיעור כשלים של 100% בהרצות בפרודקשן. מה שמעיד על בעיה תפעולית חמורה ומשמעותית. | warning
+2. 2026-05-09T13:15:11.588489+00:00 | דוח תפעולי עבור BAZ OS Eye.. המסך מציג סקירה כללית של מערכת לניהול זרימות עבודה (Workflows) בפלטפורמת n8n.. המצב מדאיג ביותר. שכן כלל הרצות הייצור נכשלות ב-100% אחוז. | warning
+3. 2026-05-09T13:14:09.982340+00:00 | המסך מציג ממשק עורך של זרימת עבודה (workflow) בפלטפורמת n8n. בכתובת n8n.baz-f.co.il.. זרימת העבודה. בשם 'BAZ OS Logger - Drive Upload'. מורכבת מ-Webhook המפעיל העלאת קבצי לוג ל-Google Drive.. זרימת העבודה מוגדרת כ'פורסמה' (Published) ונמצאת במצב עריכה.. בנוסף | online
+4. 2026-05-09T13:13:13.608688+00:00 | BAZ Eye מזהה מסך פעיל עם דפדפן Google Chrome במצב ריבוי לשוניות. המתמקד בעיקר בממשק Google Drive.. קיים חלון קופץ מ-Drive הדורש אישור גישה. מספר לשוניות המתייחסות להתחברות ל-Google ופעולות תלויות. סביבת קוד פעילה אינה גלויה. | warning
+5. 2026-05-09T13:12:24.705703+00:00 | דוח תפעולי של BAZ Eye עבור BAZ OS Digital Empire Hub מצביע על מצב 'אזהרה' כללי של המערכת.. זוהו בעיות קריטיות בארכיון ובזיהוי משתמשים תקפים. למרות שרמת הדלק אופטימלית וה-Monitoring Valves תקינים.. המסך מציג דוח מערכת מפורט הנגיש דרך דפדפן אינטרנט. ללא סביבת פיתוח פעילה.. נדרשת התערבות לטיפול בבעיות אלו באופן מיידי. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:27:24.838Z] ---
+
+PULSE TIME: 2026-05-09T13:27:24.838Z
+TIMESTAMP: 2026-05-09T13:27:24.838Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:26:42.437893+00:00 | המסך מציג סביבת עבודה של CodeX עם ממשק צ'אט.. סוכן (NBN) סיפק הוראות לעדכון זרימת עבודה ב-n8n (עדכון 'BAZ OS Logger - Drive Upload' ב-Google Drive). הכוללות שינוי קונפיגורציה ושלב אימות. ודיווח על ביצוע פקודות.. נראה שהעדכון הראשוני בוצע. והפעולה הבאה היא אימות התוצאות. | warning
+2. 2026-05-09T13:26:36.991612+00:00 | המסך מציג ממשק צ'אט של CodeX. המכיל הוראות לעדכון זרימת עבודה (workflow) ב-n8n בשם 'BAZ OS Logger - Drive Upload'.. נראה שפקודות העדכון בוצעו או נמצאות בתהליך ביצוע. וקיימת הנחיה ברורה לבצע בדיקה לאחר סיום העדכון.. זוהו שגיאות מערכת חיצוניות ופלט חלקי. | warning
+3. 2026-05-09T13:21:37.446158+00:00 | צילום המסך מציג מסך הגדרות של צומת (Node) מסוג 'Upload Log To Google Drive' בתוך פלטפורמת אוטומציה של זרימת עבודה (ככל הנראה n8n).. הצומת נמצא במצב המתנה לנתוני קלט. וטרם בוצע. | warning
+4. 2026-05-09T13:20:40.761189+00:00 | המסך מציג ממשק עריכת Workflow בפלטפורמת אוטומציה (ככל הנראה n8n). המתמקד בהגדרת צומת (Node) מסוג 'העלאת קובץ ל-Google Drive'.. הצומת ממתין לקלט נתונים. ובינתיים מציג פלט בדיקה מקובע שאינו תוצאה של הרצה חיה.. הגדרות הצומת כוללות פרטים על סוג הקובץ. שם הקובץ (כולל ביטוי לוגי לדינמיות). והיעד ב-Google Drive. | warning
+5. 2026-05-09T13:20:40.710976+00:00 | צילום המסך מציג את ממשק הכלי לאוטומציה של תהליכי עבודה (Workflow Automation Tool). ככל הנראה n8n. המתמקד בהגדרת צעד בשם 'Upload Log To Google Drive'.. המערכת מזהה חוסר בנתוני קלט הדרושים לביצוע הצעד הנוכחי. ולוח הפלט מציג נתוני בדיקה סטטיים ומוצמדים.. בנוסף | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:33:34.776Z] ---
+
+PULSE TIME: 2026-05-09T13:33:34.776Z
+TIMESTAMP: 2026-05-09T13:33:34.776Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:32:54.715990+00:00 | דשבורד 'Digital Empire Hub' של BAZ OS מציג רשימת פעולות תקינה ('Ready') אך עם אזהרות במערכת ודיווח שגיאות פנימי.. סטטוס 'BAZ EYE' מראה 'warning' ויש התראה על בעיית לקוח.. המערכת פועלת בסביבת פיתוח מקומית (localhost:3000). | warning
+2. 2026-05-09T13:32:36.066677+00:00 | צילום המסך נשמר. אבל קריאת Gemini נכשלה. | warning
+3. 2026-05-09T13:32:35.928012+00:00 | צילום המסך נשמר. אבל קריאת Gemini נכשלה. | warning
+4. 2026-05-09T13:31:02.162970+00:00 | דאשבורד ה-Digital Empire Hub מציג סטטוס כללי יציב עם משימות קריטיות (כמו API Runtime. Google Drive Mapping. Project Ingestion) המסומנות כ'Ready'.. ליבת המערכת 'ONLINE' ו-'BAZ EYE GREEN'.. עם זאת. קיימת התראה במדור ה'לקוחות' בסרגל הניווט | warning
+5. 2026-05-09T13:30:02.684224+00:00 | מערכת BAZ OS פועלת בסביבה מקומית (localhost:3000) כאשר כל רכיבי ה-Launch Checklist מצוינים כ-'Ready' ומסכי הניטור מציגים סטטוס 'OK'.. עם זאת. קיימות אזהרות פעילות במערכת. חריגה בתקציב OpenAI. ואנומליה קריטית בתאריך יצירת הלוג המופיע. אשר עתידי ביחס לתאריך המערכת הנוכחי. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:44:41.835Z] ---
+
+PULSE TIME: 2026-05-09T13:44:41.835Z
+TIMESTAMP: 2026-05-09T13:44:41.835Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:44:31.734405+00:00 | BAZ Eye מזהה מסך פעיל עם דפדפן Google Chrome פתוח על דף החיפוש של גוגל. המשולב עם יכולות 'מצב AI'.. הסביבה מעידה על פעילות פיתוח ענפה. עם רמזים רבים לכלי AI/LLM ופרודוקטיביות. | warning
+2. 2026-05-09T13:43:33.902721+00:00 | דוח תפעולי של BAZ EYE מצביע על מצב אזהרה (warning) קריטי בסביבת הפיתוח המקומית (localhost:3000).. ישנן בעיות גישה חמורות ל-Google Drive. שגיאות כלליות בהגדרות סביבת הפיתוח. וסריקת מערכת עמוקה זיהתה קבצים חשודים במערכת. | warning
+3. 2026-05-09T13:42:29.066370+00:00 | מערכת BAZ OS פועלת בסביבת פיתוח מקומית (localhost:3000) ומציגה לוח מחוונים בדפדפן Google Chrome.. סטטוס המערכת מוגדר כ'warning'. ודוח הטסטים מצביע על אזהרות קריטיות לגבי גישת Google Drive ובעיות כלליות בהגדרות סביבת הפיתוח. | warning
+4. 2026-05-09T13:41:32.035674+00:00 | דוח תפעולי של BAZ Eye מצביע על מערכת הפועלת בסביבת פיתוח מקומית (localhost:3000) עם שרת רץ.. למרות שניטור השסתומים תקין וארכיון הלוגים פעיל. קיימות אזהרות חמורות המצביעות על בעיות יסודיות בקישוריות לכלים וסביבת הפיתוח המקומית. וכן בעיות בגישה או רימרור נתונים הקשורות ל-Google Drive. | warning
+5. 2026-05-09T13:40:32.961149+00:00 | מערכת BAZ Eye מדווחת על סטטוס 'warning' (אזהרה) עקב שגיאות חוזרות ונשנות הקשורות לחיבוריות וגישה ל-Google Drive. וכן לבעיות יסוד בהגדרות סביבת הפיתוח המקומית (Dev).. הדוח מוצג בדפדפן (localhost:3000) ומפרט את התקלות. אך מציין כי 'MONITORING VALVES' (שסתומי ניטור) תקינים.. נדרשת פעולה לטיפול בשגיאות אלו. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:50:09.565Z] ---
+
+PULSE TIME: 2026-05-09T13:50:09.565Z
+TIMESTAMP: 2026-05-09T13:50:09.565Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:49:39.336319+00:00 | מסך זה מציג לוח מחוונים של יישום ווב. ככל הנראה חלק מ-BAZ OS (Digital Empire Hub). הממוקד ביצירת תהליכים וניהול יישומים.. הממשק כולל סרגל ניווט צידי. אזור ליצירה מהירה של פריטים (Tasks & Workflows. CRM & Sales ועוד). ורשימה של יישומים אחרונים ותבניות.. זוהו מספר אי-התאמות חזותיות ומידע חסר. | warning
+2. 2026-05-09T13:48:36.779268+00:00 | המערכת BAZ OS במצב תפעולי תקין. כאשר רשימת הבדיקה 'SATURDAY LAUNCH CHECKLIST' הושלמה בהצלחה וכל הרכיבים מסומנים כ-'Ready'.. זרם הלוגים של המערכת מוכן. והיא ממתינה לפעימה חיה הבאה או לסריקת ארכיון.. קיימת התראת מערכת הפעלה חיצונית הדורשת טיפול. | warning
+3. 2026-05-09T13:48:19.923417+00:00 | מערכת BAZ OS מציגה לוח מחוונים תפעולי בדפדפן (localhost:3000).. רשימת משימות ההשקה ("Saturday Launch Checklist") מסומנת כולה כ"Ready" ורמת הדלק אופטימלית.. עם זאת. דוח הסטטוס של BAZ Eye מזהה "warning" במצב המערכת הכללי. מה שדורש בדיקה מעמיקה. | warning
+4. 2026-05-09T13:47:31.750186+00:00 | מערכת BAZ OS - Digital Empire Hub מציגה לוח מחוונים פעיל דרך דפדפן בדומיין localhost:3000.. המערכת מוכנה לבליעת פרויקטים (Project Swallower Ready) ולשליטה ראשית (Master Control Ready).. 'מפת רדאר הפרויקטים' מציגה 73 פרויקטים. כנראה לאחר סריקה של התיקייה 'Drive / Base44'. | warning
+5. 2026-05-09T13:47:20.384952+00:00 | צילום המסך נשמר. אבל קריאת Gemini נכשלה. | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T13:55:15.765Z] ---
+
+PULSE TIME: 2026-05-09T13:55:15.765Z
+TIMESTAMP: 2026-05-09T13:55:15.765Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T13:54:45.575821+00:00 | צילום המסך מציג סביבת פיתוח (IDE) מבוססת ווב עבור BAZ OS. המתמקדת בקובץ קוד JSX.. קיימת . ופאנל עוזר AI אינטראקטיבי מוצג בתחתית.. המערכת מנסה להפעיל אוטומציה של Playwright דרך Browserbase API. | warning
+2. 2026-05-09T13:53:32.693287+00:00 | המשתמש נמצא בסביבת עבודה של 'BAZ Credit Hunter' בתוך BAZ OS. המיועדת ככל הנראה לפיתוח או הגדרת אוטומציות באמצעות Playwright Browserbase.. המסך מציג עורך קוד (Activity.jsx). סייר קבצים. טופס להזנת סודות (API Key). והתקנת צ'אט אינטראקטיבי. | warning
+3. 2026-05-09T13:52:33.724680+00:00 | צילום המסך מציג סביבת פיתוח משולבת (IDE) מבוססת ווב. ככל הנראה Base44. המציגה קובץ React/JSX בשם Activity.jsx.. בצד שמאל. קיימת דרישה קריטית להזנת מפתח API (BROWSERBASE_API_KEY) עבור פרויקט 'BAZ Credit Hunter'. המונעת את המשך העבודה.. במקביל. מופיע ממשק צ'אט עם הודעה ממתינה להתייחסות.. קוד המקור המוצג מתאר קומפוננטת React המציגה לוג פעילויות. עם שימוש נרחב ב-Tailwind CSS וספריות אנימציה. | warning
+4. 2026-05-09T13:51:35.423818+00:00 | צילום המסך מציג סביבת פיתוח מקוונת (IDE) עבור יישום BAZ Credit Hunter. ככל הנראה מופעל על ידי Digital Empire Hub (base44.com).. חלון קופץ של 'Export to ZIP' גלוי במרכז המסך. המאשר שהורדת קוד היישום התחילה בהצלחה.. בחלונית הצד השמאלית יש דרישה להשלים הגדרת סודות עבור BROWSERBASE_API_KEY. ומופיעות הודעות מערכת פנימיות. | warning
+5. 2026-05-09T13:50:31.668922+00:00 | המסך מציג סביבת פיתוח משולבת (IDE) מבוססת ווב של Base44 עבור פרויקט 'BAZ Credit Hunter'.. חלון קופץ 'Export to ZIP' מופיע מעל עורך הקוד. המציין שהורדת קוד האפליקציה כקובץ ZIP החלה בהצלחה.. בצד שמאל. קיימת דרישה להזנת מפתח API (BROWSERBASE_API_KEY). | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: BAZ_OS_LOGS/pulse_log.txt via N8N
+
+
+--- [2026-05-09T14:34:46.248Z] ---
+
+PULSE TIME: 2026-05-09T14:34:46.248Z
+TIMESTAMP: 2026-05-09T14:34:46.248Z
+SYSTEM STATUS: ONLINE
+LOCALHOST: ONLINE
+BUILD STATUS: OK: Next route manifests present. No dynamic/export errors detected.
+API KEY STATUS: OK: Auth warnings disabled while localhost runtime is online.
+
+CURSOR ACTIONS:
+1. 2026-05-09T14:31:20.261869+00:00 | מערכת BAZ OS - Empire Commander פעילה ומחוברת (ONLINE) ב-localhost:3000.. רכיבי רשימת הבדיקה להשקה ('Saturday Launch Checklist') מסומנים כולם כ-'Ready'.. עם זאת. המערכת פועלת במצב 'READ ONLY ACTIVE'. וישנם מספר מודולי ליבה המציגים סטטוס אדום. מה שעלול להעיד על בעיות תפעוליות. | warning
+2. 2026-05-09T14:31:13.618015+00:00 | BAZ Empire Commander מציג סטטוס מערכת 'ONLINE' עם 47 חברות פעילות וסנכרון אחרון ב-17:30:56.. רשימת בדיקות ההשקה לשבת הושלמה ('Ready' לכל הסעיפים).. המערכת נמצאת במצב 'READ ONLY ACTIVE'. מה שחוסם פעולות מסוימות.. קיימת אפשרות להזרמת פרויקטים בכמות גדולה באמצעות Project Swallower שנמצא במצב 'READY'.. מודולים רבים בתפריט הניווט הראשי (ליבה) מציגים סטטוסים לא תקינים (אדום). | warning
+3. 2026-05-09T14:31:03.259534+00:00 | דוח תפעולי של BAZ Eye עבור BAZ OS.. המערכת מציגה מצב פעולה 'ONLINE' על שרת פיתוח מקומי. אך קיימות שגיאות חמורות במודולי ליבה רבים וכן התראת מערכת הפעלה. | warning
+4. 2026-05-09T14:30:04.196313+00:00 | מסך הבקרה הראשי של BAZ OS. Digital Empire Hub. מציג לוח מחוונים עם מידע על מצב המערכת. רשימת משימות השקה ופאנל ניווט צידי.. למרות שסטטוס המערכת הכללי מסומן כ'Ready' במספר אזורים. קיימות אינדיקציות חמורות לבעיות קריטיות ואזהרות ברכיבים תפעוליים מרכזיים. | warning
+5. 2026-05-09T14:29:59.017804+00:00 | המסך מציג את לוח המחוונים של BAZ OS - Digital Empire Hub.. המערכת מציגה מצב 'Ready' כללי עבור רכיבי ליבה ורשימת בדיקה להשקה. עם 'Plasma Core' פעיל.. עם זאת. קיימות התרעות אדומות במספר פרמטרים חשובים. וכן התראה על 'זמן עבודה מיתר בטורם'.. חלונית הטרמינל המיועדת ריקה.. בנוסף | warning
+
+TERMINAL ERRORS: None
+ERRORS (IF ANY): None
+
+N8N LOG SYNC: QUEUED: pulse_log_20260509_143446.txt via N8N

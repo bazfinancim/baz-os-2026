@@ -1,0 +1,16 @@
+==============================
+דוח סטטוס - BAZ EYE
+==============================
+מזהה דוח: baz-eye-20260509144501
+זמן יצירה: 2026-05-09T11:45:01.880610+00:00
+סטטוס מערכת: warning
+סיכום: מערכת BAZ OS - Digital Empire Hub פועלת במצב אזהרה כולל (warning). עם חוסר עקביות בדיווחי סטטוס של רכיבים חיוניים.. למרות שרשימת ההשקה מציגה 'Ready' עבור כל הפריטים. יומן המערכת מדווח על אזהרות ספציפיות.
+מצב קוד / טרמינל: המערכת מדווחת כי 'קוד המערכת הוא warning'.. הממשק המוצג הוא יישום ווב הנגיש דרך localhost:3000.. אין סביבת פיתוח משולבת (IDE) או קוד גלוי במסך. כאשר ה-MASTER REPORT משמש כטרמינל לוגים ופלט סטטוסים.
+שגיאות שזוהו: סטטוס מערכת כולל מדווח כ'warning' ב-MASTER REPORT ובכמה מקומות ביומן., אזהרה לגבי 'APT Keys Handshake' ביומן המערכת ('warning' APT Keys Handshake), למרות שהפריט ברשימת ה-SATURDAY LAUNCH CHECKLIST מסומן כ'Ready'., חוסר עקביות בדיווח סטטוס ה-'MONITORING VALVES': מוצג כ-'[OK]' בחלונית העליונה אך ביומן המערכת מופיעה אזהרה לגביו ('warning' - Monitoring Valves).
+רכיבי UI חשובים: SATURDAY LAUNCH CHECKLIST: רשימת משימות השקה עם 3 פריטים המסומנים כ'Ready' (API Keys Handshake, Google Drive Folder Mapping, Massive Project Ingestion)., AI Core Status Panel: כולל 'STATUS BAR' ו-'MASTER CONTROL READY'., MONITORING VALVES Status: מציג סטטוס נוכחי '[OK]' ושעת מערכת פעילה., SYSTEM LOGS / MASTER REPORT: אזור תצוגה מרכזי ליומני מערכת, פרטי דוח (מזהה, זמן יצירה), וסיכום סטטוס מערכת., כפתורי פעולה: 'Copy to Clipboard', 'History', מתג 'ציד זמן היסטורי', וכפתור 'סריקת מערכת עצומה'.
+פעולה הבאה: מומלץ להפעיל את 'סריקת מערכת עצומה' (Massive System Scan) לאיסוף אבחון מפורט יותר אודות האזהרות המדווחות.. במקביל. יש לבחון את יומני המערכת לעומק כדי לזהות את הסיבה לחוסר העקביות באזהרות 'APT Keys Handshake' ו'Monitoring Valves'. ולתקן את הגורמים להן.
+צילום מסך נשמר כאן: C:\Users\משתמש\Desktop\BAZ_OS_2026\current_screen.png
+פילוסופיה: מקסימום אוטומציה, מינימום חיכוך ידני.
+==============================
+
+CHECKSUM: 2ef97e0df332768fa88da88a2e6f4da1d9cf6cf0bc085c4cd37ece399bfaf472
