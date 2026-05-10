@@ -31,7 +31,7 @@ const agents = [
 ];
 
 export function Base44MasterView() {
-  const [tab, setTab] = useState<"hunter" | "apps" | "agents">("hunter");
+  const [tab, setTab] = useState<"hunter" | "apps" | "agents" | "whatsapp">("hunter");
 
   const tabStyle = (active: boolean) => ({
     padding: "8px 20px", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" as const,
@@ -45,9 +45,10 @@ export function Base44MasterView() {
         ⚡ Base44 — כל מה שנבנה
       </h1>
       <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
-        <button style={tabStyle(tab === "hunter")} onClick={() => setTab("hunter")}>🎯 Credit Hunter</button>
+        <button style={tabStyle(tab === "hunter")} onClick={() => setTab("hunter")}>🎯 קרדיט האנטר</button>
         <button style={tabStyle(tab === "apps")} onClick={() => setTab("apps")}>📦 כל האפליקציות</button>
         <button style={tabStyle(tab === "agents")} onClick={() => setTab("agents")}>🤖 סוכנים</button>
+        <button style={tabStyle(tab === "whatsapp")} onClick={() => setTab("whatsapp")}>💬 וואטסאפ</button>
       </div>
 
       {tab === "hunter" && (
@@ -87,6 +88,10 @@ export function Base44MasterView() {
             </div>
           ))}
         </div>
+      )}
+      {tab === "whatsapp" && (
+        <iframe src="https://n8n.baz-f.co.il" width="100%" height="780px"
+          style={{ border: "none", borderRadius: "12px", display: "block" }} />
       )}
     </div>
   );
