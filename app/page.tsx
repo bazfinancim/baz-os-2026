@@ -9,6 +9,8 @@ import db from "@/src/lib/db.json";
 import { IntegrationGalaxy } from "@/src/components/IntegrationGalaxy";
 import { MarketingHub } from "@/src/components/MarketingHub";
 import { Base44MasterView } from "@/src/components/Base44MasterView";
+import { CommsHub } from "@/src/components/CommsHub";
+import { BillingPipeline } from "@/src/components/BillingPipeline";
 import base44Inventory from "@/src/data/base44_inventory.json";
 import hunterToolsInventory from "@/src/data/hunter_tools.json";
 import { getPowerDispatcherState } from "@/src/lib/engine";
@@ -1054,7 +1056,7 @@ export default function Home() {
               onIntervene={openClientIntervention}
             />
           ) : null}
-          {activeTab === "finance" ? <FinancePanel /> : null}
+          {activeTab === "finance" ? <BillingPipeline /> : null}
           {activeTab === "vault" ? <VaultPanel keyValves={keyValves} isReadOnlyMode={isReadOnlyMode} /> : null}
           {activeTab === "keys_valves" ? (
             <KeysValvesPanel
@@ -1066,7 +1068,7 @@ export default function Home() {
           ) : null}
           {activeTab === "base" ? <Base44MasterView /> : null}
           {activeTab === "lead_gen" ? <LeadGenPanel isReadOnlyMode={isReadOnlyMode} /> : null}
-          {activeTab === "comms" ? <CommunicationHub isReadOnlyMode={isReadOnlyMode} /> : null}
+          {activeTab === "comms" ? <CommsHub /> : null}
           {activeTab === "arsenal" ? <EmpireInfrastructurePanel /> : null}
           {activeTab === "n8n_automations" ? <N8NAutomationsPanel /> : null}
           {activeTab === "server_infra" ? <ServerInfraPanel /> : null}
