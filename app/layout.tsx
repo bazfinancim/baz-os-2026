@@ -1,34 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
-  title: "BAZ OS - Digital Empire Hub",
-  description: "Unified automation dashboard for BAZ OS.",
+  title: "BAZ OS",
+  description: "BAZ AI Factory",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="he"
-      dir="rtl"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="he" dir="rtl">
+      <body style={{ background: "#0a0f1e", margin: 0, minHeight: "100vh" }}>
+        {children}
+      </body>
     </html>
   );
 }
