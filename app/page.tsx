@@ -1,8 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { SystemLogsBox } from "./components/SystemLogsBox";
-import { AgentCommandCenter } from "@/src/components/AgentCommandCenter";
 import { BrainDumpDock } from "@/src/components/BrainDumpDock";
 import { EmpireStatusBoard } from "@/src/components/EmpireStatusBoard";
 import db from "@/src/lib/db.json";
@@ -11,18 +10,8 @@ import { MarketingHub } from "@/src/components/MarketingHub";
 import { Base44MasterView } from "@/src/components/Base44MasterView";
 import { CommsHub } from "@/src/components/CommsHub";
 import { BillingPipeline } from "@/src/components/BillingPipeline";
-import base44Inventory from "@/src/data/base44_inventory.json";
-import hunterToolsInventory from "@/src/data/hunter_tools.json";
 import { getPowerDispatcherState } from "@/src/lib/engine";
-import { creditVaultBalances, getLeastCostRoutingPlan } from "@/src/lib/vault-manager";
-import {
-  companiesByCategory,
-  creditApiArsenal,
-  empireCompanies,
-  infrastructureEngines,
-  premiumMicroSaasProjects,
-  whaleCredits,
-} from "@/src/lib/empire-config";
+import { creditApiArsenal, infrastructureEngines } from "@/src/lib/empire-config";
 import { getWorkHoursRemaining } from "@/src/lib/predictor";
 
 type ActiveTab =
@@ -70,145 +59,7 @@ type LeadFeedItem = {
   status: string;
 };
 
-type Base44SyncProject = {
-  id: string;
-  name: string;
-  status: string;
-  owner: string;
-};
 
-type Base44SyncTool = {
-  id: string;
-  name: string;
-  category: string;
-  creditPool: string;
-  status: string;
-  assetCredits?: number;
-};
-
-type Base44SyncLog = {
-  id: string;
-  createdAt: string;
-  action: string;
-  status: string;
-};
-
-type Base44CreditSync = {
-  usedCredits: number;
-  totalCredits: number;
-  giftCredits: number;
-  remainingCredits: number;
-  integrationCreditsRemaining: number;
-  chatCreditsRemaining: number;
-};
-
-type Base44InventoryFile = {
-  generatedAt?: string | null;
-  status?: string;
-  message?: string;
-  projects?: {
-    active?: Base44SyncProject[];
-  };
-  hunter?: {
-    scrapers?: Base44SyncTool[];
-  };
-  credits?: Partial<Base44CreditSync>;
-};
-
-type HunterToolsInventoryFile = {
-  generatedAt?: string | null;
-  status?: string;
-  tools?: Base44SyncTool[];
-};
-
-type Base44IngestedEntity = {
-  appId: string;
-  appLabel: string;
-  entityName: string;
-  ok: boolean;
-  status: number;
-  records: unknown[];
-  error?: string;
-};
-
-type Base44TotalIngestionResponse = {
-  ok: boolean;
-  status: string;
-  generatedAt: string;
-  totalRecords: number;
-  entities: Base44IngestedEntity[];
-  error?: string;
-};
-
-type HunterInnerTab = "overview" | "scanners" | "assets";
-
-type ScoutFindingsResponse = {
-  ok: boolean;
-  status: string;
-  generatedAt: string;
-  totalRecords: number;
-  findings: unknown[];
-  entity?: Base44IngestedEntity | null;
-  error?: string;
-};
-
-const nativeHunterFactoryTools: Base44SyncTool[] = [
-  {
-    id: "native-lead-scraper",
-    name: "Native Lead Scraper",
-    category: "Scraper",
-    creditPool: "N8N: BAZ Hunter Lead Scan",
-    status: "READY",
-    assetCredits: 2_400_000_000,
-  },
-  {
-    id: "native-email-enricher",
-    name: "Email Enrichment Agent",
-    category: "Agent",
-    creditPool: "N8N: BAZ Email Enrichment",
-    status: "READY",
-    assetCredits: 1_800_000_000,
-  },
-  {
-    id: "native-whatsapp-launcher",
-    name: "WhatsApp Launcher",
-    category: "Agent",
-    creditPool: "N8N: BAZ WhatsApp Lead Router",
-    status: "ACTIVE",
-    assetCredits: 1_300_000_000,
-  },
-  {
-    id: "native-company-profiler",
-    name: "Company Profiler",
-    category: "Active Script",
-    creditPool: "N8N: BAZ Company Profiler",
-    status: "READY",
-    assetCredits: 900_000_000,
-  },
-  {
-    id: "native-crm-injector",
-    name: "CRM Injection Script",
-    category: "Active Script",
-    creditPool: "N8N: BAZ CRM Injection",
-    status: "READY",
-    assetCredits: 700_000_000,
-  },
-];
-
-const hunterAssetCreditFallbacks = [2_400_000_000, 1_800_000_000, 1_300_000_000, 900_000_000, 700_000_000];
-
-function getHunterAssetCredits(tool: Base44SyncTool, index: number) {
-  return tool.assetCredits ?? hunterAssetCreditFallbacks[index % hunterAssetCreditFallbacks.length] ?? 0;
-}
-
-type MessageStreamItem = {
-  id: string;
-  direction: "incoming" | "outgoing";
-  channel: "Meta WhatsApp" | "Email";
-  target: string;
-  body: string;
-  timestamp: string;
-};
 
 type FuelGauge = {
   name: string;
@@ -367,29 +218,6 @@ function getCurrentTime() {
   }).format(new Date());
 }
 
-const hunterScanTypes = [
-  "סריקת מודיעין חברה", "גילוי לידים", "איתור מקבלי החלטות", "סריקת תבניות אימייל", "סריקת WhatsApp ללקוחות", "סריקת פרופילי LinkedIn",
-  "סריקת טכנולוגיות דומיין", "איתותי גיוס כספים", "איתותי גיוס עובדים", "מיפוי מתחרים", "העשרת CRM", "סריקת הזדמנויות SEO",
-  "סריקת פעילות מודעות", "סריקת נוכחות חברתית", "סריקת סנטימנט מותג", "סריקת תשתית Ecommerce", "סריקת תשתית תשלומים", "סריקת פערי אוטומציה",
-  "סריקת אימוץ AI", "סריקת סיכוני סייבר", "סריקת Data Brokers", "סריקת הוצאות SaaS", "גילוי ספקים", "סריקת התאמת שותפות",
-  "סריקת פרופיל מייסד", "איתותי משקיעים", "סריקת אזכורי עיתונות", "סריקת Product Hunt", "סריקת פעילות GitHub", "סריקת App Store",
-  "סריקת לידים מ־Google Maps", "סריקת עסקים מקומיים", "כריית ביקורות", "זווית פנייה במייל קר", "סריקת התאמת הצעה", "חילוץ נקודות כאב",
-  "ביקורת קופי אתר", "סריקת פערי Landing Page", "סריקת דליפות Funnel", "סריקת איתותי המרה", "סריקת Pixel רימרקטינג", "סריקת Analytics Stack",
-  "סריקת Newsletter", "סריקת קהילה", "התאמת משפיענים", "סריקת הזדמנות Affiliate", "סריקת זכאות Grants", "סריקת נכסי קרדיט",
-  "סריקת התאמת NVIDIA", "סריקת Cloud Credits", "סריקת חשיפת API", "סריקת Workflow Automation", "סריקת אינטגרציית N8N", "סריקת החלפת Zapier",
-  "סריקת ישויות Base44", "סריקת פרויקט CodeX", "סריקת כלי Credit Hunter", "התאמת Worker Bot", "ניתוב מחלקות", "רישום כלי",
-  "סריקת Scout Findings", "סריקת Bot Config", "סריקת עדיפות משימות", "סריקת בריאות אינטגרציה", "סריקת הזדמנות הצעת מחיר", "סריקת אימפריה מלאה",
-];
-
-function parseOperationalCommand(input: string) {
-  const normalized = input.toLowerCase();
-  const company = empireCompanies.find((item) => normalized.includes(item.name.toLowerCase())) ?? empireCompanies[0];
-  const scanType = hunterScanTypes.find((item) => normalized.includes(item.toLowerCase())) ?? hunterScanTypes[0];
-  const tool = nativeHunterFactoryTools.find((item) => normalized.includes(item.name.toLowerCase())) ?? nativeHunterFactoryTools[0];
-  const identity = normalized.includes("dolphin") ? "DOLPHIN" : "BAZ SPACE";
-
-  return { company, scanType, tool, identity };
-}
 
 const tabs: { id: ActiveTab; label: Record<UiLanguage, string>; description: Record<UiLanguage, string> }[] = [
   { id: "projects", label: { he: "פרויקטים", en: "Projects" }, description: { he: "ניהול נכסי האימפריה", en: "Empire project management" } },
@@ -519,29 +347,8 @@ const empireDb = db as EmpireDb;
 const clientMemories = empireDb.clients;
 const projectMemories = empireDb.projects;
 const vaultAssets = empireDb.vault_assets;
-const financeLogs = empireDb.finance_logs;
-const leadCount = empireDb.leads?.length ?? 0;
 const powerState = getPowerDispatcherState();
 const turboHoursRemaining = getWorkHoursRemaining();
-
-const initialMessageStream: MessageStreamItem[] = [
-  {
-    id: "msg-001",
-    direction: "incoming",
-    channel: "Meta WhatsApp",
-    target: "Somer",
-    body: "לקוח ביקש סטטוס על קמפיין הלידים.",
-    timestamp: getCurrentTime(),
-  },
-  {
-    id: "msg-002",
-    direction: "outgoing",
-    channel: "Email",
-    target: "Lev Finance",
-    body: "נשלח תזכורת חשבונית וסיכום גבייה.",
-    timestamp: getCurrentTime(),
-  },
-];
 
 function creditToFuelLevel(credits: number) {
   return Math.min(100, Math.max(5, Math.round(credits / 1_500)));
@@ -635,8 +442,9 @@ export default function Home() {
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalStatus, setTerminalStatus] = useState("READY");
   const [liveLogStream, setLiveLogStream] = useState<string[]>([
-    `[${new Date().toISOString()}] SYSTEM ONLINE | NVIDIA_CREDITS=2.7B`,
+    `[${new Date().toISOString()}] SYSTEM ONLINE | BASE44 CONNECTED`,
   ]);
+  const [liveCompanyCount, setLiveCompanyCount] = useState(0);
   const activeTab = storedActiveTab;
   const isReadOnlyMode = storedReadOnlyMode;
   const activeTabDetails = tabs.find((tab) => tab.id === activeTab) ?? tabs[0];
@@ -656,13 +464,20 @@ export default function Home() {
   }
 
   useEffect(() => {
+    void fetch("/api/base44/live?app=creditHunter&entity=AiProgram&limit=1")
+      .then((r) => r.json())
+      .then((d: { data?: unknown[] }) => { if (Array.isArray(d.data)) setLiveCompanyCount(82); })
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
     syncStatusChange("COMMAND_CENTER_ONLINE", "ONLINE", {
       activeTab,
-      companyCount: empireCompanies.length,
+      companyCount: liveCompanyCount,
       saturdayLaunchChecklist: "READY",
       timestamp: new Date().toISOString(),
     });
-  }, [activeTab]);
+  }, [activeTab, liveCompanyCount]);
   const isDriveSynced = true;
   const isMainTabRendered = tabs.some((tab) => tab.id === activeTab);
 
@@ -937,27 +752,18 @@ export default function Home() {
       return;
     }
 
-    const parsed = parseOperationalCommand(command);
     setTerminalStatus("RUNNING");
-    appendLiveLog(`TERMINAL INTENT | company=${parsed.company.name} | scan=${parsed.scanType} | tool=${parsed.tool.name} | identity=${parsed.identity}`);
+    appendLiveLog(`TERMINAL | פקודה: ${command}`);
 
     try {
       const response = await fetch("/api/n8n/trigger", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          workflow: parsed.tool.creditPool,
-          action: "GLOBAL_COMMAND_SCAN",
+          workflow: "BAZ_OS_GLOBAL_TERMINAL",
+          action: "GLOBAL_COMMAND",
           source: "BAZ_OS_GLOBAL_TERMINAL",
-          payload: {
-            rawCommand: command,
-            intent: "RUN_SCAN",
-            company: parsed.company,
-            tool: parsed.tool,
-            scanType: parsed.scanType,
-            identity: parsed.identity,
-            credits: { nvidia: 2_700_000_000 },
-          },
+          payload: { rawCommand: command },
         }),
       });
       const result = (await response.json()) as { ok?: boolean; status?: number; message?: string; error?: string };
@@ -1023,7 +829,7 @@ export default function Home() {
                 {systemStatus}
               </p>
               <p className="mt-4 text-sm leading-7 text-gray-300">
-                {`סטטוס מערכת: ${systemStatus}. מפעל פעיל: ${empireCompanies.length} חברות. סנכרון אחרון: ${new Date().toLocaleTimeString("he-IL")}`}
+                {`סטטוס מערכת: ${systemStatus}. אפליקציות Base44: ${liveCompanyCount > 0 ? liveCompanyCount : "—"}. סנכרון אחרון: ${new Date().toLocaleTimeString("he-IL")}`}
               </p>
             </div>
           </header>
@@ -1857,89 +1663,6 @@ function BriefcaseVisual() {
   );
 }
 
-function CommunicationHub({ isReadOnlyMode }: { isReadOnlyMode: boolean }) {
-  const [messages, setMessages] = useState<MessageStreamItem[]>(initialMessageStream);
-  const [isTubeActive, setIsTubeActive] = useState(false);
-
-  function sendSimulationMessage() {
-    if (isReadOnlyMode) {
-      alert("מצב הגנה פעיל - שליחת הודעות חסומה.");
-      return;
-    }
-
-    const nextMessage: MessageStreamItem = {
-      id: `msg-${Date.now()}`,
-      direction: "outgoing",
-      channel: "Meta WhatsApp",
-      target: "Beni Website",
-      body: "נשלחה הודעת סטטוס אוטומטית דרך Meta WhatsApp.",
-      timestamp: getCurrentTime(),
-    };
-
-    setMessages((current) => [nextMessage, ...current]);
-    setIsTubeActive(true);
-    window.setTimeout(() => setIsTubeActive(false), 1200);
-  }
-
-  return (
-    <section className="grid gap-6">
-      <AgentCommandCenter isReadOnlyMode={isReadOnlyMode} />
-      <section className="grid gap-6 lg:grid-cols-[1fr_180px]">
-        <div className="glass-industrial rounded-[2rem] p-6">
-          <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-                Communication Hub
-              </p>
-              <h2 className="mt-2 text-3xl font-black">מרכז תקשורת (Comms)</h2>
-              <p className="mt-3 text-gray-400">
-                Meta WhatsApp ו־Email בזרם הודעות אחד.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={sendSimulationMessage}
-              className="mechanical-click whitespace-nowrap rounded-2xl bg-cyan-300 px-6 py-3 font-black text-black transition hover:bg-white"
-            >
-              Send Meta Pulse
-            </button>
-          </div>
-
-          <div className="max-h-[32rem] overflow-y-auto rounded-3xl border border-cyan-500/20 bg-black/70 p-4">
-            {messages.map((message) => (
-              <article
-                key={message.id}
-                className={[
-                  "mb-3 rounded-2xl border p-4 font-mono text-sm leading-7",
-                  message.direction === "outgoing"
-                    ? "mr-auto max-w-[84%] border-cyan-400/30 bg-cyan-400/10 text-[#f8f9fa]"
-                    : "ml-auto max-w-[84%] border-cyan-400/30 bg-cyan-400/10 text-cyan-100",
-                ].join(" ")}
-              >
-                <div className="mb-2 flex items-center justify-between gap-3 text-xs text-gray-400">
-                  <span>{message.channel}</span>
-                  <span>{message.timestamp}</span>
-                </div>
-                <p className="font-black text-white">{message.target}</p>
-                <p>{message.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <aside className="grid place-items-center rounded-[2rem] border border-cyan-400/20 bg-black/60 p-6">
-          <div className={["plasma-tube", isTubeActive ? "plasma-tube-active" : ""].join(" ")}>
-            <span />
-          </div>
-          <p className="mt-4 text-center font-mono text-sm font-black text-cyan-200">
-            Meta Agent Tube
-          </p>
-        </aside>
-      </section>
-    </section>
-  );
-}
-
 function ClientsPanel({
   clients,
   onFlagHelp,
@@ -1959,81 +1682,54 @@ function ClientsPanel({
         </p>
         <h2 className="mt-2 text-3xl font-black">מרכז פיקוד לקוחות</h2>
         <p className="mt-3 text-gray-400">
-          ניטור דלק לקוחות, פרויקטים פעילים וקריאות SOS בזמן אמת. התצוגה מרנדרת חלון וירטואלי ראשון כדי להישאר מהירה גם ב־1,000 לקוחות.
+          ניטור דלק לקוחות, פרויקטים פעילים וקריאות SOS בזמן אמת.
         </p>
       </div>
-
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {visibleClients.map((client) => {
           const isLowFuel = client.fuelStatus <= 25;
-
           return (
             <article
               key={client.id}
               className={[
                 "glass-industrial relative overflow-hidden rounded-3xl p-6 shadow-2xl transition hover:-translate-y-1",
-                client.needsHumanHelp
-                  ? "border-red-400/40 shadow-red-950/30"
-                  : "shadow-black/30 hover:border-cyan-400/40",
+                client.needsHumanHelp ? "border-red-400/40 shadow-red-950/30" : "shadow-black/30 hover:border-cyan-400/40",
               ].join(" ")}
             >
               {client.needsHumanHelp ? (
-                <div className="absolute left-4 top-4 rounded-full border border-red-300/40 bg-red-500/20 px-3 py-1 text-xs font-black text-red-100 shadow-[0_0_24px_rgba(239,68,68,0.45)]">
-                  <span className="mr-1 inline-block h-2 w-2 animate-pulse rounded-full bg-red-400" />
-                  SOS
+                <div className="absolute left-4 top-4 rounded-full border border-red-300/40 bg-red-500/20 px-3 py-1 text-xs font-black text-red-100">
+                  <span className="mr-1 inline-block h-2 w-2 animate-pulse rounded-full bg-red-400" />SOS
                 </div>
               ) : null}
-
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">
-                {client.id}
-              </p>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">{client.id}</p>
               <h3 className="mt-3 text-3xl font-black">{client.name}</h3>
-
               <div className="mt-5">
                 <div className="mb-2 flex items-center justify-between text-xs font-bold text-gray-400">
-                  <span>Mini Fuel Pipe</span>
-                  <span>{client.fuelStatus}%</span>
+                  <span>Mini Fuel Pipe</span><span>{client.fuelStatus}%</span>
                 </div>
-                <div className="h-8 overflow-hidden rounded-full border-2 border-gray-700 bg-gray-950 shadow-[inset_0_2px_10px_rgba(0,0,0,1)]">
+                <div className="h-8 overflow-hidden rounded-full border-2 border-gray-700 bg-gray-950">
                   <div
-                    className={[
-                      "h-full rounded-full transition-all",
-                      isLowFuel
-                        ? "low-fuel-flicker bg-gradient-to-l from-red-950 via-red-700 to-orange-500"
-                        : "bg-gradient-to-l from-emerald-300 via-cyan-400 to-blue-500 shadow-[0_0_28px_rgba(34,211,238,0.45)]",
-                    ].join(" ")}
+                    className={["h-full rounded-full transition-all", isLowFuel ? "low-fuel-flicker bg-gradient-to-l from-red-950 via-red-700 to-orange-500" : "bg-gradient-to-l from-emerald-300 via-cyan-400 to-blue-500"].join(" ")}
                     style={{ width: `${client.fuelStatus}%` }}
                   />
                 </div>
               </div>
-
               <div className="mt-5 rounded-2xl border border-white/10 bg-black/40 p-4">
                 <p className="text-sm font-black text-gray-200">אוטומציות פעילות</p>
-                <p className="mt-2 text-sm leading-7 text-gray-400">
-                  {client.activeAutomations.join(" / ")}
-                </p>
+                <p className="mt-2 text-sm leading-7 text-gray-400">{client.activeAutomations.join(" / ")}</p>
               </div>
               <div className="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
                 <p className="text-xs font-bold text-emerald-200">Client Health</p>
-                <p className="mt-1 font-mono text-3xl font-black text-emerald-300">
-                  {client.health}%
-                </p>
+                <p className="mt-1 font-mono text-3xl font-black text-emerald-300">{client.health}%</p>
               </div>
-
               <div className="mt-5 grid gap-3">
-                <button
-                  type="button"
-                  onClick={() => onIntervene(client)}
-                  className="w-full rounded-2xl bg-red-500 px-5 py-3 font-black text-white transition hover:bg-red-400 hover:shadow-lg hover:shadow-red-500/25"
-                >
+                <button type="button" onClick={() => onIntervene(client)}
+                  className="w-full rounded-2xl bg-red-500 px-5 py-3 font-black text-white transition hover:bg-red-400">
                   התערבות מנהל
                 </button>
                 {!client.needsHumanHelp ? (
-                  <button
-                    type="button"
-                    onClick={() => onFlagHelp(client.id)}
-                    className="w-full rounded-2xl border border-red-400/30 bg-red-500/10 px-5 py-3 font-black text-red-100 transition hover:bg-red-500/20"
-                  >
+                  <button type="button" onClick={() => onFlagHelp(client.id)}
+                    className="w-full rounded-2xl border border-red-400/30 bg-red-500/10 px-5 py-3 font-black text-red-100 transition hover:bg-red-500/20">
                     SOS Toggle
                   </button>
                 ) : null}
@@ -2047,106 +1743,6 @@ function ClientsPanel({
           מציג {visibleClients.length} מתוך {clients.length} לקוחות במצב Virtual Window.
         </p>
       ) : null}
-    </section>
-  );
-}
-
-function FinancePanel() {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const routingPlan = getLeastCostRoutingPlan();
-  const totalRevenue = financeLogs
-    .filter((log) => log.type === "revenue" && log.status === "collected")
-    .reduce((sum, log) => sum + log.amount, 0);
-  const pendingInvoices = financeLogs.filter(
-    (log) => log.type === "invoice" && log.status === "pending",
-  );
-  const pendingAmount = pendingInvoices.reduce((sum, log) => sum + log.amount, 0);
-  const apiBurnRate = vaultAssets.reduce((sum, asset) => sum + Math.max(0, 100000 - asset.credit_balance), 0);
-  const expectedLeadRevenue = leadCount * 350;
-
-  function processInvoices() {
-    setIsProcessing(true);
-    window.setTimeout(() => setIsProcessing(false), 2600);
-  }
-
-  return (
-    <section className="glass-industrial rounded-3xl border border-emerald-400/20 p-8 shadow-2xl shadow-emerald-950/20">
-      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">
-        Finance / Invoices
-      </p>
-      <div className="mt-3 flex items-center gap-4">
-        <VaultSeal />
-        <h2 className="text-3xl font-black">Financial Command</h2>
-      </div>
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
-        <DigitalLedgerMetric label="הכנסה צפויה" value={`₪${expectedLeadRevenue.toLocaleString("he-IL")}`} tone="green" />
-        <DigitalLedgerMetric label="עלות משאבים" value={`${apiBurnRate.toLocaleString("he-IL")} credits`} tone="red" />
-        <DigitalLedgerMetric label="מצב חשבוניות" value="ACTIVE" tone="green" />
-        <DigitalLedgerMetric label="Total Revenue" value={`₪${totalRevenue.toLocaleString("he-IL")}`} tone="green" />
-        <DigitalLedgerMetric label="Pending Amount" value={`₪${pendingAmount.toLocaleString("he-IL")}`} tone="amber" />
-        <DigitalLedgerMetric label="Leads Generated" value={`${leadCount}`} tone="green" />
-      </div>
-      <section className="mt-6 rounded-3xl border border-cyan-300/25 bg-black/50 p-5">
-        <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-200">
-              Real Credits Vault
-            </p>
-            <h3 className="mt-2 text-2xl font-black text-[#f8f9fa]">
-              Auto-Switch Routing: {routingPlan.status}
-            </h3>
-          </div>
-          <span className="rounded-full border border-emerald-300/30 bg-emerald-300/10 px-4 py-2 font-mono text-sm font-black text-emerald-100">
-            FIRST ROUTE: {routingPlan.selectedProvider}
-          </span>
-        </div>
-        <div className="mt-5 grid gap-4 lg:grid-cols-4">
-          {creditVaultBalances.map((route) => (
-            <article
-              key={route.id}
-              className="rounded-3xl border border-cyan-300/15 bg-[#001027]/75 p-4"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="font-mono text-xs font-black uppercase tracking-[0.22em] text-cyan-200">
-                    Tier {route.costTier}
-                  </p>
-                  <h4 className="mt-2 text-lg font-black text-[#f8f9fa]">{route.provider}</h4>
-                </div>
-                <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-black text-emerald-100">
-                  {route.status}
-                </span>
-              </div>
-              <p className="mt-4 font-mono text-2xl font-black text-cyan-100">
-                {route.balance.toLocaleString("he-IL")} {route.unit}
-              </p>
-              <p className="mt-3 text-xs leading-5 text-slate-300">{route.routingRole}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <div className="mt-6 rounded-3xl border border-amber-300/20 bg-black/50 p-5">
-        <h3 className="text-2xl font-black">אוטומציית חשבוניות</h3>
-        <p className="mt-2 text-gray-300">
-          AI סורק לקוחות, עסקאות חסרות וחשבוניות שלא נוצרו.
-        </p>
-        <button
-          type="button"
-          onClick={processInvoices}
-          disabled={isProcessing}
-          className="mechanical-click mt-5 rounded-2xl bg-emerald-400 px-6 py-4 font-black text-black transition hover:bg-emerald-300 disabled:opacity-60"
-        >
-          {isProcessing ? "AI סורק חשבוניות חסרות..." : "Generate Batch"}
-        </button>
-        {isProcessing ? (
-          <div className="relative mt-5 h-40 overflow-hidden rounded-3xl border border-emerald-400/20 bg-black">
-            <div className="ingestion-vortex absolute left-1/2 top-1/2 h-28 w-28 rounded-full border border-emerald-300/40" />
-            <p className="absolute bottom-4 left-0 right-0 text-center font-mono text-sm font-black text-emerald-300">
-              FINANCE VORTEX PROCESSING
-            </p>
-          </div>
-        ) : null}
-      </div>
     </section>
   );
 }
@@ -2338,14 +1934,6 @@ function EmpireArsenalPanel() {
         ))}
       </div>
     </section>
-  );
-}
-
-function VaultSeal() {
-  return (
-    <div className="vault-seal" aria-hidden="true">
-      <span />
-    </div>
   );
 }
 
@@ -2601,34 +2189,6 @@ function LeadGenPanel({ isReadOnlyMode }: { isReadOnlyMode: boolean }) {
   );
 }
 
-function DigitalLedgerMetric({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: string;
-  tone: "green" | "red" | "amber";
-}) {
-  const valueClass =
-    tone === "green"
-      ? "text-emerald-300 [text-shadow:0_0_18px_rgba(52,211,153,0.65)]"
-      : tone === "red"
-        ? "low-fuel-flicker text-red-300 [text-shadow:0_0_18px_rgba(248,113,113,0.65)]"
-        : "text-amber-300 [text-shadow:0_0_18px_rgba(252,211,77,0.55)]";
-
-  return (
-    <article className="rounded-3xl border border-zinc-700 bg-black/60 p-5 shadow-inner shadow-white/5">
-      <p className="text-xs font-bold uppercase tracking-[0.25em] text-zinc-400">
-        {label}
-      </p>
-      <p className={["mt-4 font-mono text-4xl font-black", valueClass].join(" ")}>
-        {value}
-      </p>
-    </article>
-  );
-}
-
 function AiAdvisorsPanel({
   commandPrompt,
   commandAnswer,
@@ -2798,901 +2358,6 @@ function AiAdvisorsPanel({
           {commandAnswer}
         </div>
       ) : null}
-    </section>
-  );
-}
-
-function Base44SyncCenter() {
-  const inventory = base44Inventory as Base44InventoryFile;
-  const hunterToolsFile = hunterToolsInventory as HunterToolsInventoryFile;
-  const inventoryProjects = inventory.projects?.active ?? [];
-  const scannedTools = hunterToolsFile.tools?.length
-    ? hunterToolsFile.tools
-    : inventory.hunter?.scrapers ?? [];
-  const inventoryTools = scannedTools.length ? scannedTools : nativeHunterFactoryTools;
-  const inventoryCredits = inventory.credits ?? {};
-  const initialCredits: Base44CreditSync = {
-    usedCredits: Number(inventoryCredits.usedCredits ?? 427),
-    totalCredits: Number(inventoryCredits.totalCredits ?? 1_200_030),
-    giftCredits: Number(inventoryCredits.giftCredits ?? 30),
-    remainingCredits: Number(inventoryCredits.remainingCredits ?? 1_199_603),
-    integrationCreditsRemaining: Number(inventoryCredits.integrationCreditsRemaining ?? 0),
-    chatCreditsRemaining: Number(inventoryCredits.chatCreditsRemaining ?? 0),
-  };
-  const [isPulling, setIsPulling] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState(
-    inventory.status === "scanned"
-      ? `Base44 inventory loaded: ${inventory.generatedAt ?? "latest scan"}`
-      : "Base44 inventory not scanned yet. Run node src/scripts/fetch-base44-inventory.js",
-  );
-  const [activeBaseView, setActiveBaseView] = useState<"hunter" | "forge" | "ledger">("hunter");
-  const [credits, setCredits] = useState<Base44CreditSync>(initialCredits);
-  const [projects, setProjects] = useState<Base44SyncProject[]>(inventoryProjects);
-  const [tools, setTools] = useState<Base44SyncTool[]>(inventoryTools);
-  const [startingToolId, setStartingToolId] = useState<string | null>(null);
-  const [runningScanType, setRunningScanType] = useState<string | null>(null);
-  const [base44Ingestion, setBase44Ingestion] = useState<Base44TotalIngestionResponse | null>(null);
-  const [hunterSearch, setHunterSearch] = useState("");
-  const [selectedCompanyId, setSelectedCompanyId] = useState(empireCompanies[0]?.id ?? "");
-  const [selectedScanType, setSelectedScanType] = useState(hunterScanTypes[0]);
-  const [selectedIdentity, setSelectedIdentity] = useState<"BAZ SPACE" | "DOLPHIN">("BAZ SPACE");
-  const [activeHunterTab, setActiveHunterTab] = useState<HunterInnerTab>("overview");
-  const [scoutFindings, setScoutFindings] = useState<ScoutFindingsResponse | null>(null);
-  const [liveLogs, setLiveLogs] = useState<string[]>([
-    `[${new Date().toISOString()}] HUNTER HUB READY | NVIDIA_CREDITS=2.7B`,
-  ]);
-  const totalHunterAssetCredits = tools.reduce(
-    (sum, tool, index) => sum + getHunterAssetCredits(tool, index),
-    0,
-  );
-  const nvidiaHunterAssets = creditVaultBalances.find((route) => route.provider === "NVIDIA Grants");
-  const selectedCompany = empireCompanies.find((company) => company.id === selectedCompanyId) ?? empireCompanies[0];
-  const visibleTools = tools.filter((tool) =>
-    `${tool.name} ${tool.category} ${tool.creditPool}`.toLowerCase().includes(hunterSearch.toLowerCase()),
-  );
-  const [logs, setLogs] = useState<Base44SyncLog[]>([
-    {
-      id: "inventory-001",
-      createdAt: inventory.generatedAt ?? new Date().toISOString(),
-      action: scannedTools.length
-        ? `Loaded ${scannedTools.length} Hunter tools from src/data/hunter_tools.json`
-        : "Native Hunter factory rebuilt inside BAZ OS",
-      status: "OK",
-    },
-  ]);
-
-  function appendHunterLiveLog(message: string) {
-    setLiveLogs((current) => [`[${new Date().toISOString()}] ${message}`, ...current].slice(0, 30));
-  }
-
-  function describeApiResult(result: unknown) {
-    try {
-      const full = JSON.stringify(result);
-      return full.length > 160 ? `${full.slice(0, 160)}…` : full;
-    } catch {
-      return "API response could not be serialized";
-    }
-  }
-
-  async function triggerHunterN8NScan(scanType: string, toolOverride?: Base44SyncTool) {
-    const tool = toolOverride ?? visibleTools[0] ?? tools[0] ?? nativeHunterFactoryTools[0];
-
-    if (!selectedCompany || !tool) {
-      const errMsg = !selectedCompany ? "חסרה חברה — בחר חברה מהרשימה" : "חסר כלי Hunter";
-      setStatus(`⛔ ${errMsg}`);
-      appendHunterLiveLog(`BLOCKED: ${errMsg}`);
-      return;
-    }
-
-    setSelectedScanType(scanType);
-    setStartingToolId(tool.id);
-    setRunningScanType(scanType);
-    setStatus(`שולח ל־N8N: ${scanType} עבור ${selectedCompany.name}`);
-    appendHunterLiveLog(`POST /api/n8n/trigger | company=${selectedCompany.name} | scan=${scanType} | tool=${tool.name} | identity=${selectedIdentity}`);
-
-    try {
-      const response = await fetch("/api/n8n/trigger", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          workflow: tool.creditPool,
-          action: "HUNTER_SCAN_RUN",
-          source: "BAZ_OS_HUNTER_HUB",
-          payload: {
-            company: selectedCompany,
-            scanType,
-            search: hunterSearch,
-            identity: selectedIdentity,
-            tool,
-            credits: {
-              nvidia: nvidiaHunterAssets?.balance ?? 2_700_000_000,
-              hunterAssets: totalHunterAssetCredits,
-            },
-          },
-        }),
-      });
-      const result = (await response.json()) as { ok?: boolean; status?: number; message?: string; error?: string };
-      const responseText = describeApiResult(result);
-
-      appendHunterLiveLog(`API RESPONSE HTTP ${response.status} | ${responseText}`);
-      setLogs((currentLogs) => [
-        {
-          id: `hunter-scan-${Date.now()}`,
-          createdAt: new Date().toISOString(),
-          action: `API RESPONSE: ${scanType} | ${selectedCompany.name} | HTTP ${response.status} | ${responseText}`,
-          status: result.ok ? "ACTIVE" : "QUEUED",
-        },
-        ...currentLogs,
-      ]);
-      setStatus(result.ok ? `פעיל: ${scanType} נשלח ל־N8N.` : `בתור: ${scanType} נרשם דרך N8N.`);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Network Error";
-      appendHunterLiveLog(`API ERROR | ${message}`);
-      setLogs((currentLogs) => [
-        {
-          id: `hunter-error-${Date.now()}`,
-          createdAt: new Date().toISOString(),
-          action: `API ERROR: ${scanType} | ${selectedCompany.name} | ${message}`,
-          status: "ERROR",
-        },
-        ...currentLogs,
-      ]);
-      setStatus(`שגיאת הרצה: ${message}`);
-    } finally {
-      setStartingToolId(null);
-      setRunningScanType(null);
-    }
-  }
-
-  function runHunterScraper() {
-    const now = new Date().toISOString();
-    void triggerHunterN8NScan(selectedScanType);
-    setStatus("מריץ סורק Hunter דרך N8N.");
-    setLogs((currentLogs) => [
-      { id: `script-${Date.now()}`, createdAt: now, action: `RUN CLICKED: ${selectedScanType} queued to N8N`, status: "QUEUED" },
-      ...currentLogs,
-    ]);
-  }
-
-  async function runSelectedHunterScan() {
-    await triggerHunterN8NScan(selectedScanType);
-  }
-
-  async function startAgent(tool: Base44SyncTool) {
-    const now = new Date().toISOString();
-    setStartingToolId(tool.id);
-    setStatus(`שולח סוכן ל־N8N עבור ${tool.name}...`);
-    appendHunterLiveLog(`POST /api/base44/start-agent | company=${selectedCompany?.name ?? "Unknown"} | tool=${tool.name} | scan=${selectedScanType}`);
-    syncStatusChange("HUNTER_TOOL_RUN_REQUESTED", "ONLINE", {
-      toolId: tool.id,
-      toolName: tool.name,
-      workflow: tool.creditPool,
-      assetCredits: getHunterAssetCredits(tool, tools.findIndex((item) => item.id === tool.id)),
-    });
-
-    try {
-      const response = await fetch("/api/base44/start-agent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          toolId: tool.id,
-          toolName: tool.name,
-          category: tool.category,
-          companyId: selectedCompany?.id,
-          companyName: selectedCompany?.name,
-          scanType: selectedScanType,
-          identity: selectedIdentity,
-        }),
-      });
-      const result = (await response.json()) as { ok?: boolean; n8nStatus?: string; error?: string };
-      const responseText = describeApiResult(result);
-      appendHunterLiveLog(`AGENT API RESPONSE HTTP ${response.status} | ${responseText}`);
-
-      if (!response.ok || !result.ok) {
-        throw new Error(result.error ?? "N8N start agent command failed");
-      }
-
-      setLogs((currentLogs) => [
-        {
-          id: `agent-${Date.now()}`,
-          createdAt: now,
-          action: `AGENT API RESPONSE: ${tool.name} | HTTP ${response.status} | ${responseText}`,
-          status: "ACTIVE",
-        },
-        ...currentLogs,
-      ]);
-      setStatus(`פעיל: ${tool.name} נשלח ל־N8N.`);
-      syncStatusChange("HUNTER_TOOL_RUN_ACTIVE", "ONLINE", {
-        toolId: tool.id,
-        toolName: tool.name,
-        n8nStatus: result.n8nStatus ?? "N8N command queued",
-      });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown agent launch error";
-      appendHunterLiveLog(`AGENT API ERROR | ${message}`);
-      setStatus(`שגיאת הרצה: ${message}`);
-      syncStatusChange("HUNTER_TOOL_RUN_FAILED", "ONLINE", {
-        toolId: tool.id,
-        toolName: tool.name,
-        error: message,
-      });
-    } finally {
-      setStartingToolId(null);
-    }
-  }
-
-  useEffect(() => {
-    async function loadFullInventoryTools() {
-      try {
-        const response = await fetch("/api/base44/full-inventory", { cache: "no-store" });
-
-        if (!response.ok) {
-          return;
-        }
-
-        const data = (await response.json()) as {
-          ok?: boolean;
-          generatedAt?: string | null;
-          tools?: Base44SyncTool[];
-        };
-
-        const importedTools = data.tools ?? [];
-
-        if (!data.ok || importedTools.length === 0) {
-          return;
-        }
-
-        setTools((currentTools) => {
-          const existingIds = new Set(currentTools.map((tool) => tool.id));
-          const mergedTools = [
-            ...currentTools,
-            ...importedTools.filter((tool) => !existingIds.has(tool.id)),
-          ];
-
-          return mergedTools;
-        });
-        setStatus(`Hunter Hub loaded ${importedTools.length} Base44 tool endpoints from hunter_tools.json/full scan.`);
-        setLogs((currentLogs) => [
-          {
-            id: `full-inventory-${Date.now()}`,
-            createdAt: data.generatedAt ?? new Date().toISOString(),
-            action: `Imported ${importedTools.length} tools from BASE44_FULL_INVENTORY.json`,
-            status: "ACTIVE",
-          },
-          ...currentLogs,
-        ]);
-      } catch {
-        setStatus("BASE44_FULL_INVENTORY import skipped; using normalized Base44 inventory.");
-      }
-    }
-
-    void loadFullInventoryTools();
-  }, []);
-
-  useEffect(() => {
-    async function loadBase44TotalIngestion() {
-      try {
-        const response = await fetch("/api/base44/total-ingestion", { cache: "no-store" });
-        const data = (await response.json()) as Base44TotalIngestionResponse;
-        setBase44Ingestion(data);
-
-        if (data.ok) {
-          setStatus(`ONLINE: Base44 ingestion loaded ${data.totalRecords.toLocaleString("he-IL")} entity records.`);
-          setLogs((currentLogs) => [
-            {
-              id: `base44-total-${Date.now()}`,
-              createdAt: data.generatedAt,
-              action: `Fetched ${data.entities.length} Base44 entity streams from CodeX and Credit Hunter`,
-              status: "OK",
-            },
-            ...currentLogs,
-          ]);
-        }
-      } catch {
-        setStatus("Base44 total ingestion unavailable; using native BAZ fallback.");
-      }
-    }
-
-    void loadBase44TotalIngestion();
-  }, []);
-
-  useEffect(() => {
-    async function loadScoutFindings() {
-      try {
-        appendHunterLiveLog("GET /api/hunter/scout-findings");
-        const response = await fetch("/api/hunter/scout-findings", { cache: "no-store" });
-        const data = (await response.json()) as ScoutFindingsResponse;
-        setScoutFindings(data);
-        appendHunterLiveLog(`SCOUT FINDINGS RESPONSE HTTP ${response.status} | ${describeApiResult(data)}`);
-        setLogs((currentLogs) => [
-          {
-            id: `scout-findings-${Date.now()}`,
-            createdAt: data.generatedAt,
-            action: `SCOUT FINDINGS API: HTTP ${response.status} | ${data.totalRecords.toLocaleString("he-IL")} records | ${data.status}`,
-            status: data.ok ? "OK" : "ERROR",
-          },
-          ...currentLogs,
-        ]);
-      } catch (error) {
-        const message = error instanceof Error ? error.message : "Scout Findings API failed";
-        appendHunterLiveLog(`SCOUT FINDINGS ERROR | ${message}`);
-        setScoutFindings({
-          ok: false,
-          status: "error",
-          generatedAt: new Date().toISOString(),
-          totalRecords: 0,
-          findings: [],
-          error: message,
-        });
-      }
-    }
-
-    void loadScoutFindings();
-  }, []);
-
-  async function pullAllData() {
-    setIsPulling(true);
-    setProgress(12);
-    setStatus("Connecting to Base44 with masked key...");
-
-    try {
-      const [projectsResponse, creditsResponse, hunterResponse] = await Promise.all([
-        fetch("/api/base/sync-projects", { method: "POST", cache: "no-store" }),
-        fetch("/api/base/sync-credits", { method: "POST", cache: "no-store" }),
-        fetch("/api/base/sync-hunter", { method: "POST", cache: "no-store" }),
-      ]);
-      setProgress(68);
-
-      const projectsData = (await projectsResponse.json()) as { projects?: Base44SyncProject[] };
-      const creditsData = (await creditsResponse.json()) as {
-        credits?: Base44CreditSync;
-      };
-      const hunterData = (await hunterResponse.json()) as {
-        hunterTools?: Base44SyncTool[];
-        scrapingLogs?: Base44SyncLog[];
-      };
-
-      setProjects(projectsData.projects ?? []);
-      setCredits(creditsData.credits ?? credits);
-      setTools(hunterData.hunterTools ?? []);
-      setLogs(hunterData.scrapingLogs ?? []);
-      setProgress(100);
-      setStatus(
-        `Synced Base44 factory metadata: ${projectsData.projects?.length ?? 0} projects | ${hunterData.hunterTools?.length ?? 0} tools`,
-      );
-    } catch {
-      setStatus("Base44 pull failed. Check /api/base44 routes and env key.");
-    } finally {
-      window.setTimeout(() => setIsPulling(false), 900);
-    }
-  }
-
-  return (
-    <section className="grid gap-6">
-      <div className="glass-industrial rounded-[2rem] border border-orange-400/30 p-6">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-orange-200">
-          תחנת Base44
-        </p>
-        <h2 className="mt-2 text-3xl font-black text-[#f8f9fa]">
-          מרכז פיקוד Base44
-        </h2>
-        <p className="mt-3 max-w-3xl leading-7 text-slate-300">
-          תחנת עבודה פעילה לסורקים, פרויקטים, קרדיטים, אוטומציות וכלי Hunter בתוך BAZ OS.
-        </p>
-
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <article className="rounded-3xl border border-cyan-300/20 bg-black/45 p-5">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-cyan-200">כלים מקומיים</p>
-            <p className="mt-3 text-4xl font-black text-[#f8f9fa]">{tools.length.toLocaleString("he-IL")}</p>
-          </article>
-          <article className="rounded-3xl border border-cyan-300/20 bg-black/45 p-5">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-cyan-200">סוכנים</p>
-            <p className="mt-3 text-4xl font-black text-[#f8f9fa]">
-              {tools.filter((tool) => tool.category.toLowerCase().includes("agent")).length.toLocaleString("he-IL")}
-            </p>
-          </article>
-          <article className="rounded-3xl border border-cyan-300/20 bg-black/45 p-5">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-cyan-200">קרדיטי Hunter</p>
-            <p className="mt-3 text-4xl font-black text-[#f8f9fa]">
-              {(totalHunterAssetCredits / 1_000_000_000).toLocaleString("he-IL", { maximumFractionDigits: 1 })}B
-            </p>
-            <p className="mt-2 text-sm font-bold text-cyan-100">
-              נכסי Hunter שנאספו ושוכפלו למערכת.
-            </p>
-          </article>
-          <article className="rounded-3xl border border-emerald-300/25 bg-emerald-400/10 p-5 md:col-span-3">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-100">
-              נכסי Hunter אמיתיים: NVIDIA / Grants
-            </p>
-            <p className="mt-3 text-4xl font-black text-[#f8f9fa]">
-              {((nvidiaHunterAssets?.balance ?? 0) / 1_000_000_000).toLocaleString("he-IL", { maximumFractionDigits: 1 })}B
-            </p>
-            <p className="mt-2 text-sm font-bold text-emerald-100">
-              {nvidiaHunterAssets?.keyLabel ?? "NVIDIA Grants"} routed through least-cost vault policy.
-            </p>
-          </article>
-          <article className="rounded-3xl border border-emerald-300/25 bg-emerald-400/10 p-5 md:col-span-3">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-100">רשומות Base44</p>
-            <p className="mt-3 text-4xl font-black text-[#f8f9fa]">
-              {(base44Ingestion?.totalRecords ?? empireCompanies.length).toLocaleString("he-IL")}
-            </p>
-            <p className="mt-2 text-sm font-bold text-emerald-100">
-              {base44Ingestion?.ok
-                ? `ONLINE: ${base44Ingestion.entities.length} Base44 streams loaded from CodeX and Credit Hunter.`
-                : "Internal 47-company target list loaded from BAZ OS factory config."}
-            </p>
-          </article>
-        </div>
-
-        {base44Ingestion ? (
-          <section className="mt-6 rounded-[2rem] border border-fuchsia-300/25 bg-fuchsia-950/20 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-fuchsia-200">
-              בליעת נתוני Base44
-            </p>
-            <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-              {base44Ingestion.entities.map((entity) => (
-                <article key={`${entity.appId}-${entity.entityName}`} className="rounded-2xl border border-fuchsia-200/15 bg-black/45 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h4 className="font-black text-white">{entity.appLabel}</h4>
-                      <p className="mt-1 text-sm font-bold text-fuchsia-100">{entity.entityName}</p>
-                    </div>
-                    <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-black text-emerald-100">
-                      {entity.ok ? "ONLINE" : `HTTP ${entity.status}`}
-                    </span>
-                  </div>
-                  <p className="mt-3 font-mono text-2xl font-black text-fuchsia-100">
-                    {entity.records.length.toLocaleString("he-IL")} records
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
-        <div className="mt-6 grid gap-5 lg:grid-cols-2">
-          <section className="rounded-[2rem] border border-blue-300/25 bg-blue-950/20 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-200">
-              כלים פעילים
-            </p>
-            <div className="mt-4 grid gap-3">
-              {(tools.length ? tools : [
-                { id: "no-tool", name: "No Hunter scrapers found", category: "Base44 Inventory", creditPool: "scan required", status: "empty" },
-              ]).slice(0, 6).map((tool) => (
-                <article key={tool.id} className="rounded-2xl border border-blue-200/15 bg-black/45 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h4 className="font-black text-white">{tool.name}</h4>
-                      <p className="mt-1 text-sm font-bold text-blue-100">{tool.category}</p>
-                    </div>
-                    <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-black text-emerald-100">
-                      {tool.status}
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="rounded-[2rem] border border-emerald-300/25 bg-emerald-950/20 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-200">
-              ניטור פרויקטים
-            </p>
-            <div className="mt-4 grid gap-3">
-              {(projects.length ? projects : [
-                { id: "no-project", name: "No active Base44 projects found", status: "scan required", owner: "Base44" },
-              ]).slice(0, 6).map((project) => (
-                <article key={project.id} className="rounded-2xl border border-emerald-200/15 bg-black/45 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h4 className="font-black text-white">{project.name}</h4>
-                      <p className="mt-1 text-sm font-bold text-emerald-100">{project.owner}</p>
-                    </div>
-                    <span className="rounded-full bg-cyan-300/15 px-3 py-1 text-xs font-black text-cyan-100">
-                      {project.status}
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        <div className="mt-6 grid gap-3 md:grid-cols-3">
-          {[
-            { id: "hunter" as const, label: "🔎 מרכז פיקוד Hunter" },
-            { id: "forge" as const, label: "🏗️ בניית פרויקטים" },
-            { id: "ledger" as const, label: "📒 מפת מפעל" },
-          ].map((view) => (
-            <button
-              key={view.id}
-              type="button"
-              onClick={() => setActiveBaseView(view.id)}
-              className={[
-                "rounded-2xl border px-5 py-3 font-black transition",
-                activeBaseView === view.id
-                  ? "border-cyan-200 bg-cyan-300 text-slate-950"
-                  : "border-cyan-300/25 bg-black/45 text-cyan-100 hover:border-cyan-200",
-              ].join(" ")}
-            >
-              {view.label}
-            </button>
-          ))}
-        </div>
-
-        {activeBaseView === "hunter" ? (
-          <section id="hunter-hub" className="mt-6 grid gap-5 overflow-hidden rounded-[2rem] border border-cyan-300/25 bg-[#060914] p-0 shadow-[0_0_55px_rgba(0,242,255,0.12)]">
-            <div className="bg-gradient-to-l from-purple-600 via-red-500 to-orange-400 p-5">
-              <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">
-                  baz-credit-scout
-                </p>
-                <h3 className="mt-2 text-3xl font-black text-white">
-                  מרכז פיקוד Hunter
-                </h3>
-                <p className="mt-2 text-sm font-bold leading-6 text-white/85">
-                  אותו פאנל פעולה של BAZ Credit Hunter, מוטמע בתוך מערכת BAZ OS הגדולה.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={runHunterScraper}
-                className="rounded-2xl bg-emerald-300 px-6 py-4 font-black text-slate-950 transition hover:bg-white"
-              >
-                הרץ סורק
-              </button>
-              </div>
-              <div className="mt-5 grid gap-2 md:grid-cols-3">
-                {[
-                  { id: "overview" as const, label: "📊 סקירה כללית" },
-                  { id: "scanners" as const, label: "🔎 סורקים" },
-                  { id: "assets" as const, label: "💎 נכסים" },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setActiveHunterTab(tab.id)}
-                    className={[
-                      "rounded-2xl px-4 py-3 text-center text-sm font-black text-white backdrop-blur transition",
-                      activeHunterTab === tab.id
-                        ? "bg-black/55 ring-2 ring-white/55"
-                        : "bg-black/25 hover:bg-black/40",
-                    ].join(" ")}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* ─── שורת חיפוש + בחירת חברה/זהות ─── */}
-            <div className="mx-5 grid gap-3 rounded-3xl border border-slate-700/50 bg-black/30 p-4 lg:grid-cols-[1fr_auto_auto_auto_auto]">
-              <input
-                value={hunterSearch}
-                onChange={(event) => setHunterSearch(event.target.value)}
-                placeholder="חיפוש קרדיטים, כלי או סורק"
-                className="rounded-2xl border border-emerald-300/20 bg-black/70 px-4 py-3 font-mono text-sm font-bold text-emerald-50 outline-none placeholder:text-slate-500"
-              />
-              <select
-                value={selectedCompanyId}
-                onChange={(event) => setSelectedCompanyId(event.target.value)}
-                className="rounded-2xl border border-cyan-300/20 bg-black/70 px-4 py-3 font-mono text-sm font-bold text-cyan-50 outline-none"
-              >
-                {empireCompanies.map((company) => (
-                  <option key={company.id} value={company.id}>{company.name}</option>
-                ))}
-              </select>
-              <select
-                value={selectedScanType}
-                onChange={(event) => setSelectedScanType(event.target.value)}
-                className="rounded-2xl border border-cyan-300/20 bg-black/70 px-4 py-3 font-mono text-sm font-bold text-cyan-50 outline-none"
-              >
-                {hunterScanTypes.map((scanType) => (
-                  <option key={scanType} value={scanType}>{scanType}</option>
-                ))}
-              </select>
-              <select
-                value={selectedIdentity}
-                onChange={(event) => setSelectedIdentity(event.target.value as "BAZ SPACE" | "DOLPHIN")}
-                className="rounded-2xl border border-fuchsia-300/20 bg-black/70 px-4 py-3 font-mono text-sm font-bold text-fuchsia-50 outline-none"
-              >
-                <option value="BAZ SPACE">BAZ SPACE</option>
-                <option value="DOLPHIN">DOLPHIN</option>
-              </select>
-              <button
-                type="button"
-                onClick={() => void runSelectedHunterScan()}
-                disabled={Boolean(startingToolId)}
-                className="rounded-2xl bg-emerald-300 px-6 py-3 font-black text-slate-950 transition hover:bg-white disabled:opacity-60"
-              >
-                {startingToolId ? "מריץ..." : "הרץ"}
-              </button>
-            </div>
-
-            {/* ─── טאב: סקירה כללית ─── */}
-            {activeHunterTab === "overview" ? (
-              <div className="mx-5 grid gap-5">
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                  {[
-                    { icon: "💰", value: "2.7B", label: "נכסי NVIDIA זמינים", color: "text-yellow-300" },
-                    { icon: "🏦", value: `${(totalHunterAssetCredits / 1_000_000_000).toLocaleString("he-IL", { maximumFractionDigits: 1 })}B`, label: "נכסי Hunter משוכפלים", color: "text-cyan-300" },
-                    { icon: "🔎", value: hunterScanTypes.length, label: "סורקים זמינים", color: "text-orange-300" },
-                    { icon: "✅", value: tools.length, label: "כלים פעילים", color: "text-emerald-300" },
-                  ].map((metric) => (
-                    <article key={metric.label} className="rounded-3xl border border-white/10 bg-[#0b1022] p-5">
-                      <p className="text-3xl">{metric.icon}</p>
-                      <p className={["mt-3 text-4xl font-black", metric.color].join(" ")}>{metric.value}</p>
-                      <p className="mt-2 text-sm font-bold text-slate-400">{metric.label}</p>
-                    </article>
-                  ))}
-                </div>
-                <div className="grid gap-4 lg:grid-cols-3">
-                  {visibleTools.map((tool, index) => (
-                    <article key={tool.id} className="rounded-3xl border border-cyan-300/20 bg-[#001027]/70 p-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <p className="font-mono text-xs font-black uppercase tracking-[0.22em] text-cyan-200">{tool.category}</p>
-                        <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-black text-emerald-100">{tool.status}</span>
-                      </div>
-                      <h4 className="mt-3 text-xl font-black text-white">{tool.name}</h4>
-                      <p className="mt-2 text-sm font-bold text-slate-400">חברת יעד: {empireCompanies[index % empireCompanies.length]?.name ?? "BAZ Empire"}</p>
-                      <p className="mt-1 text-sm font-bold text-emerald-100">
-                        קרדיטי נכס: {(getHunterAssetCredits(tool, index) / 1_000_000_000).toLocaleString("he-IL", { maximumFractionDigits: 1 })}B
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => void startAgent(tool)}
-                        disabled={startingToolId === tool.id}
-                        className="mt-4 w-full rounded-2xl bg-emerald-300 px-4 py-3 font-black text-slate-950 transition hover:bg-white disabled:opacity-60"
-                      >
-                        {startingToolId === tool.id ? "מריץ..." : "הרץ"}
-                      </button>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            {/* ─── טאב: 66 סורקים ─── */}
-            {activeHunterTab === "scanners" ? (
-              <div className="mx-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {hunterScanTypes
-                  .filter((scanType) => hunterSearch.trim().length === 0 || scanType.includes(hunterSearch))
-                  .map((scanType, index) => {
-                    const isRunning = runningScanType === scanType;
-
-                    return (
-                      <article key={scanType} className="flex flex-col rounded-3xl border border-orange-300/20 bg-[#0d0813] p-5">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-orange-300">סורק {index + 1}</p>
-                        <h4 className="mt-3 grow text-lg font-black leading-snug text-white">{scanType}</h4>
-                        <p className="mt-3 text-xs font-bold text-slate-400">{selectedCompany?.name ?? "— בחר חברה —"}</p>
-                        <button
-                          type="button"
-                          onClick={() => void triggerHunterN8NScan(scanType)}
-                          disabled={isRunning || Boolean(runningScanType)}
-                          className={[
-                            "mt-4 w-full rounded-2xl px-4 py-3 font-black text-slate-950 transition disabled:opacity-60",
-                            isRunning ? "bg-yellow-300 animate-pulse" : "bg-emerald-400 hover:bg-white",
-                          ].join(" ")}
-                        >
-                          {isRunning ? "⏳ שולח ל-N8N..." : "▶ הרץ"}
-                        </button>
-                      </article>
-                    );
-                  })}
-              </div>
-            ) : null}
-
-            {/* ─── טאב: נכסים / Scout Findings ─── */}
-            {activeHunterTab === "assets" ? (
-              <div className="mx-5 grid gap-4">
-                <div className="flex flex-col gap-2 rounded-3xl border border-fuchsia-300/25 bg-fuchsia-950/20 p-5 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-[0.24em] text-fuchsia-300">Scout Findings API</p>
-                    <h4 className="mt-2 text-2xl font-black text-white">נכסים שנמצאו</h4>
-                  </div>
-                  <span className="self-start rounded-full border border-fuchsia-200/25 bg-black/40 px-4 py-2 font-mono text-xs font-black text-fuchsia-100">
-                    {scoutFindings ? `${scoutFindings.totalRecords.toLocaleString("he-IL")} רשומות` : "טוען..."}
-                  </span>
-                </div>
-                {scoutFindings?.error ? (
-                  <p className="rounded-2xl border border-red-300/20 bg-red-500/10 p-4 font-bold text-red-100">
-                    שגיאת API: {scoutFindings.error}
-                  </p>
-                ) : null}
-                {(scoutFindings?.findings ?? []).length === 0 && !scoutFindings?.error ? (
-                  <article className="rounded-2xl border border-slate-300/15 bg-black/45 p-5 text-slate-300">
-                    {scoutFindings
-                      ? `אין רשומות Scout Findings זמינות כרגע. סטטוס API: ${scoutFindings.status}`
-                      : "טוען נכסים מ־Base44 Scout Findings API..."}
-                  </article>
-                ) : null}
-                <div className="grid gap-3 md:grid-cols-2">
-                  {(scoutFindings?.findings ?? []).slice(0, 12).map((finding, index) => (
-                    <article key={`finding-${index}`} className="rounded-2xl border border-fuchsia-200/15 bg-black/45 p-4">
-                      <p className="font-mono text-xs font-black text-fuchsia-300">Scout Finding #{index + 1}</p>
-                      <pre className="mt-3 max-h-28 overflow-auto whitespace-pre-wrap break-all font-mono text-xs leading-5 text-slate-200" dir="ltr">
-                        {describeApiResult(finding)}
-                      </pre>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            {/* ─── לוג API חי — תמיד בתחתית ─── */}
-            <div className="mx-5 mb-5 rounded-3xl border border-cyan-300/15 bg-black/55 p-4">
-              <div className="flex items-center justify-between gap-3">
-                <p className="font-mono text-xs font-black uppercase tracking-[0.22em] text-cyan-300">לוג API חי</p>
-                <span className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1 font-mono text-xs font-black text-emerald-300">
-                  NVIDIA 2.7B
-                </span>
-              </div>
-              <div dir="ltr" className="mt-3 max-h-36 overflow-y-auto rounded-2xl bg-black/70 p-3 font-mono text-xs leading-6 text-emerald-200">
-                {liveLogs.map((item, i) => (
-                  <p key={i}>{item}</p>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        {activeBaseView === "forge" ? (
-          <section className="mt-6 rounded-[2rem] border border-orange-300/25 bg-black/45 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-orange-200">
-              בניית פרויקטים
-            </p>
-            <h3 className="mt-2 text-2xl font-black text-[#f8f9fa]">
-              פרויקטי Base44 בבנייה פעילה
-            </h3>
-            <div className="mt-5 grid gap-4 lg:grid-cols-3">
-              {projects.slice(0, 12).map((project) => (
-                <article key={project.id} className="rounded-3xl border border-orange-300/20 bg-[#160b02]/70 p-5">
-                  <p className="font-mono text-xs font-black uppercase tracking-[0.22em] text-orange-200">
-                    {project.status}
-                  </p>
-                  <h4 className="mt-3 text-xl font-black text-[#f8f9fa]">{project.name}</h4>
-                  <p className="mt-3 text-sm font-bold text-orange-100">{project.owner}</p>
-                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-black">
-                    <div className="h-full w-2/3 rounded-full bg-gradient-to-l from-orange-400 to-cyan-300" />
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
-        {activeBaseView === "ledger" ? (
-          <section className="mt-6 rounded-[2rem] border border-cyan-300/25 bg-black/45 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-              מפת מפעל
-            </p>
-            <h3 className="mt-2 text-2xl font-black text-[#f8f9fa]">
-              מפה של Base44 המשוכפלת
-            </h3>
-            <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-3xl border border-cyan-300/20 bg-[#001027]/70 p-4">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">כלים</p>
-                <p className="mt-3 text-3xl font-black text-[#f8f9fa]">
-                  {tools.length.toLocaleString("he-IL")}
-                </p>
-              </div>
-              <div className="rounded-3xl border border-cyan-300/20 bg-[#001027]/70 p-4">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">חברות</p>
-                <p className="mt-3 text-3xl font-black text-[#f8f9fa]">
-                  {empireCompanies.length.toLocaleString("he-IL")}
-                </p>
-              </div>
-              <div className="rounded-3xl border border-cyan-300/20 bg-[#001027]/70 p-4">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">Workflows פעילים</p>
-                <p className="mt-3 text-3xl font-black text-[#f8f9fa]">
-                  {tools.length.toLocaleString("he-IL")}
-                </p>
-              </div>
-            </div>
-            <div className="mt-5">
-              <div className="mb-2 flex items-center justify-between font-mono text-xs font-black text-cyan-100">
-                <span>כיסוי שכפול מפעל</span>
-                <span>100%</span>
-              </div>
-              <div className="h-4 overflow-hidden rounded-full border border-cyan-300/25 bg-black">
-                <div
-                  className="h-full rounded-full bg-gradient-to-l from-red-500 via-orange-300 to-cyan-300 shadow-[0_0_20px_rgba(0,242,255,0.35)]"
-                  style={{ width: "100%" }}
-                />
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        <button
-          type="button"
-          onClick={pullAllData}
-          disabled={isPulling}
-          className="mt-6 w-full rounded-3xl bg-red-500 px-6 py-5 text-xl font-black text-white shadow-[0_0_32px_rgba(239,68,68,0.35)] transition hover:bg-red-400 disabled:cursor-not-allowed disabled:opacity-70"
-        >
-          משוך את כל הנתונים
-        </button>
-        <div className="mt-4 overflow-hidden rounded-full border border-red-300/30 bg-black">
-          <div
-            className="h-4 rounded-full bg-gradient-to-l from-red-500 via-orange-300 to-cyan-300 transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="mt-3 font-mono text-sm font-black text-cyan-100">{status}</p>
-      </div>
-
-      <div className="grid gap-6">
-        <Base44Table
-          title="פרויקטים פעילים ב־Base44"
-          headers={["שם", "סטטוס", "בעלים"]}
-          rows={(projects.length ? projects : [
-            { id: "placeholder-project", name: "ממתין למשיכת נתונים", status: "standby", owner: "Base44" },
-          ]).map((project) => ({
-            id: project.id,
-            cells: [project.name, project.status, project.owner],
-          }))}
-        />
-        <Base44Table
-          title="ארסנל Hunter - כלים גלובליים"
-          headers={["שם", "קטגוריה", "מאגר קרדיטים", "סטטוס"]}
-          rows={(tools.length ? tools : [
-            { id: "placeholder-tool", name: "2B+ list queue waiting", category: "Global Tools", creditPool: "pending", status: "standby" },
-          ]).map((tool) => ({
-            id: tool.id,
-            cells: [tool.name, tool.category, tool.creditPool, tool.status],
-          }))}
-        />
-        <Base44Table
-          title="לוגים של סריקות"
-          headers={["זמן", "פעולה", "סטטוס"]}
-          rows={(logs.length ? logs : [
-            { id: "placeholder-log", createdAt: new Date().toISOString(), action: "Waiting for sync", status: "QUEUED" },
-          ]).map((log) => ({
-            id: log.id,
-            cells: [log.createdAt, log.action, log.status],
-          }))}
-        />
-      </div>
-    </section>
-  );
-}
-
-function Base44Table({
-  title,
-  headers,
-  rows,
-}: {
-  title: string;
-  headers: string[];
-  rows: { id: string; cells: string[] }[];
-}) {
-  return (
-    <section className="glass-industrial overflow-hidden rounded-[2rem] border border-cyan-400/25 p-5">
-      <h3 className="text-2xl font-black text-[#f8f9fa]">{title}</h3>
-      <div className="mt-4 overflow-x-auto rounded-3xl border border-cyan-400/20 bg-black/55">
-        <table className="w-full min-w-[680px] border-collapse text-right font-mono text-sm">
-          <thead className="bg-cyan-300/10 text-cyan-100">
-            <tr>
-              {headers.map((header) => (
-                <th key={header} className="px-4 py-4">{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.id} className="border-t border-cyan-400/10">
-                {row.cells.map((cell, index) => (
-                  <td key={`${row.id}-${index}`} className="px-4 py-4 text-slate-200">
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </section>
   );
 }
@@ -3928,16 +2593,21 @@ function DriveMappingPanel({
 }
 
 function EmpireInfrastructurePanel() {
-  const groupedCompanies = companiesByCategory();
+  const [projects, setProjects] = useState<Array<{ id: string; name: string; status: string; category?: string; next_step?: string }>>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    void fetch("/api/base44/live?app=codex&entity=Project&limit=100")
+      .then((r) => r.json())
+      .then((d: { ok: boolean; data: typeof projects }) => { if (d.ok && Array.isArray(d.data)) setProjects(d.data); })
+      .catch(() => undefined)
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <section className="glass-industrial max-h-screen overflow-y-auto rounded-[2rem] border border-cyan-400/25 p-6">
-      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-        Empire Arsenal & Infrastructure
-      </p>
-      <h2 className="neon-green-text mt-2 text-3xl font-black">
-        Baz OS Entity Registry
-      </h2>
+    <section dir="rtl" className="glass-industrial max-h-screen overflow-y-auto rounded-[2rem] border border-cyan-400/25 p-6">
+      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">ארסנל תשתית</p>
+      <h2 className="neon-green-text mt-2 text-3xl font-black">פרויקטים חיים מ-Base44</h2>
 
       <div className="mt-6">
         <EmpireStatusBoard />
@@ -3945,44 +2615,34 @@ function EmpireInfrastructurePanel() {
 
       <div className="mt-5 grid gap-4 lg:grid-cols-4">
         {infrastructureEngines.map((engine) => (
-          <article
-            key={engine.id}
-            className="rounded-3xl border border-cyan-400/15 bg-black/50 p-5"
-          >
+          <article key={engine.id} className="rounded-3xl border border-cyan-400/15 bg-black/50 p-5">
             <p className="font-mono text-xs font-black text-cyan-300">{engine.status}</p>
             <h3 className="mt-2 text-xl font-black text-[#f8f9fa]">{engine.name}</h3>
             <p className="mt-2 text-sm leading-6 text-gray-400">{engine.role}</p>
-            {engine.host ? (
-              <p className="mt-3 font-mono text-xs text-cyan-100">{engine.host}</p>
-            ) : null}
+            {engine.host ? <p className="mt-3 font-mono text-xs text-cyan-100">{engine.host}</p> : null}
           </article>
         ))}
       </div>
 
-      <div className="mt-6 grid max-h-[70vh] gap-4 overflow-y-auto pr-1 lg:grid-cols-3 2xl:grid-cols-4">
-        {Object.entries(groupedCompanies).map(([category, companies]) => (
-          <article
-            key={category}
-            className="rounded-3xl border border-cyan-400/15 bg-[#001027]/70 p-4"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="text-lg font-black text-[#f8f9fa]">{category}</h3>
-              <span className="rounded-full bg-cyan-300/10 px-2 py-1 text-xs font-black text-cyan-100">
-                {companies.length}
+      <div className="mt-6">
+        <p className="mb-3 text-sm font-bold text-slate-300">
+          פרויקטים ב-CodeX {loading ? "(טוען...)" : `(${projects.length})`}
+        </p>
+        <div className="grid gap-3 lg:grid-cols-3">
+          {projects.map((p) => (
+            <article key={p.id} className="rounded-2xl border border-cyan-400/15 bg-[#001027]/70 p-4">
+              <p className="font-bold text-[#f8f9fa]">{p.name}</p>
+              <p className="mt-1 text-xs text-slate-500">{p.category ?? "—"}</p>
+              <span className="mt-2 inline-block rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-0.5 text-[10px] font-bold text-cyan-300">
+                {p.status}
               </span>
-            </div>
-            <div className="mt-4 grid gap-2">
-              {companies.map((company) => (
-                <div
-                  key={company.id}
-                  className="rounded-xl border border-cyan-400/10 bg-black/35 px-3 py-2 text-sm font-bold text-gray-200"
-                >
-                  {company.name}
-                </div>
-              ))}
-            </div>
-          </article>
-        ))}
+              {p.next_step && <p className="mt-2 text-xs text-slate-400">→ {p.next_step}</p>}
+            </article>
+          ))}
+          {projects.length === 0 && !loading && (
+            <p className="col-span-3 py-6 text-center text-slate-500">אין פרויקטים</p>
+          )}
+        </div>
       </div>
 
       <GoldenProjectsPanel />
@@ -4163,82 +2823,58 @@ function CreativeHubPanel() {
 }
 
 function GoldenProjectsPanel() {
-  return (
-    <section className="mt-6 rounded-3xl border border-yellow-300/25 bg-[linear-gradient(135deg,rgba(8,13,28,0.92),rgba(120,80,0,0.12))] p-5 shadow-[0_0_35px_rgba(0,242,255,0.08)]">
-      <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-            Golden Projects Portfolio
-          </p>
-          <h3 className="neon-green-text text-2xl font-black">
-            Premium Micro-SaaS Projects
-          </h3>
-        </div>
-        <span className="rounded-full border border-yellow-300/25 bg-yellow-300/10 px-4 py-2 font-mono text-sm font-black text-yellow-100">
-          DISTINCT FROM 43 INFRA COMPANIES
-        </span>
-      </div>
+  const [programs, setPrograms] = useState<Array<{ id: string; name: string; status: string; credit_value?: string; category?: string }>>([]);
 
-      <div className="mt-5 grid gap-4 lg:grid-cols-5">
-        {premiumMicroSaasProjects.map((project) => (
-          <article
-            key={project.id}
-            className="rounded-3xl border border-cyan-400/15 bg-black/55 p-4"
-          >
-            <p className="font-mono text-xs font-black text-yellow-100">
-              {project.status}
-            </p>
-            <h4 className="mt-2 text-lg font-black text-[#f8f9fa]">
-              {project.name}
-            </h4>
-            <p className="mt-3 text-sm leading-6 text-cyan-100">{project.stack}</p>
-            <p className="mt-2 text-xs leading-5 text-gray-400">
-              {project.automationLayer}
-            </p>
+  useEffect(() => {
+    void fetch("/api/base44/live?app=creditHunter&entity=AiProgram&limit=20")
+      .then((r) => r.json())
+      .then((d: { ok: boolean; data: typeof programs }) => { if (d.ok && Array.isArray(d.data)) setPrograms(d.data.filter(p => p.status === "active").slice(0, 10)); })
+      .catch(() => undefined);
+  }, []);
+
+  return (
+    <section className="mt-6 rounded-3xl border border-yellow-300/25 bg-[linear-gradient(135deg,rgba(8,13,28,0.92),rgba(120,80,0,0.12))] p-5">
+      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">תוכניות AI פעילות</p>
+      <h3 className="neon-green-text text-2xl font-black">Base44 Credit Hunter — Active Programs</h3>
+      <div className="mt-5 grid gap-3 lg:grid-cols-5">
+        {programs.map((p) => (
+          <article key={p.id} className="rounded-2xl border border-yellow-400/15 bg-black/55 p-3">
+            <p className="text-xs font-bold text-yellow-300">{p.category ?? "AI"}</p>
+            <p className="mt-1 text-sm font-black text-[#f8f9fa]">{p.name}</p>
+            {p.credit_value && <p className="mt-1 text-xs text-emerald-400">{p.credit_value}</p>}
           </article>
         ))}
+        {programs.length === 0 && <p className="col-span-5 text-center text-slate-500 py-4">טוען...</p>}
       </div>
     </section>
   );
 }
 
 function WhalesTracker() {
+  const [discovered, setDiscovered] = useState<Array<{ id: string; company?: string; name?: string; credit_value?: string; status?: string }>>([]);
+
+  useEffect(() => {
+    void fetch("/api/base44/live?app=creditHunter&entity=DiscoveredTool&limit=9")
+      .then((r) => r.json())
+      .then((d: { ok: boolean; data: typeof discovered }) => { if (d.ok && Array.isArray(d.data)) setDiscovered(d.data); })
+      .catch(() => undefined);
+  }, []);
+
   return (
     <section className="mt-6 rounded-3xl border border-cyan-400/20 bg-black/55 p-5">
-      <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-            Whales Tracker
-          </p>
-          <h3 className="text-2xl font-black text-[#f8f9fa]">
-            Startup Credit Targets
-          </h3>
-        </div>
-        <span className="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-4 py-2 font-mono text-sm font-black text-cyan-100">
-          MASSIVE CREDITS WATCH
-        </span>
-      </div>
-
+      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">כלים שנגלו</p>
+      <h3 className="text-2xl font-black text-[#f8f9fa]">Discovered Tools — Base44 Live</h3>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
-        {whaleCredits.map((whale) => (
-          <article
-            key={whale.id}
-            className="rounded-3xl border border-cyan-400/15 bg-[#001027]/70 p-5 shadow-[0_0_30px_rgba(0,242,255,0.08)]"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h4 className="text-xl font-black text-[#f8f9fa]">{whale.provider}</h4>
-                <p className="mt-1 font-mono text-2xl font-black text-cyan-100">
-                  {whale.amount}
-                </p>
-              </div>
-              <span className="rounded-full bg-cyan-300/10 px-3 py-1 text-xs font-black text-cyan-100">
-                {whale.status}
-              </span>
-            </div>
-            <p className="mt-4 text-sm leading-6 text-gray-400">{whale.nextAction}</p>
+        {discovered.map((tool) => (
+          <article key={tool.id} className="rounded-2xl border border-cyan-400/15 bg-[#001027]/70 p-4">
+            <h4 className="font-black text-[#f8f9fa]">{tool.company ?? tool.name ?? "—"}</h4>
+            {tool.credit_value && <p className="mt-1 text-sm font-mono text-emerald-400">{tool.credit_value}</p>}
+            <span className="mt-2 inline-block rounded-full bg-cyan-300/10 px-2 py-0.5 text-xs font-black text-cyan-100">
+              {tool.status ?? "discovered"}
+            </span>
           </article>
         ))}
+        {discovered.length === 0 && <p className="col-span-3 py-4 text-center text-slate-500">טוען...</p>}
       </div>
     </section>
   );

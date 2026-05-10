@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type InvoiceItem = { description: string; quantity: number; unitPrice: number; total: number };
 type Invoice = {
@@ -55,24 +55,23 @@ export function BillingPipeline() {
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
   const [msg, setMsg] = useState<string | null>(null);
-  const [stripeReady, setStripeReady] = useState(false);
+  const stripeReady = invoices.some((i) => i.paymentGateway === "stripe");
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  const fetchInvoices = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/billing");
-      const data = await res.json() as { ok: boolean; invoices: Invoice[]; stats: Stats };
-      if (data.ok) { setInvoices(data.invoices); setStats(data.stats); }
-    } finally { setLoading(false); }
-  }, []);
-
-  useEffect(() => { void fetchInvoices(); }, [fetchInvoices]);
-
-  // Check Stripe config by calling /api/billing with a known bad request
   useEffect(() => {
-    // We infer Stripe readiness from payment_gateway field on invoices
-    setStripeReady(invoices.some((i) => i.paymentGateway === "stripe"));
-  }, [invoices]);
+    let active = true;
+    setLoading(true);
+    fetch("/api/billing")
+      .then((r) => r.json())
+      .then((data: { ok: boolean; invoices: Invoice[]; stats: Stats }) => {
+        if (active && data.ok) { setInvoices(data.invoices); setStats(data.stats); }
+      })
+      .catch(() => undefined)
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [refreshKey]);
+
+  function reload() { setRefreshKey((k) => k + 1); }
 
   function updateItem(idx: number, field: keyof InvoiceItem, value: string | number) {
     setForm((prev) => {
@@ -101,7 +100,7 @@ export function BillingPipeline() {
       if (data.ok) {
         setMsg(`✅ חשבונית ${data.invoice.invoiceNumber} נוצרה`);
         setForm(EMPTY_FORM);
-        void fetchInvoices();
+        reload();
       } else { setMsg("⛔ שגיאה ביצירת חשבונית"); }
     } finally {
       setCreating(false);
@@ -131,7 +130,7 @@ export function BillingPipeline() {
             <h2 className="text-4xl font-black text-[#f8f9fa]">Billing Pipeline</h2>
             <p className="mt-2 text-sm text-emerald-100">חשבוניות ותשלומים · {stripeReady ? "Stripe מחובר ✓" : "Stripe לא מחובר — נדרש STRIPE_SECRET_KEY"}</p>
           </div>
-          <button onClick={() => void fetchInvoices()} disabled={loading}
+          <button onClick={reload} disabled={loading}
             className="rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-2 text-sm font-bold text-emerald-300 transition hover:bg-emerald-500/20 disabled:opacity-50">
             {loading ? "⟳ טוען..." : "⟳ רענן"}
           </button>
