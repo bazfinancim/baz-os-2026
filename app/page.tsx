@@ -8,6 +8,7 @@ import { EmpireStatusBoard } from "@/src/components/EmpireStatusBoard";
 import db from "@/src/lib/db.json";
 import { IntegrationGalaxy } from "@/src/components/IntegrationGalaxy";
 import { MarketingHub } from "@/src/components/MarketingHub";
+import { Base44MasterView } from "@/src/components/Base44MasterView";
 import base44Inventory from "@/src/data/base44_inventory.json";
 import hunterToolsInventory from "@/src/data/hunter_tools.json";
 import { getPowerDispatcherState } from "@/src/lib/engine";
@@ -1063,7 +1064,7 @@ export default function Home() {
               onInjectVaultKeys={injectVaultKeys}
             />
           ) : null}
-          {activeTab === "base" ? <Base44SyncCenter /> : null}
+          {activeTab === "base" ? <Base44MasterView /> : null}
           {activeTab === "lead_gen" ? <LeadGenPanel isReadOnlyMode={isReadOnlyMode} /> : null}
           {activeTab === "comms" ? <CommunicationHub isReadOnlyMode={isReadOnlyMode} /> : null}
           {activeTab === "arsenal" ? <EmpireInfrastructurePanel /> : null}
