@@ -1,5 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import AI_PROGRAMS_RAW from "../../src/data/ai_export.json";
+import DISCOVERED_RAW from "../../src/data/discovered_tools.json";
 
 // ─── Credit Calculator (ported from creditCalculator.js) ──────────────────────
 function parseCreditsValue(cv: string | null | undefined): number {
@@ -47,29 +49,9 @@ function calculateCredits(tools: Tool[]) {
   return { active, potential, total: active + potential, activeCount };
 }
 
-// ─── Static fallback from ai_programs_export.json ─────────────────────────────
-const STATIC_PROGRAMS: Tool[] = [
-  { id: "1", name: "NVIDIA NIM / NGC Credits", status: "discovered", credit_value: "$1,000+", category: "cloud", notes: "NVIDIA Inception לסטארטאפים", url: "https://build.nvidia.com" },
-  { id: "2", name: "xAI Grok API", status: "active", credit_value: "$25/חשבון", category: "llm", notes: "kredit1/2/3@baz-f.co.il", url: "https://console.x.ai" },
-  { id: "3", name: "Google AI Studio (Gemini API)", status: "active", credit_value: "חינם", category: "llm", notes: "Gemini 2.0 Flash", url: "https://aistudio.google.com" },
-  { id: "4", name: "Anthropic Claude API", status: "discovered", credit_value: "$5 חינם", category: "llm", notes: "Claude 3.5 Sonnet", url: "https://console.anthropic.com" },
-  { id: "5", name: "OpenAI API", status: "active", credit_value: "$5", category: "llm", notes: "GPT-4o-mini", url: "https://platform.openai.com" },
-  { id: "6", name: "Groq API", status: "discovered", credit_value: "חינם", category: "llm", notes: "Llama 3.3 70B — מהיר פי 100", url: "https://console.groq.com" },
-  { id: "7", name: "Together AI", status: "discovered", credit_value: "$5 חינם", category: "llm", notes: "100+ מודלים Open Source", url: "https://api.together.xyz" },
-  { id: "8", name: "Cloudflare Workers AI", status: "active", credit_value: "10,000 neurons/יום", category: "llm", notes: "Edge AI — חינמי", url: "https://developers.cloudflare.com/workers-ai" },
-  { id: "9", name: "AWS Bedrock", status: "discovered", credit_value: "$1,000–$100,000", category: "cloud", notes: "AWS Activate לסטארטאפים", url: "https://aws.amazon.com/bedrock" },
-  { id: "10", name: "Google Cloud (Vertex AI)", status: "discovered", credit_value: "$350 + עד $200,000", category: "cloud", notes: "Google for Startups", url: "https://cloud.google.com/vertex-ai" },
-  { id: "11", name: "Microsoft Azure OpenAI", status: "discovered", credit_value: "$150–$150,000", category: "cloud", notes: "Microsoft for Startups", url: "https://azure.microsoft.com" },
-  { id: "12", name: "DeepSeek API", status: "discovered", credit_value: "זול פי 20 מ-GPT-4", category: "llm", notes: "V3: $0.27/M tokens", url: "https://platform.deepseek.com" },
-  { id: "13", name: "Fal.ai", status: "registered", credit_value: "$5 חינם", category: "image", notes: "FLUX.1 Schnell — $0.003/תמונה", url: "https://fal.ai" },
-  { id: "14", name: "ElevenLabs", status: "discovered", credit_value: "10,000 תווים/חודש", category: "audio", notes: "קול AI — 29 שפות", url: "https://elevenlabs.io" },
-  { id: "15", name: "Cloudflare Pages + Workers", status: "active", credit_value: "100K requests/יום", category: "server", notes: "R2, D1, KV — חינם", url: "https://pages.cloudflare.com" },
-  { id: "16", name: "GitHub Actions + Copilot", status: "active", credit_value: "2,000 דקות/חודש", category: "devtools", notes: "CI/CD חינם", url: "https://github.com/features/actions" },
-  { id: "17", name: "Supabase", status: "discovered", credit_value: "Free + $300 Startup", category: "data", notes: "PostgreSQL + pgvector", url: "https://supabase.com" },
-  { id: "18", name: "Pinecone", status: "discovered", credit_value: "Starter חינם", category: "memory", notes: "100K vectors, 5GB", url: "https://pinecone.io" },
-  { id: "19", name: "Anthropic", status: "active", credit_value: "$5", category: "llm", notes: "חשבון פעיל", url: "https://console.anthropic.com" },
-  { id: "20", name: "Mistral AI", status: "active", credit_value: "$5", category: "llm", notes: "חשבון פעיל", url: "https://console.mistral.ai" },
-];
+// ─── Local data — 100% offline, zero API ──────────────────────────────────────
+const STATIC_PROGRAMS: Tool[] = (AI_PROGRAMS_RAW as { programs: Tool[] }).programs ?? [];
+const DISCOVERED_TOOLS: Tool[] = DISCOVERED_RAW as Tool[];
 
 // ─── JOB TYPES (from original engine) ─────────────────────────────────────────
 const JOB_TYPES = [
@@ -102,9 +84,9 @@ const TABS = [
 ];
 
 export default function HunterPage() {
-  // ── Data state ──
-  const [programs, setPrograms] = useState<Tool[]>(STATIC_PROGRAMS);
-  const [discovered, setDiscovered] = useState<Tool[]>([]);
+  // ── Data — 100% local JSON, zero API calls ──
+  const [programs] = useState<Tool[]>(STATIC_PROGRAMS);
+  const [discovered] = useState<Tool[]>(DISCOVERED_TOOLS);
   const [bots, setBots] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -120,27 +102,6 @@ export default function HunterPage() {
   const [runsCount, setRunsCount] = useState(0);
   const isRunningRef = useRef(false);
 
-  // ── Fetch live data from our API proxy ──
-  const fetchLiveData = useCallback(() => {
-    setLoading(true);
-    setApiError(null);
-    fetch("/api/hunter/data")
-      .then((r) => r.json())
-      .then((d: { ok: boolean; programs?: Tool[]; tools?: Tool[]; bots?: Tool[]; error?: string }) => {
-        if (d.ok) {
-          if (d.programs && d.programs.length > 0) setPrograms(d.programs);
-          if (d.tools) setDiscovered(d.tools);
-          if (d.bots) setBots(d.bots);
-          setLastFetch(new Date().toLocaleTimeString("he-IL"));
-        } else {
-          setApiError(d.error ?? "שגיאה בטעינת נתונים");
-        }
-      })
-      .catch((e: Error) => setApiError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => { fetchLiveData(); }, [fetchLiveData]);
 
   // ── Scan simulation (visual engine from original) ──
   useEffect(() => {
@@ -156,14 +117,12 @@ export default function HunterPage() {
         `[${new Date().toLocaleTimeString("he-IL")}] ⚡ סריקה: ${type}`,
         ...prev,
       ].slice(0, 12));
-      // refresh data every 3 scans
-      if (runsCount % 3 === 0) fetchLiveData();
     };
 
     runScan();
     const interval = setInterval(runScan, 30_000);
     return () => clearInterval(interval);
-  }, [isRunning, jobIdx, runsCount, fetchLiveData]);
+  }, [isRunning, jobIdx]);
 
   // ── Credits calculation ──
   const allTools = useMemo(() => [...programs, ...discovered], [programs, discovered]);
@@ -251,13 +210,6 @@ export default function HunterPage() {
                 <div style={{ color: "#facc15", fontWeight: "bold", fontSize: "1.2rem", fontFamily: "monospace" }}>{runsCount.toLocaleString()}</div>
                 <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.65rem" }}>ריצות</div>
               </div>
-
-              <button onClick={fetchLiveData} disabled={loading} style={{
-                background: "rgba(0,0,0,0.3)", color: "white", border: "1px solid rgba(255,255,255,0.2)",
-                borderRadius: "8px", padding: "8px 14px", cursor: "pointer", fontWeight: "bold", fontSize: "0.82rem",
-              }}>
-                {loading ? "⏳ טוען..." : "🔍 סרוק"}
-              </button>
 
               <button onClick={() => setIsRunning((r) => !r)} style={{
                 padding: "8px 18px", borderRadius: "8px", fontWeight: "bold", fontSize: "0.88rem",

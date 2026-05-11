@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import RAW from "../../src/data/ai_export.json";
+import COMPANIES_RAW from "../../src/data/baz_companies.json";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Tool = {
@@ -11,17 +12,22 @@ type Tool = {
 
 type Company = {
   id: number; name: string; icon: string; status: string;
-  sector: string; color: string;
+  group: string; desc: string;
+};
+
+const GROUP_META: Record<string, { label: string; color: string }> = {
+  CORE_INFRA:       { label: "ליבה",            color: "#f59e0b" },
+  DIGITAL_CREATIVE: { label: "דיגיטל ויצירה",   color: "#818cf8" },
+  AI_AUTOMATION:    { label: "AI ואוטומציה",     color: "#38bdf8" },
+  BUSINESS:         { label: "שירותים עסקיים",   color: "#4ade80" },
+  KNOWLEDGE:        { label: "ידע ומוצרים",      color: "#fb923c" },
+  EXPANDED:         { label: "אימפריה מורחבת",   color: "#e879f9" },
+  GATES:            { label: "שערים וליבה",      color: "#f87171" },
 };
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const TOOLS: Tool[] = (RAW as { programs: Tool[] }).programs ?? [];
-
-const COMPANIES: Company[] = [
-  { id: 48, name: "Baz Finance Pro",    icon: "💼", status: "active",   sector: "פיננסים",      color: "#1d4ed8" },
-  { id: 49, name: "Baz AI Studio",      icon: "🎨", status: "active",   sector: "יצירתי",       color: "#7c3aed" },
-  { id: 50, name: "ReguCheck AI",       icon: "♿", status: "new",      sector: "נגישות / ציות", color: "#059669" },
-];
+const COMPANIES: Company[] = COMPANIES_RAW as Company[];
 
 const WA_CHANNELS = [
   { label: "שיווק 829",     phone: "054-829-4343", webhook: "https://n8n.baz-f.co.il/webhook/whatsapp-meta-829", color: "#16a34a", accent: "#4ade80", icon: "📣" },
@@ -122,7 +128,7 @@ export default function MasterHub() {
                 <span style={{ color: "#818cf8" }}> Master Hub</span>
               </h1>
               <p style={{ color: "#334155", fontSize: "0.78rem", margin: "4px 0 0" }}>
-                {TOOLS.length} כלי AI · {COMPANIES.length} חברות · WhatsApp Live · אפס API
+                {TOOLS.length} כלי AI · {COMPANIES.length} חברות · WhatsApp Live · 100% Offline
               </p>
             </div>
 
@@ -146,7 +152,8 @@ export default function MasterHub() {
           <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
             {navBtn("hunter",    "🎯 Hunter — כלי AI",    "#facc15")}
             {navBtn("whatsapp",  "💬 WhatsApp Live",       "#4ade80")}
-            {navBtn("companies", "🏢 חברות האימפריה",      "#818cf8")}
+            {navBtn("companies", `🏢 ${COMPANIES.length} חברות`,  "#818cf8")}
+            <a href="/whatsapp" style={{ padding: "9px 16px", borderRadius: "10px", background: "#0f172a", color: "#4ade80", textDecoration: "none", fontSize: "0.82rem", border: "1px solid #166534", alignSelf: "center" }}>WhatsApp Hub ↗</a>
             <a href="/" style={{ padding: "9px 16px", borderRadius: "10px", background: "#0f172a", color: "#334155", textDecoration: "none", fontSize: "0.82rem", border: "1px solid #1e1e2e", alignSelf: "center" }}>← ראשי</a>
           </div>
         </div>
@@ -280,39 +287,48 @@ export default function MasterHub() {
         {/* ════════════════ COMPANIES SECTION ════════════════ */}
         {section === "companies" && (
           <div>
-            <div style={{ background: "#0a0a1a", border: "1px solid #1e1e2e", borderRadius: "12px", padding: "12px 18px", marginBottom: "20px" }}>
-              <p style={{ color: "#334155", fontSize: "0.78rem", margin: 0 }}>
-                ⚠️ רשימת 48 החברות הראשונות ממתינה לייצוא רשמי. מוצגות כאן חברות 48–50.
-              </p>
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "14px" }}>
-              {COMPANIES.map(c => (
-                <div key={c.id} style={{ background: "#111118", border: `2px solid ${c.color}44`, borderRadius: "16px", padding: "20px 24px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <span style={{ fontSize: "2rem", background: `${c.color}22`, borderRadius: "10px", padding: "8px 10px" }}>{c.icon}</span>
-                    <div>
-                      <p style={{ fontWeight: "900", fontSize: "1rem", margin: 0 }}>{c.name}</p>
-                      <p style={{ color: "#475569", fontSize: "0.75rem", margin: "2px 0 0" }}>חברה #{c.id} · {c.sector}</p>
-                    </div>
-                    <span style={{
-                      marginRight: "auto", fontSize: "0.65rem", fontWeight: "bold",
-                      padding: "3px 8px", borderRadius: "99px",
-                      background: c.status === "new" ? "#14532d" : "#1e3a5f",
-                      color: c.status === "new" ? "#4ade80" : "#60a5fa",
-                    }}>
-                      {c.status === "new" ? "🆕 חדשה" : "✅ פעילה"}
-                    </span>
-                  </div>
+            {/* Summary */}
+            <div style={{ background: "#0f172a", border: "1px solid #1e3a5f", borderRadius: "12px", padding: "12px 18px", marginBottom: "20px", display: "flex", gap: "24px", flexWrap: "wrap" }}>
+              {Object.entries(GROUP_META).map(([key, meta]) => (
+                <div key={key} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: meta.color, display: "inline-block" }} />
+                  <span style={{ color: meta.color, fontSize: "0.72rem", fontWeight: "bold" }}>{meta.label}</span>
+                  <span style={{ color: "#334155", fontSize: "0.68rem" }}>({COMPANIES.filter(c => c.group === key).length})</span>
                 </div>
               ))}
+              <span style={{ color: "#475569", fontSize: "0.72rem", marginRight: "auto" }}>סה״כ: {COMPANIES.length} חברות</span>
             </div>
 
-            <div style={{ marginTop: "24px", background: "#0f172a", border: "1px dashed #1e3a5f", borderRadius: "12px", padding: "16px 20px", textAlign: "center" }}>
-              <p style={{ color: "#1e3a5f", fontSize: "0.8rem", margin: 0 }}>
-                + חברות 1–47 ממתינות לייצוא מ-Base44 · שלח את הקובץ ואעדכן מיד
-              </p>
-            </div>
+            {/* Groups */}
+            {Object.entries(GROUP_META).map(([groupKey, meta]) => {
+              const group = COMPANIES.filter(c => c.group === groupKey);
+              return (
+                <div key={groupKey} style={{ marginBottom: "24px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                    <div style={{ height: "2px", width: "20px", background: meta.color, borderRadius: "1px" }} />
+                    <p style={{ color: meta.color, fontWeight: "bold", fontSize: "0.82rem", margin: 0 }}>{meta.label}</p>
+                    <span style={{ color: "#334155", fontSize: "0.7rem" }}>{group.length} חברות</span>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "10px" }}>
+                    {group.map(c => (
+                      <div key={c.id} style={{
+                        background: "#111118",
+                        border: `1px solid ${meta.color}33`,
+                        borderRadius: "12px", padding: "12px 16px",
+                        display: "flex", alignItems: "flex-start", gap: "10px",
+                      }}>
+                        <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>{c.icon}</span>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <p style={{ fontWeight: "700", fontSize: "0.85rem", margin: "0 0 3px" }}>{c.name}</p>
+                          <p style={{ color: "#475569", fontSize: "0.68rem", margin: 0, lineHeight: 1.4 }}>{c.desc}</p>
+                        </div>
+                        <span style={{ fontSize: "0.58rem", color: "#334155", flexShrink: 0 }}>#{c.id}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
 

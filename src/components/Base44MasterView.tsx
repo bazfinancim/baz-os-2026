@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import AI_EXPORT from "../data/ai_export.json";
 
 const BASE_URL = "https://app.base44.com/apps";
 const AGENT_URL = "https://app.base44.com/superagent";
@@ -44,96 +45,47 @@ const WEBHOOKS = [
   },
 ];
 
-type Program = { id?: string; _id?: string; name?: string; status?: string; credit_value?: string; category?: string };
-type Project = { id?: string; _id?: string; name?: string; status?: string; next_step?: string };
+type Program = { id?: string; name?: string; status?: string; credit_value?: string; category?: string };
+
+// Local data — zero API calls
+const LOCAL_PROGRAMS: Program[] = (AI_EXPORT as { programs: Program[] }).programs ?? [];
 
 function HunterTab() {
-  const [programs, setPrograms] = useState<Program[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch("/api/base44/projects")
-      .then((r) => r.json())
-      .then((d: { ok: boolean; programs?: Program[]; projects?: Project[]; error?: string }) => {
-        if (d.ok) {
-          setPrograms(d.programs ?? []);
-          setProjects(d.projects ?? []);
-        } else {
-          setError(d.error ?? "שגיאה בטעינה");
-        }
-      })
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
-
   const s: React.CSSProperties = {
     background: "#0f172a", border: "1px solid #1e3a5f",
     borderRadius: "12px", padding: "14px",
     display: "flex", flexDirection: "column", gap: "6px",
   };
 
-  if (loading) return <p style={{ color: "#64748b", textAlign: "center", padding: "60px" }}>⏳ טוען נתונים חיים מ-Base44...</p>;
-  if (error) return (
-    <div style={{ background: "#1c0a0a", border: "1px solid #7f1d1d", borderRadius: "12px", padding: "20px", color: "#fca5a5" }}>
-      <p style={{ fontWeight: "bold" }}>❌ שגיאת חיבור ל-Base44</p>
-      <p style={{ fontSize: "0.85rem", marginTop: "8px", color: "#94a3b8" }}>{error}</p>
-      <p style={{ fontSize: "0.8rem", marginTop: "12px", color: "#64748b" }}>ודא ש-BASE44_API_KEY מוגדר ב-environment variables.</p>
-    </div>
-  );
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-      <div>
-        <p style={{ color: "#facc15", fontWeight: "bold", marginBottom: "12px" }}>
-          🎯 Credit Hunter — AiPrograms ({programs.length})
+    <div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px", flexWrap: "wrap", gap: "8px" }}>
+        <p style={{ color: "#facc15", fontWeight: "bold", margin: 0 }}>
+          🎯 Credit Hunter — {LOCAL_PROGRAMS.length} תוכניות
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "12px" }}>
-          {programs.map((p) => {
-            const key = p.id ?? p._id ?? p.name ?? Math.random().toString();
-            const isActive = p.status === "active";
-            return (
-              <div key={key} style={s}>
-                <div style={{ fontWeight: "bold", fontSize: "0.9rem" }}>{p.name ?? "—"}</div>
-                {p.category && <div style={{ color: "#94a3b8", fontSize: "0.75rem" }}>{p.category}</div>}
-                {p.credit_value && <div style={{ color: "#34d399", fontSize: "0.8rem", fontFamily: "monospace" }}>{p.credit_value}</div>}
-                <span style={{
-                  display: "inline-block", padding: "2px 8px", borderRadius: "999px", fontSize: "0.7rem",
-                  fontWeight: "bold", alignSelf: "flex-start", marginTop: "4px",
-                  background: isActive ? "#14532d" : "#1e293b",
-                  color: isActive ? "#4ade80" : "#64748b",
-                  border: `1px solid ${isActive ? "#166534" : "#334155"}`,
-                }}>{p.status ?? "—"}</span>
-              </div>
-            );
-          })}
-        </div>
+        <a href="/hunter" style={{ color: "#facc15", fontSize: "0.78rem", textDecoration: "none", border: "1px solid #854d0e", borderRadius: "6px", padding: "4px 10px" }}>
+          פתח Hunter מלא ↗
+        </a>
       </div>
-
-      {projects.length > 0 && (
-        <div>
-          <p style={{ color: "#818cf8", fontWeight: "bold", marginBottom: "12px" }}>
-            📁 CodeX — Projects ({projects.length})
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "12px" }}>
-            {projects.map((p) => {
-              const key = p.id ?? p._id ?? p.name ?? Math.random().toString();
-              return (
-                <div key={key} style={{ ...s, borderColor: "#312e81" }}>
-                  <div style={{ fontWeight: "bold", fontSize: "0.9rem" }}>{p.name ?? "—"}</div>
-                  {p.next_step && <div style={{ color: "#94a3b8", fontSize: "0.78rem" }}>→ {p.next_step}</div>}
-                  <span style={{
-                    display: "inline-block", padding: "2px 8px", borderRadius: "999px", fontSize: "0.7rem",
-                    fontWeight: "bold", alignSelf: "flex-start", marginTop: "4px",
-                    background: "#1e1b4b", color: "#818cf8", border: "1px solid #312e81",
-                  }}>{p.status ?? "—"}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "12px" }}>
+        {LOCAL_PROGRAMS.map((p, i) => {
+          const isActive = p.status === "active" || p.status === "registered";
+          return (
+            <div key={p.id ?? i} style={s}>
+              <div style={{ fontWeight: "bold", fontSize: "0.9rem" }}>{p.name ?? "—"}</div>
+              {p.category && <div style={{ color: "#94a3b8", fontSize: "0.75rem" }}>{p.category}</div>}
+              {p.credit_value && <div style={{ color: "#34d399", fontSize: "0.8rem", fontFamily: "monospace" }}>{p.credit_value}</div>}
+              <span style={{
+                display: "inline-block", padding: "2px 8px", borderRadius: "999px", fontSize: "0.7rem",
+                fontWeight: "bold", alignSelf: "flex-start", marginTop: "4px",
+                background: isActive ? "#14532d" : "#1e293b",
+                color: isActive ? "#4ade80" : "#64748b",
+                border: `1px solid ${isActive ? "#166534" : "#334155"}`,
+              }}>{p.status ?? "—"}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
