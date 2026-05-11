@@ -1022,7 +1022,7 @@ export default function Home() {
               <p className="neon-green-text mt-3 text-4xl font-black text-[#f8f9fa]">
                 {systemStatus}
               </p>
-              <p className="mt-4 text-sm leading-7 text-gray-300">
+              <p className="mt-4 text-sm leading-7 text-gray-300" suppressHydrationWarning>
                 {`סטטוס מערכת: ${systemStatus}. מפעל פעיל: ${empireCompanies.length} חברות. סנכרון אחרון: ${new Date().toLocaleTimeString("he-IL")}`}
               </p>
             </div>
@@ -4830,7 +4830,7 @@ function MissionControl({
           </p>
               <h2 className="mt-2 text-3xl font-black">פלט טרמינל וסטטוס מערכת</h2>
           </div>
-          <span className="butterfly-heartbeat whitespace-nowrap rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 font-mono text-sm font-black text-cyan-100 shadow-[0_0_26px_rgba(0,242,255,0.18)]">
+          <span className="butterfly-heartbeat whitespace-nowrap rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 font-mono text-sm font-black text-cyan-100 shadow-[0_0_26px_rgba(0,242,255,0.18)]" suppressHydrationWarning>
             BAZ EYE | Pulse Active: 300s | {new Date().toLocaleTimeString("he-IL")}
           </span>
         </div>
