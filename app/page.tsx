@@ -8,7 +8,7 @@ import { EmpireStatusBoard } from "@/src/components/EmpireStatusBoard";
 import db from "@/src/lib/db.json";
 import { IntegrationGalaxy } from "@/src/components/IntegrationGalaxy";
 import { MarketingHub } from "@/src/components/MarketingHub";
-import { Base44MasterView } from "@/src/components/Base44MasterView";
+import { LocalHunterView } from "@/src/components/LocalHunterView";
 import { CommsHub } from "@/src/components/CommsHub";
 import { BillingPipeline } from "@/src/components/BillingPipeline";
 import base44Inventory from "@/src/data/base44_inventory.json";
@@ -23,6 +23,7 @@ import {
   premiumMicroSaasProjects,
   whaleCredits,
 } from "@/src/lib/empire-config";
+import bazCompaniesData from "@/src/data/baz_companies.json";
 import { getWorkHoursRemaining } from "@/src/lib/predictor";
 
 type ActiveTab =
@@ -764,7 +765,7 @@ export default function Home() {
   useEffect(() => {
     syncStatusChange("COMMAND_CENTER_ONLINE", "ONLINE", {
       activeTab,
-      companyCount: empireCompanies.length,
+      companyCount: bazCompaniesData.length,
       saturdayLaunchChecklist: "READY",
       timestamp: new Date().toISOString(),
     });
@@ -1129,7 +1130,7 @@ export default function Home() {
                 {systemStatus}
               </p>
               <p className="mt-4 text-sm leading-7 text-gray-300">
-                {`סטטוס מערכת: ${systemStatus}. מפעל פעיל: ${empireCompanies.length} חברות. סנכרון אחרון: ${new Date().toLocaleTimeString("he-IL")}`}
+                {`סטטוס מערכת: ${systemStatus}. מפעל פעיל: ${bazCompaniesData.length} חברות. סנכרון אחרון: ${new Date().toLocaleTimeString("he-IL")}`}
               </p>
             </div>
           </header>
@@ -1172,7 +1173,7 @@ export default function Home() {
               onInjectVaultKeys={injectVaultKeys}
             />
           ) : null}
-          {activeTab === "base" ? <Base44MasterView /> : null}
+          {activeTab === "base" ? <LocalHunterView /> : null}
           {activeTab === "lead_gen" ? <LeadGenPanel isReadOnlyMode={isReadOnlyMode} /> : null}
           {activeTab === "whatsapp_hub" ? <WhatsAppHubPanel /> : null}
           {activeTab === "comms" ? <CommsHub /> : null}
@@ -1309,10 +1310,11 @@ function EmpireSidebar({
   onUiLanguageChange: (value: UiLanguage) => void;
 }) {
   const navigationGroups: { title: string; items: ActiveTab[] }[] = [
-    { title: "ליבה", items: ["projects", "clients", "base"] },
-    { title: "כסף ודלק", items: ["finance", "vault", "keys_valves", "lead_gen"] },
-    { title: "שיווק וחיבורים", items: ["marketing", "integrations", "whatsapp_hub"] },
-    { title: "מודיעין", items: ["ai_advisors", "arsenal"] },
+    { title: "תקשורת", items: ["whatsapp_hub"] },
+    { title: "ליבה", items: ["projects", "clients", "arsenal"] },
+    { title: "כסף ודלק", items: ["base", "finance", "vault", "keys_valves", "lead_gen"] },
+    { title: "שיווק וחיבורים", items: ["marketing", "integrations"] },
+    { title: "מודיעין", items: ["ai_advisors"] },
     { title: "מערכות חיצוניות", items: ["n8n_automations", "server_infra", "creative_hub"] },
     { title: "מערכת ולוגים", items: ["settings", "logs"] },
   ];
@@ -1391,7 +1393,7 @@ function EmpireSidebar({
                   >
                     <span className="flex items-center justify-between gap-3">
                       <span className="flex items-center gap-2">
-                        <span>{tab.label.he}</span>
+                        <span>{tab.label[uiLanguage]}</span>
                         {tab.id === "clients" && hasClientSos ? (
                           <span className="h-3 w-3 animate-pulse rounded-full bg-red-500 shadow-[0_0_18px_rgba(239,68,68,0.9)]" />
                         ) : null}
