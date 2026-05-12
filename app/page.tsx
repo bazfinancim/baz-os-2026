@@ -42,7 +42,8 @@ type ActiveTab =
   | "server_infra"
   | "creative_hub"
   | "logs"
-  | "settings";
+  | "settings"
+  | "whatsapp_hub";
 type UiLanguage = "he" | "en";
 type SettingsView = "drive" | "resources";
 type ChatMessage = {
@@ -401,6 +402,7 @@ const tabs: { id: ActiveTab; label: Record<UiLanguage, string>; description: Rec
   { id: "keys_valves", label: { he: "מפתחות ושסתומים", en: "Keys & Valves" }, description: { he: "הזרקת מפתחות API אמיתיים והפעלת שסתומי דלק", en: "Real API key injection and fuel valves" } },
   { id: "base", label: { he: "Base44 / Hunter", en: "Base44 / Hunter" }, description: { he: "מרכז מיגרציה מלא ל־Base44 ו־Hunter", en: "Full Base44 and Hunter migration hub" } },
   { id: "lead_gen", label: { he: "ייצור לידים", en: "Lead Generation" }, description: { he: "שריפת קרדיטים לפני תפוגה והפקת לידים", en: "Credit burn and lead extraction" } },
+  { id: "whatsapp_hub", label: { he: "📲 WhatsApp", en: "📲 WhatsApp" }, description: { he: "שיווק (829) ושירות (555) — שליחה מהירה ישירות מהפאנל", en: "Marketing and service channels with quick send" } },
   { id: "comms", label: { he: "מרכז תקשורת", en: "Comms Center" }, description: { he: "Meta WhatsApp, Email וזרימת הודעות", en: "Meta WhatsApp, Email and message streams" } },
   { id: "ai_advisors", label: { he: "יועצי AI", en: "AI Advisors" }, description: { he: "חדר ייעוץ עם BAZ AI", en: "Consulting room with BAZ AI" } },
   { id: "arsenal", label: { he: "חברות וארסנל", en: "Arsenal / Companies" }, description: { he: "47 חברות, 4 תשתיות ו־Golden Projects", en: "47 companies, 4 infrastructure engines and Golden Projects" } },
@@ -588,6 +590,110 @@ function isExpiringSoon(expiryDate: string) {
   const daysLeft = (expiry.getTime() - now.getTime()) / 86_400_000;
 
   return daysLeft >= 0 && daysLeft < 7;
+}
+
+
+// ── WhatsApp Hub Panel ────────────────────────────────────────────────────────
+function WhatsAppHubPanel() {
+  const [sendTo, setSendTo] = useState("");
+  const [msg, setMsg] = useState("");
+  const [channel, setChannel] = useState<"marketing" | "service">("marketing");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "err">("idle");
+
+  const lines = [
+    { id: "marketing" as const, name: "שיווק / לידים", num: "+972 54-829-4343", color: "#22c55e", icon: "📣", webhook: "https://n8n.baz-f.co.il/webhook/whatsapp-meta-829" },
+    { id: "service"   as const, name: "שירות לקוחות",  num: "+972 54-555-9934", color: "#3b82f6", icon: "🏢", webhook: "https://n8n.baz-f.co.il/webhook/whatsapp-meta-555" },
+  ];
+
+  async function handleSend() {
+    if (!sendTo || !msg) return;
+    setStatus("sending");
+    const line = lines.find(l => l.id === channel)!;
+    try {
+      const res = await fetch(line.webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to: sendTo.replace(/[^0-9]/g, ""), message: msg, channel: line.id }),
+      });
+      setStatus(res.ok ? "done" : "err");
+    } catch { setStatus("err"); }
+    setTimeout(() => setStatus("idle"), 3000);
+  }
+
+  return (
+    <div dir="rtl" style={{ padding: "28px", maxWidth: "1000px", margin: "0 auto", fontFamily: "inherit" }}>
+      <div style={{ marginBottom: "28px" }}>
+        <div style={{ fontSize: "0.65rem", letterSpacing: "0.25em", color: "#22c55e", textTransform: "uppercase", marginBottom: "8px", fontWeight: 700 }}>
+          COMMUNICATIONS / WHATSAPP META API
+        </div>
+        <h1 style={{ fontSize: "2rem", fontWeight: 900, color: "#f1f5f9", margin: 0, letterSpacing: "-0.02em" }}>
+          📲 WhatsApp Hub
+        </h1>
+        <p style={{ color: "#475569", marginTop: "6px", fontSize: "0.85rem" }}>
+          שיווק (829) · שירות (555) · שליחה מהירה · מחובר ל-N8N
+        </p>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
+        {lines.map(line => (
+          <div key={line.id}
+            onClick={() => setChannel(line.id)}
+            style={{
+              background: channel === line.id ? "linear-gradient(135deg,#0d1117,#0f1f2e)" : "linear-gradient(135deg,#0d1117,#111827)",
+              border: channel === line.id ? `2px solid ${line.color}80` : `1px solid ${line.color}25`,
+              borderRadius: "16px", padding: "20px", cursor: "pointer", transition: "all 0.2s",
+            }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <div style={{ fontSize: "1.5rem", marginBottom: "6px" }}>{line.icon}</div>
+                <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#f1f5f9" }}>{line.name}</div>
+                <div style={{ fontSize: "1.1rem", fontWeight: 800, color: line.color, marginTop: "3px" }}>{line.num}</div>
+              </div>
+              <div style={{ background: line.color + "15", border: `1px solid ${line.color}40`, borderRadius: "20px", padding: "3px 10px", fontSize: "0.6rem", color: line.color, fontWeight: 700 }}>
+                {channel === line.id ? "✓ נבחר" : "לחץ לבחור"}
+              </div>
+            </div>
+            <div style={{ marginTop: "12px", background: "#0a0e18", borderRadius: "6px", padding: "7px 10px" }}>
+              <div style={{ fontSize: "0.55rem", color: "#334155", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>N8N Webhook</div>
+              <div style={{ fontSize: "0.65rem", color: "#22d3ee", fontFamily: "monospace", wordBreak: "break-all" }}>{line.webhook}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ background: "linear-gradient(135deg,#0d1117,#111827)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "16px", padding: "24px", marginBottom: "20px" }}>
+        <div style={{ fontSize: "0.7rem", color: "#475569", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "16px" }}>✉️ שלח הודעה מהירה</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+          <div>
+            <label style={{ fontSize: "0.7rem", color: "#64748b", display: "block", marginBottom: "6px" }}>מספר יעד (972+)</label>
+            <input value={sendTo} onChange={e => setSendTo(e.target.value)} placeholder="972541234567"
+              style={{ width: "100%", background: "#0a0e18", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "10px 12px", color: "#f1f5f9", fontSize: "0.85rem", boxSizing: "border-box" as const, direction: "ltr" }} />
+          </div>
+          <div>
+            <label style={{ fontSize: "0.7rem", color: "#64748b", display: "block", marginBottom: "6px" }}>ערוץ שליחה</label>
+            <select value={channel} onChange={e => setChannel(e.target.value as "marketing" | "service")}
+              style={{ width: "100%", background: "#0a0e18", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "10px 12px", color: "#f1f5f9", fontSize: "0.85rem", boxSizing: "border-box" as const }}>
+              <option value="marketing">📣 שיווק — 829</option>
+              <option value="service">🏢 שירות — 555</option>
+            </select>
+          </div>
+        </div>
+        <textarea value={msg} onChange={e => setMsg(e.target.value)} placeholder="כתוב את ההודעה כאן..." rows={3}
+          style={{ width: "100%", background: "#0a0e18", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "10px 12px", color: "#f1f5f9", fontSize: "0.85rem", boxSizing: "border-box" as const, resize: "vertical", marginBottom: "14px" }} />
+        <div style={{ display: "flex", gap: "10px", justifyContent: "flex-end" }}>
+          <button onClick={() => window.open("https://n8n.baz-f.co.il", "_blank")}
+            style={{ background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.25)", borderRadius: "8px", color: "#a855f7", padding: "10px 18px", fontSize: "0.8rem", fontWeight: 700, cursor: "pointer" }}>
+            ⚙️ N8N Console
+          </button>
+          <button onClick={handleSend} disabled={status === "sending" || !sendTo || !msg}
+            style={{ background: status === "done" ? "rgba(34,197,94,0.15)" : "rgba(34,197,94,0.1)", border: status === "done" ? "1px solid #22c55e" : "1px solid rgba(34,197,94,0.3)", borderRadius: "8px", color: "#22c55e", padding: "10px 24px", fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", opacity: (!sendTo || !msg || status === "sending") ? 0.5 : 1 }}>
+            {status === "idle" ? "📤 שלח" : status === "sending" ? "⟳ שולח..." : status === "done" ? "✅ נשלח!" : "❌ שגיאה"}
+          </button>
+        </div>
+      </div>
+      <div style={{ background: "rgba(239,68,68,0.05)", border: "1px solid rgba(239,68,68,0.15)", borderRadius: "10px", padding: "12px 16px", fontSize: "0.75rem", color: "#94a3b8" }}>
+        ⚠️ <strong style={{ color: "#f87171" }}>נדרש חיבור Meta API</strong> — כדי לשלוח הודעות אמיתיות יש להגדיר META_WHATSAPP_ACCESS_TOKEN + Phone Number IDs ב-Hetzner env vars.
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -1068,6 +1174,7 @@ export default function Home() {
           ) : null}
           {activeTab === "base" ? <Base44MasterView /> : null}
           {activeTab === "lead_gen" ? <LeadGenPanel isReadOnlyMode={isReadOnlyMode} /> : null}
+          {activeTab === "whatsapp_hub" ? <WhatsAppHubPanel /> : null}
           {activeTab === "comms" ? <CommsHub /> : null}
           {activeTab === "arsenal" ? <EmpireInfrastructurePanel /> : null}
           {activeTab === "n8n_automations" ? <N8NAutomationsPanel /> : null}
@@ -1204,7 +1311,7 @@ function EmpireSidebar({
   const navigationGroups: { title: string; items: ActiveTab[] }[] = [
     { title: "ליבה", items: ["projects", "clients", "base"] },
     { title: "כסף ודלק", items: ["finance", "vault", "keys_valves", "lead_gen"] },
-    { title: "שיווק וחיבורים", items: ["marketing", "integrations", "comms"] },
+    { title: "שיווק וחיבורים", items: ["marketing", "integrations", "whatsapp_hub", "comms"] },
     { title: "מודיעין", items: ["ai_advisors", "arsenal"] },
     { title: "מערכות חיצוניות", items: ["n8n_automations", "server_infra", "creative_hub"] },
     { title: "מערכת ולוגים", items: ["settings", "logs"] },
