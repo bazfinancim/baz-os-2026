@@ -3,14 +3,18 @@ export type HubLang = "he" | "en";
 export type HubMessageKey =
   | "brandSubtitle"
   | "brandTitle"
+  | "sectionGate"
   | "sectionComm"
   | "sectionSocial"
   | "sectionCore"
   | "sectionFuel"
+  | "sectionVip"
   | "sectionMore"
   | "sectionCommand"
   | "nav.geminiEyes"
   | "nav.geminiEyesHint"
+  | "nav.home"
+  | "nav.homeHint"
   | "nav.whatsapp"
   | "nav.whatsappHint"
   | "nav.facebook"
@@ -35,6 +39,12 @@ export type HubMessageKey =
   | "nav.financeHint"
   | "nav.vault"
   | "nav.vaultHint"
+  | "nav.vipMaster"
+  | "nav.vipMasterHint"
+  | "nav.base44"
+  | "nav.base44Hint"
+  | "nav.cursorLog"
+  | "nav.cursorLogHint"
   | "nav.wip"
   | "nav.wipHint"
   | "langHe"
@@ -45,14 +55,18 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
   he: {
     brandSubtitle: "BAZ OS",
     brandTitle: "Master Hub",
+    sectionGate: "שער",
     sectionComm: "תקשורת",
     sectionSocial: "רשתות ושיווק",
     sectionCore: "ליבה",
     sectionFuel: "כסף ודלק",
+    sectionVip: "VIP ומסכים",
     sectionMore: "עוד",
     sectionCommand: "מפקדה",
     "nav.geminiEyes": "מפקדת ג׳מיני — Eyes",
     "nav.geminiEyesHint": "/admin/status · ניטור n8n",
+    "nav.home": "שער ראשי",
+    "nav.homeHint": "דף הבית",
     "nav.whatsapp": "WhatsApp Hub",
     "nav.whatsappHint": "n8n · סטטוס",
     "nav.facebook": "פייסבוק · Meta",
@@ -77,6 +91,12 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     "nav.financeHint": "קרדיטים וחיובים",
     "nav.vault": "כספת",
     "nav.vaultHint": "מפתחות בשרת",
+    "nav.vipMaster": "Master Hub · VIP",
+    "nav.vipMasterHint": "מנוע קלאסי · כלים",
+    "nav.base44": "Base44",
+    "nav.base44Hint": "ממשק ישיר",
+    "nav.cursorLog": "Cursor Log",
+    "nav.cursorLogHint": "יומן סוכן",
     "nav.wip": "WIP",
     "nav.wipHint": "בפיתוח",
     langHe: "עברית",
@@ -86,14 +106,18 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
   en: {
     brandSubtitle: "BAZ OS",
     brandTitle: "Master Hub",
+    sectionGate: "Gate",
     sectionComm: "Communication",
     sectionSocial: "Social & ads",
     sectionCore: "Core",
     sectionFuel: "Fuel & money",
+    sectionVip: "VIP & screens",
     sectionMore: "More",
     sectionCommand: "Command",
     "nav.geminiEyes": "Gemini HQ — Eyes",
     "nav.geminiEyesHint": "/admin/status · n8n",
+    "nav.home": "Home",
+    "nav.homeHint": "Landing",
     "nav.whatsapp": "WhatsApp Hub",
     "nav.whatsappHint": "n8n · status",
     "nav.facebook": "Facebook · Meta",
@@ -118,6 +142,12 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     "nav.financeHint": "Credits & billing",
     "nav.vault": "Vault",
     "nav.vaultHint": "Keys on server",
+    "nav.vipMaster": "Master Hub · VIP",
+    "nav.vipMasterHint": "Classic tools engine",
+    "nav.base44": "Base44",
+    "nav.base44Hint": "Direct UI",
+    "nav.cursorLog": "Cursor Log",
+    "nav.cursorLogHint": "Agent log",
     "nav.wip": "WIP",
     "nav.wipHint": "In development",
     langHe: "עברית",

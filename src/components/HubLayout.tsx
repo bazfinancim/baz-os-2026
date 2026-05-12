@@ -13,6 +13,8 @@ type NavItem = {
   icon: string;
   /** קישור חיצוני (פייסבוק, אינסטגרם וכו׳) */
   external?: boolean;
+  /** לנתיב / בלבד — לא לסמן פעיל בכל דף */
+  exactActive?: boolean;
 };
 
 type Section = { titleKey: HubMessageKey; items: NavItem[] };
@@ -62,6 +64,10 @@ function buildSections(): Section[] {
       items: [{ href: "/admin/status", labelKey: "nav.geminiEyes", hintKey: "nav.geminiEyesHint", icon: "◆" }],
     },
     {
+      titleKey: "sectionGate",
+      items: [{ href: "/", labelKey: "nav.home", hintKey: "nav.homeHint", icon: "⌂", exactActive: true }],
+    },
+    {
       titleKey: "sectionComm",
       items: [{ href: "/whatsapp", labelKey: "nav.whatsapp", hintKey: "nav.whatsappHint", icon: "💬" }],
     },
@@ -83,6 +89,14 @@ function buildSections(): Section[] {
         { href: "/hunter", labelKey: "nav.hunter", hintKey: "nav.hunterHint", icon: "🎯" },
         { href: "/credits-hub", labelKey: "nav.finance", hintKey: "nav.financeHint", icon: "💰" },
         { href: "/vault", labelKey: "nav.vault", hintKey: "nav.vaultHint", icon: "🔐" },
+      ],
+    },
+    {
+      titleKey: "sectionVip",
+      items: [
+        { href: "/master-hub", labelKey: "nav.vipMaster", hintKey: "nav.vipMasterHint", icon: "⚡" },
+        { href: "/base44", labelKey: "nav.base44", hintKey: "nav.base44Hint", icon: "🔷" },
+        { href: "/cursor-log", labelKey: "nav.cursorLog", hintKey: "nav.cursorLogHint", icon: "📜" },
       ],
     },
     {
@@ -120,7 +134,8 @@ function NavRow({
   isCommandSection: boolean;
 }) {
   const active =
-    !item.external && (pathname === item.href || pathname?.startsWith(`${item.href}/`));
+    !item.external &&
+    (item.exactActive ? pathname === item.href : pathname === item.href || pathname?.startsWith(`${item.href}/`));
   const baseStyle: CSSProperties = {
     display: "flex",
     alignItems: "flex-start",
