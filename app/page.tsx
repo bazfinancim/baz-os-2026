@@ -405,7 +405,7 @@ const tabs: { id: ActiveTab; label: Record<UiLanguage, string>; description: Rec
   { id: "whatsapp_hub", label: { he: "📲 WhatsApp", en: "📲 WhatsApp" }, description: { he: "שיווק (829) ושירות (555) — שליחה מהירה ישירות מהפאנל", en: "Marketing and service channels with quick send" } },
   { id: "comms", label: { he: "מרכז תקשורת", en: "Comms Center" }, description: { he: "Meta WhatsApp, Email וזרימת הודעות", en: "Meta WhatsApp, Email and message streams" } },
   { id: "ai_advisors", label: { he: "יועצי AI", en: "AI Advisors" }, description: { he: "חדר ייעוץ עם BAZ AI", en: "Consulting room with BAZ AI" } },
-  { id: "arsenal", label: { he: "חברות וארסנל", en: "Arsenal / Companies" }, description: { he: "47 חברות, 4 תשתיות ו־Golden Projects", en: "47 companies, 4 infrastructure engines and Golden Projects" } },
+  { id: "arsenal", label: { he: "חברות וארסנל", en: "Arsenal / Companies" }, description: { he: "60 חברות, 4 תשתיות ו־Golden Projects", en: "60 companies, 4 infrastructure engines and Golden Projects" } },
   { id: "n8n_automations", label: { he: "אוטומציות N8N", en: "N8N Automations" }, description: { he: "בניית workflows מקוריים ב־N8N", en: "Native N8N workflow cockpit" } },
   { id: "server_infra", label: { he: "שרתים ותשתית", en: "Server Hub" }, description: { he: "Hetzner, Vercel ו־Cloudflare בלבד", en: "Hetzner, Vercel and Cloudflare only" } },
   { id: "creative_hub", label: { he: "מרכז יצירה", en: "Creative" }, description: { he: "Canva ומיילים ארגוניים", en: "Canva and company mail" } },
@@ -1311,7 +1311,7 @@ function EmpireSidebar({
   const navigationGroups: { title: string; items: ActiveTab[] }[] = [
     { title: "ליבה", items: ["projects", "clients", "base"] },
     { title: "כסף ודלק", items: ["finance", "vault", "keys_valves", "lead_gen"] },
-    { title: "שיווק וחיבורים", items: ["marketing", "integrations", "whatsapp_hub", "comms"] },
+    { title: "שיווק וחיבורים", items: ["marketing", "integrations", "whatsapp_hub"] },
     { title: "מודיעין", items: ["ai_advisors", "arsenal"] },
     { title: "מערכות חיצוניות", items: ["n8n_automations", "server_infra", "creative_hub"] },
     { title: "מערכת ולוגים", items: ["settings", "logs"] },
@@ -1502,7 +1502,7 @@ function ProjectsPanel({
       return;
     }
 
-    setScanFeedback(`BAZ OS: תיק הסריקה ננעל על ${normalizedPath}. מוכן לחיבור שבת.`);
+    setScanFeedback(`BAZ OS: תיק הסריקה ננעל על ${normalizedPath}. מוכן לביצוע.`);
   }
 
   async function ingestBulkProjects(text: string) {
@@ -1698,7 +1698,7 @@ function ProjectsPanel({
             🚀
           </span>
           <h3 className="relative z-10 mt-6 text-2xl font-black text-white">
-            הפעלת המפץ הגדול (Launch Empire)
+            הפעל מערכת
           </h3>
           <p className="relative z-10 mt-4 leading-7 text-gray-300">
             יצירת 70 Briefcases נעולים עם Fuel Level ו־Protection Status: LOCKED.
@@ -2327,7 +2327,7 @@ function VaultPanel({
           עצירת דימום קרדיטים: כל כלי, מפתח, תאריך תפוגה ויתרת קרדיט במקום אחד.
         </p>
         <p className="mt-4 rounded-2xl border border-amber-300/30 bg-amber-300/10 px-4 py-3 font-black text-amber-100">
-          מצב סימולציה (Simulation Mode) - חיבור מפתחות אמיתיים בשבת
+          מצב סימולציה (Simulation Mode) - נדרש קינפוג
         </p>
       </div>
 
@@ -4869,10 +4869,10 @@ function LaunchChecklist({
   return (
     <section className="mb-5 rounded-3xl border border-cyan-400/20 bg-[#001027]/70 p-5">
       <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-        Saturday Launch Checklist
+        SYSTEM STATUS
       </p>
       <h3 className="mt-2 text-2xl font-black text-[#f8f9fa]">
-        רשימת שיגור לשבת
+        סטטוס מערכת
       </h3>
       <div className="mt-4 grid gap-3">
         {items.map((item) => (
