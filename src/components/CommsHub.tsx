@@ -95,25 +95,55 @@ export function CommsHub() {
 
   return (
     <section dir="rtl" className="flex flex-col gap-6">
-      {/* כותרת */}
+{/* 🔗 WhatsApp Hub Banner */}
       <div className="glass-industrial rounded-[2rem] border border-cyan-400/25 p-6 shadow-[0_0_42px_rgba(0,242,255,0.12)]">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">COMMUNICATIONS / WHATSAPP</p>
-        <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h2 className="text-4xl font-black text-[#f8f9fa]">Comms Hub</h2>
             <p className="mt-2 text-sm text-cyan-100">
               ניטור הודעות WhatsApp · שיווק ומשרד · עדכון כל 15 שניות
             </p>
           </div>
-          <button
-            onClick={() => void fetchMessages()}
-            disabled={loading}
-            className="rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-2 text-sm font-bold text-cyan-300 transition hover:bg-cyan-500/20 disabled:opacity-50"
-          >
+          <button onClick={() => void fetchMessages()} disabled={loading}
+            className="rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-2 text-sm font-bold text-cyan-300 transition hover:bg-cyan-500/20 disabled:opacity-50">
             {loading ? "⟳ טוען..." : "⟳ רענן"}
           </button>
         </div>
       </div>
+
+      {/* WhatsApp Lines Quick Access */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {[
+          { id: "marketing", name: "שיווק / לידים", num: "+972 54-829-4343", color: "#22c55e", icon: "📣", webhook: "https://n8n.baz-f.co.il/webhook/whatsapp-meta-829" },
+          { id: "service",   name: "שירות לקוחות", num: "+972 54-555-9934", color: "#3b82f6", icon: "🏢", webhook: "https://n8n.baz-f.co.il/webhook/whatsapp-meta-555" },
+        ].map(line => (
+          <div key={line.id} style={{ background: "linear-gradient(135deg,#0d1117,#111827)", border: "1px solid " + line.color + "33", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <div style={{ fontSize: "1.3rem", marginBottom: "4px" }}>{line.icon}</div>
+                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#f1f5f9" }}>{line.name}</div>
+                <div style={{ fontSize: "1.1rem", fontWeight: 800, color: line.color, marginTop: "2px" }}>{line.num}</div>
+              </div>
+              <div style={{ background: line.color + "20", border: "1px solid " + line.color + "50", borderRadius: "20px", padding: "3px 10px", fontSize: "0.65rem", color: line.color, fontWeight: 700 }}>CONNECTED</div>
+            </div>
+            <div style={{ background: "#0a0e18", borderRadius: "8px", padding: "8px 12px" }}>
+              <div style={{ fontSize: "0.58rem", color: "#475569", marginBottom: "3px", letterSpacing: "0.1em", textTransform: "uppercase" }}>N8N Webhook</div>
+              <div style={{ fontSize: "0.68rem", color: "#22d3ee", fontFamily: "monospace", wordBreak: "break-all" }}>{line.webhook}</div>
+            </div>
+            <button onClick={() => window.open("https://n8n.baz-f.co.il", "_blank")} style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: "8px", color: "#22c55e", padding: "7px", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>
+              🔗 פתח N8N Console
+            </button>
+          </div>
+        ))}
+      </div>
+      <div style={{ textAlign: "center", marginTop: "-8px" }}>
+        <button onClick={() => window.open("/whatsapp", "_blank")} style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: "10px", color: "#22c55e", padding: "10px 28px", fontSize: "0.85rem", fontWeight: 700, cursor: "pointer" }}>
+          📲 לדף WhatsApp Hub המלא ←
+        </button>
+      </div>
+
+      {/* --- הפרדה --- */}
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "4px" }} />
 
       {/* סטטוס תצורה */}
       <div className="rounded-2xl border border-slate-700/40 bg-slate-900/50 p-5">
