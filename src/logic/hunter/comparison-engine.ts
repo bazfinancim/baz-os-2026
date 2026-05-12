@@ -1,5 +1,5 @@
 import type { CreditTool } from "@/src/lib/credits-calculator";
-import { calculateCredits, formatCreditsCompact, parseCreditsValue } from "@/src/lib/credits-calculator";
+import { calculateCredits, formatCreditsCompact, parseCreditsValue, toolDisplayLabel } from "@/src/lib/credits-calculator";
 
 /** סיכום לפי קטגוריה — בסיס ל־Comparison Engine */
 export type CategorySlice = {
@@ -33,7 +33,7 @@ function pushTopTools(
   return [...tools]
     .filter((t) => (t.category ?? "other") === cat)
     .map((t) => ({
-      name: t.name ?? "—",
+      name: toolDisplayLabel(t),
       credit: parseCreditsValue(t.credit_value),
       status: t.status,
     }))

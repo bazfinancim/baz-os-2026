@@ -2,6 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 import COMPANIES_RAW from "@/src/data/baz_companies.json";
 
+/** עומק כמו shell.mainBg — רק עטיפה, בלי לגעת ב-layout הסיידבר */
+const ENGINE_DEPTH_BG =
+  "radial-gradient(ellipse 100% 80% at 50% -10%, rgba(49, 46, 129, 0.35) 0%, #07070f 42%, #040406 100%)";
+
 type Company = {
   id: number | string;
   name: string;
@@ -37,7 +41,8 @@ const grouped = companies.reduce<Record<string, Company[]>>((acc, c) => {
 
 export default function AppsPage() {
   return (
-    <div dir="rtl" style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div dir="rtl" style={{ minHeight: "100%", background: ENGINE_DEPTH_BG }}>
+      <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
       <div style={{ marginBottom: "32px" }}>
         <div style={{ fontSize: "0.7rem", letterSpacing: "0.2em", color: "#3b82f6", textTransform: "uppercase", marginBottom: "8px", fontWeight: 600 }}>
           BAZ ECOSYSTEM — {companies.length} חברות
@@ -92,6 +97,7 @@ export default function AppsPage() {
           </div>
         </div>
       ))}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import DISCOVERED_RAW from "@/src/data/discovered_tools.json";
-import type { CreditTool } from "@/src/lib/credits-calculator";
+import { type CreditTool, toolDisplayLabel } from "@/src/lib/credits-calculator";
 import { runComparisonEngine } from "@/src/logic/hunter/comparison-engine";
 import { useBazCompanies } from "@/src/components/HubBazCompaniesProvider";
 import { buildBotEnvelope, serializeBotPayload } from "@/src/logic/bots/bot-template";
@@ -12,6 +12,7 @@ type Tool = {
   id?: string;
   _id?: string;
   name?: string;
+  tool_name?: string;
   status?: string;
   credit_value?: string;
   category?: string;
@@ -100,7 +101,7 @@ export default function HunterPage() {
       const q = search.toLowerCase();
       list = list.filter(
         (t) =>
-          (t.name ?? "").toLowerCase().includes(q) ||
+          toolDisplayLabel(t).toLowerCase().includes(q) ||
           (t.notes ?? "").toLowerCase().includes(q) ||
           (t.category ?? "").toLowerCase().includes(q) ||
           (t.credit_type ?? "").toLowerCase().includes(q),
@@ -115,6 +116,9 @@ export default function HunterPage() {
         const pa = a.priority ?? 0;
         const pb = b.priority ?? 0;
         return (pa - pb) * dirMul;
+      }
+      if (sortKey === "name") {
+        return toolDisplayLabel(a).localeCompare(toolDisplayLabel(b), "he") * dirMul;
       }
       const va = String(a[sortKey] ?? "").toLowerCase();
       const vb = String(b[sortKey] ?? "").toLowerCase();
@@ -286,7 +290,7 @@ export default function HunterPage() {
                     return (
                       <tr key={rowKey} style={{ borderTop: "1px solid #f1f5f9" }}>
                         <td style={{ padding: "8px 12px", fontFamily: "monospace", color: "#64748b" }}>{t.priority ?? "—"}</td>
-                        <td style={{ padding: "8px 12px", fontWeight: 600 }}>{t.name ?? "—"}</td>
+                        <td style={{ padding: "8px 12px", fontWeight: 600 }}>{toolDisplayLabel(t)}</td>
                         <td style={{ padding: "8px 12px", color: "#475569" }}>{t.category ?? "—"}</td>
                         <td style={{ padding: "8px 12px" }}>
                           <span

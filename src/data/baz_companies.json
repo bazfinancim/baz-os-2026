@@ -1,4 +1,5 @@
 [
+  { "id": 61, "name": "BAZ-F", "group": "GATES", "icon": "⚡", "desc": "מועצת המוחות — חברת דוגמה (Empire)", "status": "active" },
   { "id": 1,  "name": "Baz Brain",          "group": "CORE_INFRA",    "icon": "🧠", "desc": "מרכז הבינה — AI Core",            "status": "active" },
   { "id": 2,  "name": "Baz Credits",         "group": "CORE_INFRA",    "icon": "💰", "desc": "ניהול קרדיטים ותקציב",            "status": "active" },
   { "id": 3,  "name": "Baz Arsenal",         "group": "CORE_INFRA",    "icon": "⚔️", "desc": "מאגר כלים ונשק דיגיטלי",         "status": "active" },

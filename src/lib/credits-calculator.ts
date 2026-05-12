@@ -4,6 +4,8 @@ export type CreditTool = {
   id?: string;
   _id?: string;
   name?: string;
+  /** שדה חלופי מ־Base44 / discovered_tools */
+  tool_name?: string;
   status?: string;
   credit_value?: string;
   category?: string;
@@ -15,6 +17,12 @@ export type CreditTool = {
   priority?: number;
   credit_type?: string;
 };
+
+/** תווית תצוגה — name או tool_name (מקור JSON משתנה) */
+export function toolDisplayLabel(t: Pick<CreditTool, "name" | "tool_name">): string {
+  const raw = (t.name ?? t.tool_name ?? "").toString().trim();
+  return raw.length > 0 ? raw : "—";
+}
 
 export function parseCreditsValue(cv: string | null | undefined): number {
   if (!cv) return 0;
