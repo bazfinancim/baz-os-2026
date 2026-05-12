@@ -10,7 +10,9 @@
     "pulse": "tsx src/scripts/baz-eye-pulse.ts",
     "pulse:once": "tsx src/scripts/baz-eye-pulse.ts --once",
     "hunter-tools:fetch": "tsx src/scripts/fetch-hunter-tools.ts",
-    "sync:discovered": "tsx src/scripts/sync-discovered-base44.ts"
+    "sync:discovered": "tsx src/scripts/sync-discovered-base44.ts",
+    "empire:snapshot": "tsx scripts/snapshot.ts",
+    "empire:layout-audit": "tsx scripts/emit-layout-audit.ts"
   },
   "dependencies": {
     "axios": "^1.16.0",

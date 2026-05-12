@@ -117,61 +117,77 @@ export function HubLayout({ children }: { children: ReactNode }) {
         </div>
 
         <nav style={{ display: "flex", flexDirection: "column", gap: "14px", flex: 1, overflow: "auto" }}>
-          {sections.map((sec) => (
-            <div key={sec.titleKey}>
-              <p
-                style={{
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  color: "#94a3b8",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.04em",
-                  margin: "0 8px 6px",
-                }}
+          {sections.map((sec) => {
+            const isCommand = sec.titleKey === "sectionCommand";
+            return (
+              <div
+                key={sec.titleKey}
+                style={
+                  isCommand
+                    ? {
+                        background: "linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%)",
+                        border: "1px solid #fcd34d",
+                        borderRadius: "12px",
+                        padding: "10px 8px 12px",
+                        boxShadow: "0 1px 3px rgba(245, 158, 11, 0.12)",
+                      }
+                    : undefined
+                }
               >
-                {t(sec.titleKey)}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                {sec.items.map((item) => {
-                  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "10px",
-                        padding: "9px 11px",
-                        borderRadius: "10px",
-                        textDecoration: "none",
-                        fontSize: "0.88rem",
-                        fontWeight: active ? 700 : 500,
-                        color: active ? "#1d4ed8" : "#475569",
-                        background: active ? "#eff6ff" : "transparent",
-                        border: active ? "1px solid #bfdbfe" : "1px solid transparent",
-                      }}
-                    >
-                      <span aria-hidden>{item.icon}</span>
-                      <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
-                        <span>{t(item.labelKey)}</span>
-                        <span
-                          style={{
-                            fontSize: "0.62rem",
-                            fontWeight: 400,
-                            color: active ? "#3b82f6" : "#94a3b8",
-                            lineHeight: 1.2,
-                          }}
-                        >
-                          {t(item.hintKey)}
+                <p
+                  style={{
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    color: isCommand ? "#b45309" : "#94a3b8",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
+                    margin: "0 8px 6px",
+                  }}
+                >
+                  {t(sec.titleKey)}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                  {sec.items.map((item) => {
+                    const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "10px",
+                          padding: isCommand ? "11px 12px" : "9px 11px",
+                          borderRadius: "10px",
+                          textDecoration: "none",
+                          fontSize: isCommand ? "0.92rem" : "0.88rem",
+                          fontWeight: active ? 800 : isCommand ? 600 : 500,
+                          color: active ? "#1d4ed8" : "#475569",
+                          background: active ? "#eff6ff" : isCommand ? "#ffffff" : "transparent",
+                          border: active ? "1px solid #bfdbfe" : isCommand ? "1px solid #fde68a" : "1px solid transparent",
+                        }}
+                      >
+                        <span aria-hidden>{item.icon}</span>
+                        <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
+                          <span>{t(item.labelKey)}</span>
+                          <span
+                            style={{
+                              fontSize: "0.62rem",
+                              fontWeight: 400,
+                              color: active ? "#3b82f6" : "#94a3b8",
+                              lineHeight: 1.2,
+                            }}
+                          >
+                            {t(item.hintKey)}
+                          </span>
                         </span>
-                      </span>
-                    </Link>
-                  );
-                })}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </nav>
 
         <p style={{ marginTop: "auto", fontSize: "0.62rem", color: "#94a3b8", padding: "6px 8px" }}>{t("footer")}</p>
