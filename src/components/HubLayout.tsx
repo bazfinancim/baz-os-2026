@@ -2,60 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useHubLang } from "@/src/components/HubLanguageProvider";
 import type { HubMessageKey } from "@/src/lib/hub-messages";
 
-type NavItem = {
-  href: string;
-  labelKey: HubMessageKey;
-  hintKey: HubMessageKey;
-  icon: string;
-  /** קישור חיצוני (פייסבוק, אינסטגרם וכו׳) */
-  external?: boolean;
-  /** לנתיב / בלבד — לא לסמן פעיל בכל דף */
-  exactActive?: boolean;
-};
+/** מבנה Heritage מ־152b2f8 — קטגוריית מפקדה + רשתות (לינקים פנימיים) נוספו אחרי השחזור */
+type NavItem = { href: string; labelKey: HubMessageKey; hintKey: HubMessageKey; icon: string };
 
 type Section = { titleKey: HubMessageKey; items: NavItem[] };
-
-const SOCIAL_EXTERNAL: NavItem[] = [
-  {
-    href: "https://business.facebook.com/",
-    labelKey: "nav.facebook",
-    hintKey: "nav.facebookHint",
-    icon: "📘",
-    external: true,
-  },
-  {
-    href: "https://www.instagram.com/",
-    labelKey: "nav.instagram",
-    hintKey: "nav.instagramHint",
-    icon: "📸",
-    external: true,
-  },
-  {
-    href: "https://www.linkedin.com/",
-    labelKey: "nav.linkedin",
-    hintKey: "nav.linkedinHint",
-    icon: "💼",
-    external: true,
-  },
-  {
-    href: "https://www.tiktok.com/",
-    labelKey: "nav.tiktok",
-    hintKey: "nav.tiktokHint",
-    icon: "🎵",
-    external: true,
-  },
-  {
-    href: "https://www.youtube.com/",
-    labelKey: "nav.youtube",
-    hintKey: "nav.youtubeHint",
-    icon: "▶",
-    external: true,
-  },
-];
 
 function buildSections(): Section[] {
   return [
@@ -64,16 +18,15 @@ function buildSections(): Section[] {
       items: [{ href: "/admin/status", labelKey: "nav.geminiEyes", hintKey: "nav.geminiEyesHint", icon: "◆" }],
     },
     {
-      titleKey: "sectionGate",
-      items: [{ href: "/", labelKey: "nav.home", hintKey: "nav.homeHint", icon: "⌂", exactActive: true }],
-    },
-    {
       titleKey: "sectionComm",
       items: [{ href: "/whatsapp", labelKey: "nav.whatsapp", hintKey: "nav.whatsappHint", icon: "💬" }],
     },
     {
       titleKey: "sectionSocial",
-      items: SOCIAL_EXTERNAL,
+      items: [
+        { href: "/social/facebook", labelKey: "nav.facebook", hintKey: "nav.facebookHint", icon: "📘" },
+        { href: "/social/instagram", labelKey: "nav.instagram", hintKey: "nav.instagramHint", icon: "📸" },
+      ],
     },
     {
       titleKey: "sectionCore",
@@ -92,20 +45,13 @@ function buildSections(): Section[] {
       ],
     },
     {
-      titleKey: "sectionVip",
-      items: [
-        { href: "/master-hub", labelKey: "nav.vipMaster", hintKey: "nav.vipMasterHint", icon: "⚡" },
-        { href: "/base44", labelKey: "nav.base44", hintKey: "nav.base44Hint", icon: "🔷" },
-        { href: "/cursor-log", labelKey: "nav.cursorLog", hintKey: "nav.cursorLogHint", icon: "📜" },
-      ],
-    },
-    {
       titleKey: "sectionMore",
       items: [{ href: "/wip", labelKey: "nav.wip", hintKey: "nav.wipHint", icon: "🛠️" }],
     },
   ];
 }
 
+/** פאנל כהה — לא ערכת Apple לבנה (שמירה על מראה Baz OS) */
 const shell = {
   pageBg: "#07070f",
   asideBg: "linear-gradient(180deg, #0a0a14 0%, #06060f 55%, #050508 100%)",
@@ -121,72 +67,6 @@ const shell = {
   commandBg: "rgba(30, 27, 75, 0.42)",
   commandBorder: "rgba(250, 204, 21, 0.28)",
 };
-
-function NavRow({
-  item,
-  pathname,
-  t,
-  isCommandSection,
-}: {
-  item: NavItem;
-  pathname: string | null;
-  t: (k: HubMessageKey) => string;
-  isCommandSection: boolean;
-}) {
-  const active =
-    !item.external &&
-    (item.exactActive ? pathname === item.href : pathname === item.href || pathname?.startsWith(`${item.href}/`));
-  const baseStyle: CSSProperties = {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: "10px",
-    padding: isCommandSection ? "10px 11px" : "9px 11px",
-    borderRadius: "10px",
-    textDecoration: "none",
-    fontSize: "0.86rem",
-    fontWeight: active ? 700 : 500,
-    color: active ? shell.navActiveText : item.external ? shell.textMuted : shell.navIdle,
-    background: active ? shell.navActiveBg : "transparent",
-    border: active ? `1px solid ${shell.navActiveBorder}` : "1px solid transparent",
-    transition: "background 0.15s ease, border-color 0.15s ease, color 0.15s ease",
-  };
-
-  const hint = (
-    <span
-      style={{
-        fontSize: "0.62rem",
-        fontWeight: 400,
-        color: active ? shell.navActiveText : shell.textDim,
-        lineHeight: 1.2,
-        opacity: 0.92,
-      }}
-    >
-      {t(item.hintKey)}
-    </span>
-  );
-
-  if (item.external) {
-    return (
-      <a href={item.href} target="_blank" rel="noopener noreferrer" style={baseStyle}>
-        <span aria-hidden>{item.icon}</span>
-        <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
-          <span>{t(item.labelKey)}</span>
-          {hint}
-        </span>
-      </a>
-    );
-  }
-
-  return (
-    <Link href={item.href} style={baseStyle}>
-      <span aria-hidden>{item.icon}</span>
-      <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
-        <span>{t(item.labelKey)}</span>
-        {hint}
-      </span>
-    </Link>
-  );
-}
 
 export function HubLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -213,7 +93,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
     >
       <aside
         style={{
-          width: "260px",
+          width: "248px",
           flexShrink: 0,
           background: shell.asideBg,
           ...asideEdge,
@@ -226,10 +106,8 @@ export function HubLayout({ children }: { children: ReactNode }) {
       >
         <div style={{ marginBottom: "8px", padding: "0 6px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
           <div>
-            <p style={{ fontSize: "0.68rem", color: shell.textDim, marginBottom: "2px", letterSpacing: "0.06em" }}>
-              {t("brandSubtitle")}
-            </p>
-            <p style={{ fontSize: "1.05rem", fontWeight: 800, color: shell.text, lineHeight: 1.25 }}>{t("brandTitle")}</p>
+            <p style={{ fontSize: "0.68rem", color: shell.textDim, marginBottom: "2px" }}>{t("brandSubtitle")}</p>
+            <p style={{ fontSize: "1.02rem", fontWeight: 800, color: shell.text, lineHeight: 1.25 }}>{t("brandTitle")}</p>
           </div>
           <div style={{ display: "flex", borderRadius: "8px", overflow: "hidden", border: `1px solid ${shell.asideBorder}` }}>
             <button
@@ -267,7 +145,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: "12px", flex: 1, overflow: "auto" }}>
+        <nav style={{ display: "flex", flexDirection: "column", gap: "14px", flex: 1, overflow: "auto" }}>
           {sections.map((sec) => {
             const isCommand = sec.titleKey === "sectionCommand";
             return (
@@ -286,20 +164,54 @@ export function HubLayout({ children }: { children: ReactNode }) {
               >
                 <p
                   style={{
-                    fontSize: "0.62rem",
+                    fontSize: "0.65rem",
                     fontWeight: 700,
                     color: isCommand ? "rgba(250, 204, 21, 0.85)" : shell.textDim,
                     textTransform: "uppercase",
-                    letterSpacing: "0.06em",
+                    letterSpacing: "0.04em",
                     margin: "0 8px 6px",
                   }}
                 >
                   {t(sec.titleKey)}
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                  {sec.items.map((item) => (
-                    <NavRow key={`${sec.titleKey}-${item.href}-${item.labelKey}`} item={item} pathname={pathname} t={t} isCommandSection={isCommand} />
-                  ))}
+                  {sec.items.map((item) => {
+                    const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "10px",
+                          padding: "9px 11px",
+                          borderRadius: "10px",
+                          textDecoration: "none",
+                          fontSize: "0.88rem",
+                          fontWeight: active ? 700 : 500,
+                          color: active ? shell.navActiveText : shell.navIdle,
+                          background: active ? shell.navActiveBg : "transparent",
+                          border: active ? `1px solid ${shell.navActiveBorder}` : "1px solid transparent",
+                        }}
+                      >
+                        <span aria-hidden>{item.icon}</span>
+                        <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
+                          <span>{t(item.labelKey)}</span>
+                          <span
+                            style={{
+                              fontSize: "0.62rem",
+                              fontWeight: 400,
+                              color: active ? shell.navActiveText : shell.textDim,
+                              lineHeight: 1.2,
+                            }}
+                          >
+                            {t(item.hintKey)}
+                          </span>
+                        </span>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             );
