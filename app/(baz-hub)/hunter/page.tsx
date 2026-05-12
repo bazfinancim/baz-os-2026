@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import AI_PROGRAMS_RAW from "@/src/data/ai_export.json";
+import Link from "next/link";
 import DISCOVERED_RAW from "@/src/data/discovered_tools.json";
+import HUNTER_TOOLS_FILE from "@/src/data/hunter_tools.json";
 
-/** יעד סריקה Master Hub (נתון עסקי) — הרשימה המקומית עשויה להיות קצרה יותר */
+/** יעד סריקה Master Hub — לא קשור ל-60 אפליקציות BAZ */
 const SCAN_PLAN_TOTAL = 2775;
 
 function parseCreditsValue(cv: string | null | undefined): number {
@@ -61,8 +62,16 @@ function calculateCredits(tools: Tool[]) {
   return { active, potential, total: active + potential, activeCount };
 }
 
-const STATIC_PROGRAMS: Tool[] = (AI_PROGRAMS_RAW as { programs: Tool[] }).programs ?? [];
+/** כלים מתוך hunter_tools.json (מערך tools) — בנפרד מ-baz_companies */
+function toolsFromHunterFile(raw: unknown): Tool[] {
+  if (!raw || typeof raw !== "object") return [];
+  const tools = (raw as { tools?: unknown }).tools;
+  if (!Array.isArray(tools)) return [];
+  return tools.filter((t) => t && typeof t === "object") as Tool[];
+}
+
 const DISCOVERED_TOOLS: Tool[] = Array.isArray(DISCOVERED_RAW) ? (DISCOVERED_RAW as Tool[]) : [];
+const FILE_EXTRA_TOOLS: Tool[] = toolsFromHunterFile(HUNTER_TOOLS_FILE);
 
 const JOB_TYPES = [
   "credits_hunt",
@@ -97,21 +106,20 @@ const CAT_COLOR: Record<string, string> = {
   devtools: "#2563eb",
 };
 
+/** טאבים רק לתחום Hunter — בלי שכבת «אפליקציות המותג» */
 const TABS = [
-  { id: "programs", label: "🧠 כלי AI" },
-  { id: "discovered", label: "🔍 נמצאו" },
+  { id: "library", label: "📦 ספריית הציד" },
   { id: "credits", label: "💰 קרדיטים" },
   { id: "bots", label: "🤖 Bots" },
-];
+] as const;
 
 export default function HunterPage() {
-  const [programs] = useState<Tool[]>(STATIC_PROGRAMS);
-  const [discovered] = useState<Tool[]>(DISCOVERED_TOOLS);
+  const [libraryTools] = useState<Tool[]>(() => [...DISCOVERED_TOOLS, ...FILE_EXTRA_TOOLS]);
   const [bots] = useState<Tool[]>([]);
   const [apiError] = useState<string | null>(null);
   const [lastFetch] = useState<string | null>(null);
 
-  const [activeTab, setActiveTab] = useState("programs");
+  const [activeTab, setActiveTab] = useState<string>("library");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("הכל");
   const [isRunning, setIsRunning] = useState(false);
@@ -139,17 +147,19 @@ export default function HunterPage() {
     return () => clearInterval(interval);
   }, [isRunning, jobIdx]);
 
-  const allTools = useMemo(() => [...programs, ...discovered], [programs, discovered]);
+  const allTools = useMemo(() => libraryTools, [libraryTools]);
   const credits = useMemo(() => calculateCredits(allTools), [allTools]);
   const scanIndex = Math.min(allTools.length, SCAN_PLAN_TOTAL);
   const scanPct = Math.round((scanIndex / SCAN_PLAN_TOTAL) * 100);
 
-  const baseList = useMemo(
-    () => (activeTab === "discovered" ? discovered : activeTab === "bots" ? bots : programs),
-    [activeTab, programs, discovered, bots],
-  );
+  const baseList = useMemo(() => {
+    if (activeTab === "bots") return bots;
+    if (activeTab === "library") return libraryTools;
+    return [];
+  }, [activeTab, libraryTools, bots]);
 
   const filtered = useMemo(() => {
+    if (activeTab === "credits") return [];
     let list = [...baseList];
     if (statusFilter !== "הכל") list = list.filter((t) => t.status === statusFilter);
     if (search.trim()) {
@@ -162,7 +172,7 @@ export default function HunterPage() {
       );
     }
     return list;
-  }, [baseList, statusFilter, search]);
+  }, [baseList, statusFilter, search, activeTab]);
 
   const tabBtn = (id: string, label: string) => (
     <button
@@ -243,11 +253,12 @@ export default function HunterPage() {
               </div>
               <div>
                 <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#0f172a", margin: 0 }}>
-                  Hunter — קרדיטים וכלים
+                  Hunter — ציד כלים חיצוניים
                 </h1>
                 <p style={{ color: "#64748b", fontSize: "0.8rem", margin: "4px 0 0" }}>
-                  נתונים מקומיים: ai_export + discovered_tools.json · יעד סריקה {SCAN_PLAN_TOTAL.toLocaleString()}{" "}
-                  כלים
+                  מקורות מקומיים בלבד: <strong>discovered_tools.json</strong>
+                  {FILE_EXTRA_TOOLS.length > 0 ? " + hunter_tools.json" : ""} · יעד סריקה{" "}
+                  {SCAN_PLAN_TOTAL.toLocaleString()} כלים — <strong>לא</strong> כולל את 60 אפליקציות BAZ
                 </p>
               </div>
             </div>
@@ -287,6 +298,25 @@ export default function HunterPage() {
             </div>
           </div>
 
+          <p
+            style={{
+              fontSize: "0.8rem",
+              color: "#0f172a",
+              background: "#fffbeb",
+              border: "1px solid #fde68a",
+              borderRadius: "10px",
+              padding: "10px 14px",
+              marginBottom: "12px",
+              lineHeight: 1.5,
+            }}
+          >
+            <strong>הפרדה מוחלטת:</strong> כאן רק רשימת ציד (שוק חיצוני). את מפת המוצרים של BAZ רואים ב־
+            <Link href="/apps" style={{ color: "#1d4ed8", fontWeight: 700 }}>
+              טאב אפליקציות
+            </Link>
+            .
+          </p>
+
           <div style={{ marginBottom: "8px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#64748b" }}>
               <span>
@@ -308,7 +338,7 @@ export default function HunterPage() {
           </div>
 
           <p style={{ fontSize: "0.72rem", color: "#94a3b8", margin: 0 }}>
-            מפתחות API: נשמרים ב-Vault / משתני סביבה בשרת — לא בדפדפן. לניהול קרדיטים השתמש בטאב ״קרדיטים״.
+            מפתחות API: ב-Vault / משתני סביבה בשרת בלבד — לא בדפדפן.
           </p>
         </div>
       </div>
@@ -340,12 +370,12 @@ export default function HunterPage() {
           }}
         >
           {[
-            { label: "סה״כ כלים (מקומי)", value: allTools.length, icon: "🗄️", color: "#2563eb" },
-            { label: "כלים פעילים", value: credits.activeCount, icon: "✅", color: "#16a34a" },
-            { label: "נמצאו (JSON)", value: discovered.length, icon: "🔍", color: "#ca8a04" },
+            { label: "כלי ציד (סה״כ)", value: allTools.length, icon: "🗄️", color: "#2563eb" },
+            { label: "מ־discovered_tools.json", value: DISCOVERED_TOOLS.length, icon: "📄", color: "#64748b" },
+            { label: "מ־hunter_tools.json", value: FILE_EXTRA_TOOLS.length, icon: "➕", color: "#64748b" },
+            { label: "פעילים + נרשמים", value: credits.activeCount, icon: "✅", color: "#16a34a" },
             { label: "קרדיטים פעילים", value: formatCreditsCompact(credits.active), icon: "🔑", color: "#16a34a" },
             { label: "פוטנציאלי", value: formatCreditsCompact(credits.potential), icon: "💡", color: "#ca8a04" },
-            { label: "סה״כ", value: formatCreditsCompact(credits.total), icon: "💎", color: "#7c3aed" },
             { label: "ריצות", value: runsCount, icon: "⚡", color: "#0284c7" },
           ].map((s) => (
             <div
@@ -388,28 +418,30 @@ export default function HunterPage() {
           </div>
         )}
 
-        <div style={{ display: "flex", gap: "8px", marginBottom: "12px", flexWrap: "wrap", alignItems: "center" }}>
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="🔍 חיפוש גלובלי..."
-            style={{
-              background: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              padding: "7px 14px",
-              color: "#0f172a",
-              fontSize: "0.85rem",
-              flex: 1,
-              minWidth: "200px",
-              outline: "none",
-            }}
-          />
-          {["הכל", "active", "registered", "discovered", "pending_registration"].map(stBtn)}
-          {lastFetch && (
-            <span style={{ color: "#94a3b8", fontSize: "0.7rem", marginRight: "auto" }}>עדכון: {lastFetch}</span>
-          )}
-        </div>
+        {activeTab !== "credits" && (
+          <div style={{ display: "flex", gap: "8px", marginBottom: "12px", flexWrap: "wrap", alignItems: "center" }}>
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="🔍 חיפוש ברשימת הציד..."
+              style={{
+                background: "#ffffff",
+                border: "1px solid #e2e8f0",
+                borderRadius: "8px",
+                padding: "7px 14px",
+                color: "#0f172a",
+                fontSize: "0.85rem",
+                flex: 1,
+                minWidth: "200px",
+                outline: "none",
+              }}
+            />
+            {["הכל", "active", "registered", "discovered", "pending_registration"].map(stBtn)}
+            {lastFetch && (
+              <span style={{ color: "#94a3b8", fontSize: "0.7rem", marginRight: "auto" }}>עדכון: {lastFetch}</span>
+            )}
+          </div>
+        )}
 
         <div
           style={{
@@ -423,7 +455,7 @@ export default function HunterPage() {
         >
           {TABS.map((t) => tabBtn(t.id, t.label))}
           <span style={{ color: "#94a3b8", fontSize: "0.75rem", alignSelf: "center", marginRight: "auto" }}>
-            {filtered.length} רשומות
+            {activeTab === "credits" ? "—" : `${filtered.length} רשומות`}
           </span>
         </div>
 
@@ -438,11 +470,19 @@ export default function HunterPage() {
               }}
             >
               <p style={{ color: "#16a34a", fontWeight: "bold", fontSize: "1.05rem", marginBottom: "12px" }}>
-                💎 סיכום קרדיטים
+                💎 סיכום קרדיטים (רשימת הציד בלבד)
               </p>
               {[
-                { label: "קרדיטים פעילים (registered + active)", value: formatCreditsCompact(credits.active), color: "#16a34a" },
-                { label: "פוטנציאל (discovered + pending)", value: formatCreditsCompact(credits.potential), color: "#ca8a04" },
+                {
+                  label: "קרדיטים פעילים (registered + active)",
+                  value: formatCreditsCompact(credits.active),
+                  color: "#16a34a",
+                },
+                {
+                  label: "פוטנציאל (discovered + pending)",
+                  value: formatCreditsCompact(credits.potential),
+                  color: "#ca8a04",
+                },
                 { label: "סה״כ אפשרי", value: formatCreditsCompact(credits.total), color: "#7c3aed" },
               ].map((row) => (
                 <div
@@ -464,7 +504,7 @@ export default function HunterPage() {
           </div>
         )}
 
-        {activeTab !== "credits" && (
+        {activeTab === "library" && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "10px" }}>
             {filtered.map((t, i) => {
               const st = ST[t.status ?? "discovered"] ?? ST.discovered;
@@ -542,15 +582,60 @@ export default function HunterPage() {
             })}
 
             {filtered.length === 0 && (
-              <p style={{ color: "#94a3b8", gridColumn: "1/-1", textAlign: "center", padding: "48px" }}>אין תוצאות</p>
+              <div
+                style={{
+                  gridColumn: "1/-1",
+                  textAlign: "center",
+                  padding: "40px 20px",
+                  background: "#ffffff",
+                  border: "1px dashed #cbd5e1",
+                  borderRadius: "12px",
+                  color: "#64748b",
+                  fontSize: "0.88rem",
+                }}
+              >
+                <p style={{ marginBottom: "10px" }}>אין עדיין רשומות ב־discovered_tools.json (והמערך tools ב־hunter_tools.json ריק).</p>
+                <p style={{ fontSize: "0.8rem", color: "#94a3b8" }}>
+                  זה תקין להפרדה: אפליקציות המותג מופיעות רק ב־
+                  <Link href="/apps" style={{ color: "#1d4ed8", fontWeight: 700 }}>
+                    /apps
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === "bots" && (
+          <div
+            style={{
+              background: "#ffffff",
+              border: "1px solid #e2e8f0",
+              borderRadius: "12px",
+              padding: "28px 20px",
+              textAlign: "center",
+              color: "#64748b",
+              fontSize: "0.88rem",
+            }}
+          >
+            {bots.length === 0 ? (
+              <>
+                <p style={{ marginBottom: "8px" }}>אין Bots מקומיים בטאב זה — יתווסף כשיהיה מקור נתונים ייעודי ל-Hunter.</p>
+                <p style={{ fontSize: "0.8rem", color: "#94a3b8" }}>לא מעורבב עם רשימת האפליקציות ב־/apps.</p>
+              </>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "10px" }}>
+                {bots.map((t, i) => (
+                  <div key={t.id ?? i} style={{ border: "1px solid #e2e8f0", borderRadius: "10px", padding: "12px" }}>
+                    {t.name ?? "—"}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}
       </div>
-
-      <style>{`
-        @keyframes scan-bar { 0%{width:0%} 50%{width:100%} 100%{width:0%;margin-right:100%} }
-      `}</style>
     </div>
   );
 }

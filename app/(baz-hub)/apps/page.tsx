@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import COMPANIES_RAW from "@/src/data/baz_companies.json";
 
 type Company = {
@@ -31,6 +32,25 @@ export default function AppsPage() {
         </h1>
         <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
           {COMPANIES.length} ישויות מקומיות מקובץ הנתונים baz_companies.json — כל שורה היא מוצר/אפליקציה באימפריה.
+        </p>
+        <p
+          style={{
+            marginTop: "12px",
+            fontSize: "0.82rem",
+            color: "#0f172a",
+            background: "#eff6ff",
+            border: "1px solid #bfdbfe",
+            borderRadius: "10px",
+            padding: "10px 14px",
+            lineHeight: 1.5,
+          }}
+        >
+          <strong>הפרדה מוחלטת:</strong> מסך זה מציג <strong>אך ורק</strong> את מפת המוצרים הפנימיים של BAZ — ללא רשימות ציד
+          חיצוניות. לניהול כלים/קרדיטים שנצודו בשוק:{" "}
+          <Link href="/hunter" style={{ color: "#1d4ed8", fontWeight: 700 }}>
+            טאב Hunter
+          </Link>
+          .
         </p>
       </header>
 

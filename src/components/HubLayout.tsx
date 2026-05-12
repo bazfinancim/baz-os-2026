@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 const NAV = [
-  { href: "/apps", label: "אפליקציות", icon: "📱" },
-  { href: "/hunter", label: "Hunter", icon: "🎯" },
-  { href: "/whatsapp", label: "WhatsApp Hub", icon: "💬" },
-  { href: "/wip", label: "WIP — בעבודה", icon: "🛠️" },
+  { href: "/apps", label: "אפליקציות", hint: "מוצרי BAZ בלבד (baz_companies)", icon: "📱" },
+  { href: "/hunter", label: "Hunter", hint: "ציד חיצוני (discovered_tools)", icon: "🎯" },
+  { href: "/whatsapp", label: "WhatsApp Hub", hint: "הודעות ו-n8n", icon: "💬" },
+  { href: "/wip", label: "WIP — בעבודה", hint: "פיתוח", icon: "🛠️" },
 ] as const;
 
 export function HubLayout({ children }: { children: ReactNode }) {
@@ -53,7 +53,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
                 href={item.href}
                 style={{
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                   gap: "10px",
                   padding: "10px 12px",
                   borderRadius: "10px",
@@ -66,7 +66,12 @@ export function HubLayout({ children }: { children: ReactNode }) {
                 }}
               >
                 <span aria-hidden>{item.icon}</span>
-                {item.label}
+                <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
+                  <span>{item.label}</span>
+                  <span style={{ fontSize: "0.65rem", fontWeight: 400, color: active ? "#3b82f6" : "#94a3b8", lineHeight: 1.2 }}>
+                    {item.hint}
+                  </span>
+                </span>
               </Link>
             );
           })}
