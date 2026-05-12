@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useHubLang } from "@/src/components/HubLanguageProvider";
 import type { HubMessageKey } from "@/src/lib/hub-messages";
 
-type NavItem = { href: string; labelKey: HubMessageKey; hintKey: HubMessageKey; icon: string };
+type NavItem = { href: string; labelKey: HubMessageKey; hintKey: HubMessageKey; icon: string; external?: boolean };
 
 type Section = { titleKey: HubMessageKey; items: NavItem[] };
 
@@ -31,7 +31,13 @@ function buildSections(): Section[] {
     {
       titleKey: "sectionFuel",
       items: [
-        { href: "/hunter", labelKey: "nav.hunter", hintKey: "nav.hunterHint", icon: "🎯" },
+        {
+          href: "https://app.base44.com/apps/69f0ecbea8b87cb75fe513c9",
+          labelKey: "nav.hunter",
+          hintKey: "nav.hunterHint",
+          icon: "🎯",
+          external: true,
+        },
         { href: "/credits-hub", labelKey: "nav.finance", hintKey: "nav.financeHint", icon: "💰" },
         { href: "/vault", labelKey: "nav.vault", hintKey: "nav.vaultHint", icon: "🔐" },
       ],
@@ -148,25 +154,24 @@ export function HubLayout({ children }: { children: ReactNode }) {
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                   {sec.items.map((item) => {
-                    const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "10px",
-                          padding: isCommand ? "11px 12px" : "9px 11px",
-                          borderRadius: "10px",
-                          textDecoration: "none",
-                          fontSize: isCommand ? "0.92rem" : "0.88rem",
-                          fontWeight: active ? 800 : isCommand ? 600 : 500,
-                          color: active ? "#1d4ed8" : "#475569",
-                          background: active ? "#eff6ff" : isCommand ? "#ffffff" : "transparent",
-                          border: active ? "1px solid #bfdbfe" : isCommand ? "1px solid #fde68a" : "1px solid transparent",
-                        }}
-                      >
+                    const isExternal = Boolean(item.external);
+                    const active =
+                      !isExternal && (pathname === item.href || pathname.startsWith(`${item.href}/`));
+                    const linkStyle: CSSProperties = {
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "10px",
+                      padding: isCommand ? "11px 12px" : "9px 11px",
+                      borderRadius: "10px",
+                      textDecoration: "none",
+                      fontSize: isCommand ? "0.92rem" : "0.88rem",
+                      fontWeight: active ? 800 : isCommand ? 600 : 500,
+                      color: active ? "#1d4ed8" : "#475569",
+                      background: active ? "#eff6ff" : isCommand ? "#ffffff" : "transparent",
+                      border: active ? "1px solid #bfdbfe" : isCommand ? "1px solid #fde68a" : "1px solid transparent",
+                    };
+                    const inner = (
+                      <>
                         <span aria-hidden>{item.icon}</span>
                         <span style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
                           <span>{t(item.labelKey)}</span>
@@ -181,6 +186,24 @@ export function HubLayout({ children }: { children: ReactNode }) {
                             {t(item.hintKey)}
                           </span>
                         </span>
+                      </>
+                    );
+                    if (isExternal) {
+                      return (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={linkStyle}
+                        >
+                          {inner}
+                        </a>
+                      );
+                    }
+                    return (
+                      <Link key={item.href} href={item.href} style={linkStyle}>
+                        {inner}
                       </Link>
                     );
                   })}

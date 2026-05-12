@@ -8,7 +8,7 @@ import { EmpireStatusBoard } from "@/src/components/EmpireStatusBoard";
 import db from "@/src/lib/db.json";
 import { IntegrationGalaxy } from "@/src/components/IntegrationGalaxy";
 import { MarketingHub } from "@/src/components/MarketingHub";
-import { LocalHunterView } from "@/src/components/LocalHunterView";
+import { Base44MasterView } from "@/src/components/Base44MasterView";
 import { CommsHub } from "@/src/components/CommsHub";
 import { BillingPipeline } from "@/src/components/BillingPipeline";
 import base44Inventory from "@/src/data/base44_inventory.json";
@@ -1173,7 +1173,7 @@ export default function Home() {
               onInjectVaultKeys={injectVaultKeys}
             />
           ) : null}
-          {activeTab === "base" ? <LocalHunterView /> : null}
+          {activeTab === "base" ? <Base44MasterView /> : null}
           {activeTab === "lead_gen" ? <LeadGenPanel isReadOnlyMode={isReadOnlyMode} /> : null}
           {activeTab === "whatsapp_hub" ? <WhatsAppHubPanel /> : null}
           {activeTab === "comms" ? <CommsHub /> : null}

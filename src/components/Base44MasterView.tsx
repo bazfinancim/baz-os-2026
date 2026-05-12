@@ -1,184 +1,116 @@
-
 "use client";
-import React, { useState, useMemo } from "react";
+
+import React, { useMemo } from "react";
 import discoveredTools from "@/src/data/discovered_tools.json";
-import bazCompanies from "@/src/data/baz_companies.json";
 
-type Tool = {
-  id: string;
-  name: string;
-  category: string;
-  status: string;
-  credit_value?: string;
-  registration_email?: string | null;
-  url?: string;
-  priority?: number;
-  credit_type?: string;
-  notes?: string;
-};
+/** עומק כמו shell.mainBg — בלי globals.css */
+const ENGINE_DEPTH_BG =
+  "radial-gradient(ellipse 100% 80% at 50% -10%, rgba(49, 46, 129, 0.35) 0%, #07070f 42%, #040406 100%)";
 
-type Company = {
-  id: number;
-  name: string;
-  group: string;
-  icon: string;
-  desc: string;
-  status: string;
-};
+const HUNTER_INTEL_URL = "https://app.base44.com/apps/69f0ecbea8b87cb75fe513c9";
 
-const CATEGORY_LABELS: Record<string, string> = {
-  cloud: "☁️ ענן",
-  llm: "🧠 מודלי AI",
-  saas: "⚙️ SaaS",
-  infra: "🏗️ תשתית",
-  marketing: "📣 שיווק",
-  finance: "💰 פיננסים",
-  other: "📦 אחר",
-};
-
-const STATUS_COLORS: Record<string, string> = {
-  active: "#22c55e",
-  discovered: "#3b82f6",
-  pending: "#f59e0b",
-  inactive: "#6b7280",
-};
-
+/**
+ * שער Launchpad לטאב Base במסך הראשי — ללא טבלאות/iframe שבורים.
+ * מועצת המוחות: מסך יוקרתי + כפתור שיגור ל־Base44 Hunter.
+ */
 export function Base44MasterView() {
-  const [tab, setTab] = useState<"hunter" | "companies" | "agents">("hunter");
-  const [search, setSearch] = useState("");
-  const [catFilter, setCatFilter] = useState("all");
-
-  const tools = useMemo<Tool[]>(() => {
-    const raw = discoveredTools as Tool[] | { tools?: Tool[] };
-    return Array.isArray(raw) ? raw : (raw.tools ?? []);
+  const toolCount = useMemo(() => {
+    const raw = discoveredTools as unknown[] | { tools?: unknown[] };
+    if (Array.isArray(raw)) return raw.length;
+    return Array.isArray((raw as { tools?: unknown[] }).tools) ? (raw as { tools: unknown[] }).tools.length : 0;
   }, []);
 
-  const companies = useMemo<Company[]>(() => bazCompanies as Company[], []);
-
-  const filtered = useMemo(() => {
-    return tools.filter(t => {
-      const q = search.toLowerCase();
-      const matchSearch = !q || t.name.toLowerCase().includes(q) || (t.notes ?? "").toLowerCase().includes(q) || t.category.toLowerCase().includes(q);
-      const matchCat = catFilter === "all" || t.category === catFilter;
-      return matchSearch && matchCat;
-    });
-  }, [tools, search, catFilter]);
-
-  const categories = useMemo(() => ["all", ...Array.from(new Set(tools.map(t => t.category)))], [tools]);
-
-  const tabStyle = (active: boolean) => ({
-    padding: "8px 18px", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" as const,
-    background: active ? "#1d4ed8" : "#0f172a", color: active ? "white" : "#64748b",
-    border: active ? "none" : "1px solid #1e3a5f", fontSize: "0.88rem", transition: "all 0.15s",
-  });
-
   return (
-    <div dir="rtl" style={{ padding: "24px", color: "#e2e8f0", fontFamily: "inherit" }}>
-      {/* Header */}
-      <div style={{ marginBottom: "20px" }}>
-        <div style={{ fontSize: "0.6rem", letterSpacing: "0.25em", color: "#facc15", textTransform: "uppercase", marginBottom: "6px", fontWeight: 700 }}>BASE44 / HUNTER</div>
-        <h1 style={{ fontSize: "1.8rem", fontWeight: 900, color: "#f8f9fa", margin: 0 }}>⚡ מרכז הארסנל</h1>
-        <p style={{ color: "#475569", marginTop: "4px", fontSize: "0.82rem" }}>{tools.length} כלים · {companies.length} חברות</p>
-      </div>
+    <div
+      dir="rtl"
+      style={{
+        minHeight: "100%",
+        background: ENGINE_DEPTH_BG,
+        color: "#e2e8f0",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        padding: "clamp(24px, 5vw, 48px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* נקודות עומק עדינות (לא CSS גלובלי) */}
+      <div
+        aria-hidden
+        style={{
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          backgroundImage:
+            "radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.12) 0%, transparent 55%), radial-gradient(1px 1px at 78% 22%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(1px 1px at 55% 80%, rgba(165,180,252,0.15) 0%, transparent 45%)",
+          opacity: 0.9,
+          zIndex: 0,
+        }}
+      />
 
-      {/* Tabs */}
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap" }}>
-        <button style={tabStyle(tab === "hunter")} onClick={() => setTab("hunter")}>🎯 Credit Hunter ({tools.length})</button>
-        <button style={tabStyle(tab === "companies")} onClick={() => setTab("companies")}>🏢 חברות ({companies.length})</button>
-        <button style={tabStyle(tab === "agents")} onClick={() => setTab("agents")}>🤖 סוכנים</button>
-      </div>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          width: "100%",
+          maxWidth: "640px",
+          borderRadius: "20px",
+          padding: "clamp(28px, 4vw, 40px)",
+          background: "linear-gradient(145deg, rgba(15,23,42,0.72) 0%, rgba(15,23,42,0.45) 100%)",
+          border: "1px solid rgba(129, 140, 248, 0.28)",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset",
+          backdropFilter: "blur(12px)",
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            fontSize: "0.65rem",
+            letterSpacing: "0.28em",
+            fontWeight: 800,
+            color: "rgba(250, 204, 21, 0.85)",
+            textTransform: "uppercase",
+          }}
+        >
+          Base44 · Hunter Intel
+        </p>
+        <h1 style={{ margin: "12px 0 0", fontSize: "clamp(1.5rem, 4vw, 2rem)", fontWeight: 900, lineHeight: 1.2, color: "#f8fafc" }}>
+          שער השיגור
+        </h1>
+        <p style={{ margin: "14px 0 0", fontSize: "0.92rem", lineHeight: 1.65, color: "#94a3b8", maxWidth: "52ch" }}>
+          מאגר המקורי ב־BAZ מסונכרן עם <strong style={{ color: "#cbd5e1" }}>{toolCount}</strong> כלי Intel. פתח את מנוע Base44
+          בטאב נפרד — ללא iframe וללא טבלאות שבורות.
+        </p>
 
-      {/* HUNTER TAB */}
-      {tab === "hunter" && (
-        <div>
-          {/* Search + filter bar */}
-          <div style={{ display: "flex", gap: "10px", marginBottom: "16px", flexWrap: "wrap" }}>
-            <input
-              value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="🔍 חפש כלי..."
-              style={{ flex: 1, minWidth: "200px", background: "#0a0e18", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "8px 12px", color: "#f1f5f9", fontSize: "0.85rem", direction: "rtl" }}
-            />
-            <select value={catFilter} onChange={e => setCatFilter(e.target.value)}
-              style={{ background: "#0a0e18", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "8px 12px", color: "#f1f5f9", fontSize: "0.85rem" }}>
-              {categories.map(c => <option key={c} value={c}>{c === "all" ? "כל הקטגוריות" : (CATEGORY_LABELS[c] ?? c)}</option>)}
-            </select>
-          </div>
-
-          <div style={{ fontSize: "0.72rem", color: "#475569", marginBottom: "12px" }}>מציג {filtered.length} מתוך {tools.length}</div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "12px", maxHeight: "600px", overflowY: "auto", paddingLeft: "4px" }}>
-            {filtered.slice(0, 120).map(tool => (
-              <div key={tool.id} style={{
-                background: "linear-gradient(135deg,#0d1117,#111827)",
-                border: `1px solid ${(STATUS_COLORS[tool.status] ?? "#334155")}30`,
-                borderRadius: "10px", padding: "14px",
-              }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-                  <div style={{ fontWeight: 700, color: "#f1f5f9", fontSize: "0.85rem", flex: 1 }}>{tool.name}</div>
-                  <div style={{ background: (STATUS_COLORS[tool.status] ?? "#334155") + "20", border: `1px solid ${STATUS_COLORS[tool.status] ?? "#334155"}40`, borderRadius: "12px", padding: "2px 8px", fontSize: "0.6rem", color: STATUS_COLORS[tool.status] ?? "#94a3b8", fontWeight: 700, whiteSpace: "nowrap", marginRight: "8px" }}>
-                    {tool.status}
-                  </div>
-                </div>
-                {tool.credit_value && <div style={{ fontSize: "0.78rem", color: "#22c55e", fontWeight: 700, marginBottom: "4px" }}>{tool.credit_value}</div>}
-                {tool.notes && <div style={{ fontSize: "0.72rem", color: "#64748b", lineHeight: "1.4" }}>{tool.notes}</div>}
-                <div style={{ marginTop: "8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ fontSize: "0.6rem", color: "#475569", background: "#1e293b", borderRadius: "4px", padding: "2px 6px" }}>{CATEGORY_LABELS[tool.category] ?? tool.category}</div>
-                  {tool.url && <a href={tool.url} target="_blank" rel="noreferrer" style={{ fontSize: "0.65rem", color: "#38bdf8", textDecoration: "none" }}>🔗 פתח</a>}
-                </div>
-              </div>
-            ))}
-            {filtered.length > 120 && (
-              <div style={{ gridColumn: "1/-1", textAlign: "center", color: "#475569", padding: "20px", fontSize: "0.8rem" }}>
-                ... ועוד {filtered.length - 120} כלים — צמצם את החיפוש לראות יותר
-              </div>
-            )}
-          </div>
+        <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px", alignItems: "stretch" }}>
+          <a
+            href={HUNTER_INTEL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+              padding: "16px 22px",
+              borderRadius: "14px",
+              fontWeight: 800,
+              fontSize: "0.95rem",
+              textDecoration: "none",
+              color: "#0f172a",
+              background: "linear-gradient(135deg, #fde047 0%, #facc15 40%, #eab308 100%)",
+              border: "1px solid rgba(250, 204, 21, 0.5)",
+              boxShadow: "0 12px 40px rgba(234, 179, 8, 0.35)",
+            }}
+          >
+            🚀 פתח Hunter Intel Engine (מנוע מקורי)
+          </a>
+          <p style={{ margin: 0, fontSize: "0.72rem", color: "#64748b", textAlign: "center" }}>
+            נפתח בטאב חדש · app.base44.com
+          </p>
         </div>
-      )}
-
-      {/* COMPANIES TAB */}
-      {tab === "companies" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "12px" }}>
-          {companies.map(c => (
-            <div key={c.id} style={{
-              background: "linear-gradient(135deg,#0d1117,#111827)",
-              border: `1px solid ${c.status === "active" ? "#22c55e30" : "#33415530"}`,
-              borderRadius: "10px", padding: "14px",
-            }}>
-              <div style={{ fontSize: "1.5rem", marginBottom: "6px" }}>{c.icon}</div>
-              <div style={{ fontWeight: 700, color: "#f1f5f9", fontSize: "0.88rem" }}>{c.name}</div>
-              <div style={{ fontSize: "0.7rem", color: "#64748b", marginTop: "4px", lineHeight: "1.4" }}>{c.desc}</div>
-              <div style={{ marginTop: "8px", display: "flex", justifyContent: "space-between" }}>
-                <div style={{ fontSize: "0.6rem", color: "#475569", background: "#1e293b", borderRadius: "4px", padding: "2px 6px" }}>{c.group}</div>
-                <div style={{ fontSize: "0.6rem", color: c.status === "active" ? "#22c55e" : "#6b7280", fontWeight: 700 }}>{c.status === "active" ? "פעיל" : "לא פעיל"}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* AGENTS TAB */}
-      {tab === "agents" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "12px" }}>
-          {[
-            { name: "CodeX", id: "69dd307d9b66b56b793acc13", desc: "הסוכן הראשי של האימפריה", icon: "🤖" },
-            { name: "סופר חשבונית", id: "69f0e56a29498695bbdde207", desc: "סוכן חשבוניות", icon: "📄" },
-            { name: "הסופר סוכן של בני", id: "69b6a494706c1c8dce4eb64d", desc: "סוכן בני חבסוב", icon: "👤" },
-            { name: "בייס (Base)", id: "69b1b93d4721ba14065bbedc", desc: "סוכן Base", icon: "🏛️" },
-            { name: "אורה (Ora)", id: "69b71c806e0d14c955cb617a", desc: "סוכנת קופונים", icon: "💎" },
-          ].map(agent => (
-            <div key={agent.id} style={{ background: "linear-gradient(135deg,#0d1117,#0f1f2e)", border: "1px solid #1d4ed830", borderRadius: "10px", padding: "16px" }}>
-              <div style={{ fontSize: "1.8rem", marginBottom: "8px" }}>{agent.icon}</div>
-              <div style={{ fontWeight: 700, color: "#f1f5f9", fontSize: "0.9rem" }}>{agent.name}</div>
-              <div style={{ fontSize: "0.72rem", color: "#64748b", marginTop: "4px" }}>{agent.desc}</div>
-              <button onClick={() => window.open(`https://app.base44.com/superagent/${agent.id}`, "_blank")}
-                style={{ marginTop: "12px", background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.3)", borderRadius: "6px", color: "#60a5fa", padding: "6px 14px", fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", width: "100%" }}>
-                פתח סוכן →
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+      </section>
     </div>
   );
 }
