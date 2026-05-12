@@ -1,0 +1,40 @@
+=== BAZ OS — Visual Auditor (Panel Layout Report) ===
+נוצר: 2026-05-12T19:13:13.039Z
+
+--- אזורים ---
+[root] (baz-hub)/*
+  מיקום: מכלל העמוד — flex שורה, כיוון לפי שפה (RTL עברית / LTR אנגלית)
+  תפקיד: HubLanguageProvider → HubBazCompaniesProvider → HubLayout
+  ילדים: sidebar · main
+[sidebar] (baz-hub)/*
+  מיקום: בעברית: צד ימין של המסך; באנגלית: צד שמאל — רוחב ~248px
+  תפקיד: ניווט Master Hub: מפקדה (Gemini Eyes), תקשורת, ליבה, כסף ודלק, עוד
+  ילדים: כותרת מותג · מתג שפה עברית/English · סקשנים עם קישורים
+  הערה: קובץ: src/components/HubLayout.tsx
+[main] (baz-hub)/*
+  מיקום: משטח תוכן ראשי — משמאל לסיידבר ב-RTL
+  תפקיד: תוכן העמוד (apps, hunter, whatsapp, …)
+  ילדים: אזור גלילה אנכית · רקע #f8fafc
+  הערה: קובץ: src/components/HubLayout.tsx (תג main)
+[admin_header] /admin/*
+  מיקום: חלק עליון — פס דק עם כותרת Gemini Control Center וקישור חזרה ל-Hub
+  תפקיד: Header אדמין
+  ילדים: לוגו ◆ · כותרת · קישור ← Hub
+  הערה: קובץ: app/admin/layout.tsx
+[admin_body] /admin/*
+  מיקום: תחת ה-header — רוחב מקסימלי ~1280px ממורכז
+  תפקיד: תוכן אדמין (למשל Eyes ניטור)
+  ילדים: טבלה · AutomationRunner · כפתורי רענון
+  הערה: קובץ: app/admin/status/page.tsx
+
+--- מפת נתיבים (Hub) ---
+/apps — 60 חברות (baz_companies)
+/hunter — ספריית ציד + Comparison Engine
+/whatsapp — n8n webhooks
+/credits-hub — פיננסים
+/projects, /clients, /vault, /wip
+
+--- נתיב אדמין ---
+/admin/status — Gemini Eyes (ניטור n8n לחברות)
+
+סוף דו"ח
