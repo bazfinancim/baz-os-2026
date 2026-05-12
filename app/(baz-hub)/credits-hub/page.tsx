@@ -155,7 +155,7 @@ export default function CreditsHubPage() {
               {loadingApis ? "טוען…" : "רענן נתוני שרת"}
             </button>
             <a
-              href="/"
+              href="/apps"
               style={{
                 padding: "8px 16px",
                 borderRadius: "8px",
@@ -167,7 +167,7 @@ export default function CreditsHubPage() {
                 display: "inline-block",
               }}
             >
-              ← מרכז הפיקוד
+              ← Hub
             </a>
             <a
               href="/hunter"

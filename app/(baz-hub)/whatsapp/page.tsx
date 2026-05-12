@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import { postJsonQuiet } from "@/src/lib/n8n-quiet-fetch";
 
 const CHANNELS = [
   {
@@ -57,17 +58,14 @@ export default function WhatsAppHub() {
     const ts = new Date().toLocaleTimeString("he-IL");
     const body = buildStatusPayload(statusMessage, ch, { trigger: "manual_webhook" });
     try {
-      const res = await fetch(ch.webhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (res.ok) {
+      const res = await postJsonQuiet(ch.webhook, body);
+      if (res?.ok) {
         setStatuses((p) => ({ ...p, [ch.id]: "ok" }));
         pushLog(`[${ts}] ✅ ${ch.label} (${ch.phone}) — נשלח ל-n8n (${res.status})`);
       } else {
         setStatuses((p) => ({ ...p, [ch.id]: "error" }));
-        pushLog(`[${ts}] ❌ ${ch.label} — HTTP ${res.status}`);
+        const reason = res == null ? "אין תשובת רשת" : `HTTP ${res.status}`;
+        pushLog(`[${ts}] ❌ ${ch.label} — ${reason}`);
       }
     } catch (e) {
       setStatuses((p) => ({ ...p, [ch.id]: "error" }));
@@ -85,17 +83,13 @@ export default function WhatsAppHub() {
       setStatuses((p) => ({ ...p, [ch.id]: "sending" }));
       const body = buildStatusPayload(statusMessage, ch, { trigger: "status_broadcast" });
       try {
-        const res = await fetch(ch.webhook, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
-        if (res.ok) {
+        const res = await postJsonQuiet(ch.webhook, body);
+        if (res?.ok) {
           setStatuses((p) => ({ ...p, [ch.id]: "ok" }));
           results.push(`${ch.phone}: OK`);
         } else {
           setStatuses((p) => ({ ...p, [ch.id]: "error" }));
-          results.push(`${ch.phone}: HTTP ${res.status}`);
+          results.push(`${ch.phone}: ${res == null ? "network" : `HTTP ${res.status}`}`);
         }
       } catch (e) {
         setStatuses((p) => ({ ...p, [ch.id]: "error" }));
