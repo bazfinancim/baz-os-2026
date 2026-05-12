@@ -30,8 +30,7 @@ export default function AppsPage() {
           אפליקציות BAZ
         </h1>
         <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
-          {COMPANIES.length} ישויות מקומיות מ־<code style={{ fontSize: "0.8rem" }}>baz_companies.json</code> — כל
-          שורה היא מוצר/אפליקציה באימפריה.
+          {COMPANIES.length} ישויות מקומיות מקובץ הנתונים baz_companies.json — כל שורה היא מוצר/אפליקציה באימפריה.
         </p>
       </header>
 
