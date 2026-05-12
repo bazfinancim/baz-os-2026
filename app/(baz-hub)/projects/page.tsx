@@ -34,11 +34,11 @@ export default function ProjectsPage() {
       : "Data from Base44 (CodeX) via /api/base44/projects";
 
   return (
-    <div dir={dir} style={{ padding: "24px 26px 40px", maxWidth: "960px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#0f172a", marginBottom: "6px" }}>{title}</h1>
-      <p style={{ color: "#64748b", fontSize: "0.88rem", marginBottom: "20px" }}>{subtitle}</p>
+    <div dir={dir} style={{ padding: "24px 26px 40px", maxWidth: "960px", margin: "0 auto", color: "#e2e8f0" }}>
+      <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#f8fafc", marginBottom: "6px" }}>{title}</h1>
+      <p style={{ color: "#94a3b8", fontSize: "0.88rem", marginBottom: "20px" }}>{subtitle}</p>
       {err && (
-        <div style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "10px", padding: "12px", marginBottom: "16px", color: "#b91c1c", fontSize: "0.85rem" }}>
+        <div style={{ background: "rgba(69,10,10,0.55)", border: "1px solid rgba(248,113,113,0.45)", borderRadius: "10px", padding: "12px", marginBottom: "16px", color: "#fecaca", fontSize: "0.85rem" }}>
           {err}
         </div>
       )}
@@ -47,23 +47,23 @@ export default function ProjectsPage() {
           <div
             key={String(p.id ?? i)}
             style={{
-              background: "#fff",
-              border: "1px solid #e2e8f0",
+              background: "#111118",
+              border: "1px solid #1e293b",
               borderRadius: "12px",
               padding: "14px 16px",
             }}
           >
-            <p style={{ fontWeight: 700, margin: "0 0 4px", color: "#0f172a" }}>{p.name ?? "—"}</p>
-            {p.description && <p style={{ fontSize: "0.82rem", color: "#64748b", margin: 0 }}>{p.description}</p>}
+            <p style={{ fontWeight: 700, margin: "0 0 4px", color: "#f1f5f9" }}>{p.name ?? "—"}</p>
+            {p.description && <p style={{ fontSize: "0.82rem", color: "#94a3b8", margin: 0 }}>{p.description}</p>}
             {p.status && (
-              <p style={{ fontSize: "0.72rem", color: "#94a3b8", marginTop: "8px" }}>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginTop: "8px" }}>
                 {lang === "he" ? "סטטוס" : "Status"}: {p.status}
               </p>
             )}
           </div>
         ))}
         {!err && projects.length === 0 && (
-          <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>{lang === "he" ? "אין פרויקטים להצגה." : "No projects to show."}</p>
+          <p style={{ color: "#64748b", fontSize: "0.88rem" }}>{lang === "he" ? "אין פרויקטים להצגה." : "No projects to show."}</p>
         )}
       </div>
     </div>

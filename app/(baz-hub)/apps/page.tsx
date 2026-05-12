@@ -18,21 +18,21 @@ export default function AppsPage() {
   const COMPANIES = useBazCompanies();
 
   return (
-    <div dir="rtl" style={{ padding: "24px 28px 48px", maxWidth: "1280px", margin: "0 auto" }}>
+    <div dir="rtl" style={{ padding: "24px 28px 48px", maxWidth: "1280px", margin: "0 auto", color: "#e2e8f0" }}>
       <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#0f172a", marginBottom: "6px" }}>
+        <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#f8fafc", marginBottom: "6px" }}>
           אפליקציות BAZ
         </h1>
-        <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
+        <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
           {COMPANIES.length} ישויות מקובץ הנתונים baz_companies.json (Knowledge Core ב-Hub) — כל שורה היא מוצר/אפליקציה באימפריה.
         </p>
         <p
           style={{
             marginTop: "12px",
             fontSize: "0.82rem",
-            color: "#0f172a",
-            background: "#eff6ff",
-            border: "1px solid #bfdbfe",
+            color: "#c7d2fe",
+            background: "rgba(30,27,75,0.5)",
+            border: "1px solid rgba(99,102,241,0.35)",
             borderRadius: "10px",
             padding: "10px 14px",
             lineHeight: 1.5,
@@ -40,11 +40,11 @@ export default function AppsPage() {
         >
           <strong>הפרדה מוחלטת:</strong> מסך זה מציג <strong>אך ורק</strong> את מפת המוצרים הפנימיים של BAZ — ללא רשימות ציד
           חיצוניות. לניהול כלים/קרדיטים שנצודו בשוק:{" "}
-          <Link href="/hunter" style={{ color: "#1d4ed8", fontWeight: 700 }}>
+          <Link href="/hunter" style={{ color: "#a5b4fc", fontWeight: 700 }}>
             טאב Hunter
           </Link>
           . ניטור n8n לכל חברה:{" "}
-          <Link href="/admin/status" style={{ color: "#1d4ed8", fontWeight: 700 }}>
+          <Link href="/admin/status" style={{ color: "#a5b4fc", fontWeight: 700 }}>
             Gemini Eyes
           </Link>
           .
@@ -53,8 +53,8 @@ export default function AppsPage() {
 
       <div
         style={{
-          background: "#ffffff",
-          border: "1px solid #e2e8f0",
+          background: "#111118",
+          border: "1px solid #1e293b",
           borderRadius: "12px",
           padding: "14px 18px",
           marginBottom: "22px",
@@ -68,7 +68,7 @@ export default function AppsPage() {
           <div key={key} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: meta.color }} />
             <span style={{ fontSize: "0.8rem", fontWeight: 600, color: meta.color }}>{meta.label}</span>
-            <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>
+              <span style={{ fontSize: "0.75rem", color: "#64748b" }}>
               ({COMPANIES.filter((c) => c.group === key).length})
             </span>
           </div>
@@ -85,7 +85,7 @@ export default function AppsPage() {
               <h2 style={{ fontSize: "0.95rem", fontWeight: 700, color: meta.color, margin: 0 }}>
                 {meta.label}
               </h2>
-              <span style={{ fontSize: "0.8rem", color: "#94a3b8" }}>{group.length} אפליקציות</span>
+              <span style={{ fontSize: "0.8rem", color: "#64748b" }}>{group.length} אפליקציות</span>
             </div>
             <div
               style={{
@@ -98,27 +98,27 @@ export default function AppsPage() {
                 <article
                   key={c.id}
                   style={{
-                    background: "#ffffff",
-                    border: `1px solid ${meta.color}33`,
+                    background: "#111118",
+                    border: `1px solid ${meta.color}44`,
                     borderRadius: "12px",
                     padding: "14px 16px",
                     display: "flex",
                     gap: "12px",
                     alignItems: "flex-start",
-                    boxShadow: "0 1px 2px rgba(15,23,42,0.04)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
                   }}
                 >
                   <span style={{ fontSize: "1.5rem", lineHeight: 1 }} aria-hidden>
                     {c.icon}
                   </span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <h3 style={{ fontSize: "0.92rem", fontWeight: 700, margin: "0 0 4px", color: "#0f172a" }}>
+                    <h3 style={{ fontSize: "0.92rem", fontWeight: 700, margin: "0 0 4px", color: "#f1f5f9" }}>
                       {c.name}
                     </h3>
-                    <p style={{ fontSize: "0.78rem", color: "#64748b", margin: 0, lineHeight: 1.45 }}>
+                    <p style={{ fontSize: "0.78rem", color: "#94a3b8", margin: 0, lineHeight: 1.45 }}>
                       {c.desc}
                     </p>
-                    <p style={{ fontSize: "0.68rem", color: "#94a3b8", marginTop: "8px" }}>
+                    <p style={{ fontSize: "0.68rem", color: "#64748b", marginTop: "8px" }}>
                       סטטוס: {c.status} · #{c.id}
                     </p>
                   </div>

@@ -111,20 +111,20 @@ export default function WhatsAppHub() {
   };
 
   return (
-    <div dir="rtl" style={{ color: "#0f172a" }}>
+    <div dir="rtl" style={{ color: "#e2e8f0", minHeight: "100%" }}>
       <div
         style={{
-          background: "linear-gradient(135deg, #ecfdf5 0%, #ffffff 50%, #eff6ff 100%)",
-          borderBottom: "1px solid #e2e8f0",
+          background: "linear-gradient(135deg, #0f172a 0%, #052e16 40%, #0f172a 100%)",
+          borderBottom: "1px solid rgba(99,102,241,0.22)",
           padding: "18px 22px",
         }}
       >
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-          <h1 style={{ fontSize: "1.45rem", fontWeight: 800, margin: 0 }}>
-            <span style={{ color: "#16a34a" }}>💬 WhatsApp</span>
+          <h1 style={{ fontSize: "1.45rem", fontWeight: 800, margin: 0, color: "#f8fafc" }}>
+            <span style={{ color: "#4ade80" }}>💬 WhatsApp</span>
             <span> Hub</span>
           </h1>
-          <p style={{ color: "#64748b", fontSize: "0.8rem", margin: "6px 0 0" }}>
+          <p style={{ color: "#94a3b8", fontSize: "0.8rem", margin: "6px 0 0" }}>
             Webhooks n8n · 054-829-4343 · 054-555-9934
           </p>
         </div>
@@ -133,8 +133,8 @@ export default function WhatsAppHub() {
       <div style={{ maxWidth: "720px", margin: "0 auto", padding: "24px 22px 40px" }}>
         <div
           style={{
-            background: "#f0fdf4",
-            border: "1px solid #bbf7d0",
+            background: "rgba(20,83,45,0.35)",
+            border: "1px solid rgba(74,222,128,0.35)",
             borderRadius: "12px",
             padding: "12px 16px",
             marginBottom: "20px",
@@ -147,8 +147,8 @@ export default function WhatsAppHub() {
             🟢
           </span>
           <div>
-            <p style={{ color: "#166534", fontWeight: "bold", fontSize: "0.88rem", margin: 0 }}>תשתית מחוברת ל-n8n</p>
-            <p style={{ color: "#64748b", fontSize: "0.74rem", margin: "4px 0 0" }}>
+            <p style={{ color: "#bbf7d0", fontWeight: "bold", fontSize: "0.88rem", margin: 0 }}>תשתית מחוברת ל-n8n</p>
+            <p style={{ color: "#94a3b8", fontSize: "0.74rem", margin: "4px 0 0" }}>
               כל שליחה היא POST JSON ל-workflow המתאים לכל מספר.
             </p>
           </div>
@@ -156,17 +156,17 @@ export default function WhatsAppHub() {
 
         <section
           style={{
-            background: "#ffffff",
-            border: "1px solid #e2e8f0",
+            background: "#111118",
+            border: "1px solid #1e293b",
             borderRadius: "12px",
             padding: "16px 18px",
             marginBottom: "22px",
           }}
         >
-          <h2 style={{ fontSize: "0.95rem", fontWeight: 700, margin: "0 0 10px", color: "#0f172a" }}>
+          <h2 style={{ fontSize: "0.95rem", fontWeight: 700, margin: "0 0 10px", color: "#f1f5f9" }}>
             עדכוני סטטוס לשני הערוצים
           </h2>
-          <label htmlFor="wa-status-msg" style={{ fontSize: "0.78rem", color: "#64748b", display: "block", marginBottom: "6px" }}>
+          <label htmlFor="wa-status-msg" style={{ fontSize: "0.78rem", color: "#94a3b8", display: "block", marginBottom: "6px" }}>
             טקסט העדכון (יישלח בגוף הבקשה לשני ה-webhooks)
           </label>
           <textarea
@@ -178,11 +178,13 @@ export default function WhatsAppHub() {
               width: "100%",
               resize: "vertical",
               borderRadius: "8px",
-              border: "1px solid #e2e8f0",
+              border: "1px solid #1e293b",
               padding: "10px 12px",
               fontSize: "0.88rem",
               fontFamily: "inherit",
               marginBottom: "12px",
+              background: "#0a0a12",
+              color: "#e2e8f0",
             }}
           />
           <button
@@ -190,7 +192,7 @@ export default function WhatsAppHub() {
             onClick={() => void sendStatusToBoth()}
             disabled={broadcastState === "sending"}
             style={{
-              background: broadcastState === "sending" ? "#94a3b8" : "#0f172a",
+              background: broadcastState === "sending" ? "#475569" : "rgba(99,102,241,0.55)",
               color: "#fff",
               border: "none",
               borderRadius: "8px",
@@ -209,11 +211,11 @@ export default function WhatsAppHub() {
             <div
               key={ch.id}
               style={{
-                background: "#ffffff",
-                border: `2px solid ${ch.color}33`,
+                background: "#111118",
+                border: `2px solid ${ch.color}55`,
                 borderRadius: "16px",
                 padding: "18px 20px",
-                boxShadow: "0 1px 2px rgba(15,23,42,0.04)",
+                boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
@@ -230,7 +232,7 @@ export default function WhatsAppHub() {
                 </span>
                 <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 800, fontSize: "1.02rem", color: ch.accent, margin: 0 }}>{ch.label}</p>
-                  <p style={{ color: "#64748b", fontSize: "0.76rem", margin: "4px 0 0" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.76rem", margin: "4px 0 0" }}>
                     {ch.phone} · {ch.desc}
                   </p>
                 </div>
@@ -239,14 +241,15 @@ export default function WhatsAppHub() {
 
               <div
                 style={{
-                  background: "#f8fafc",
+                  background: "#0a0a12",
                   borderRadius: "8px",
                   padding: "8px 12px",
                   marginBottom: "12px",
                   fontFamily: "monospace",
                   fontSize: "0.68rem",
-                  color: "#64748b",
+                  color: "#94a3b8",
                   wordBreak: "break-all",
+                  border: "1px solid #1e293b",
                 }}
               >
                 {ch.webhook}
@@ -258,7 +261,7 @@ export default function WhatsAppHub() {
                   onClick={() => void trigger(ch)}
                   disabled={statuses[ch.id] === "sending"}
                   style={{
-                    background: statuses[ch.id] === "sending" ? "#cbd5e1" : ch.color,
+                    background: statuses[ch.id] === "sending" ? "#475569" : ch.color,
                     color: "white",
                     border: "none",
                     borderRadius: "8px",
@@ -293,9 +296,9 @@ export default function WhatsAppHub() {
                   target="_blank"
                   rel="noreferrer"
                   style={{
-                    background: "#f8fafc",
-                    color: "#64748b",
-                    border: "1px solid #e2e8f0",
+                    background: "#1e293b",
+                    color: "#cbd5e1",
+                    border: "1px solid #334155",
                     borderRadius: "8px",
                     padding: "10px 14px",
                     fontSize: "0.78rem",
@@ -311,16 +314,16 @@ export default function WhatsAppHub() {
 
         {logs.length > 0 && (
           <div>
-            <p style={{ color: "#64748b", fontSize: "0.72rem", marginBottom: "8px", fontWeight: "bold" }}>📋 לוג פעילות</p>
+            <p style={{ color: "#94a3b8", fontSize: "0.72rem", marginBottom: "8px", fontWeight: "bold" }}>📋 לוג פעילות</p>
             <div
               style={{
-                background: "#f8fafc",
-                border: "1px solid #e2e8f0",
+                background: "#0a0a12",
+                border: "1px solid #1e293b",
                 borderRadius: "10px",
                 padding: "10px 14px",
                 fontFamily: "monospace",
                 fontSize: "0.72rem",
-                color: "#166534",
+                color: "#86efac",
                 maxHeight: "180px",
                 overflowY: "auto",
               }}

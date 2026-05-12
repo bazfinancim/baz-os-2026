@@ -39,18 +39,18 @@ export default function ClientsPage() {
     lang === "he" ? "מסד Empire מקומי דרך /api/clients" : "Local Empire DB via /api/clients";
 
   return (
-    <div dir={dir} style={{ padding: "24px 26px 40px", maxWidth: "960px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#0f172a", marginBottom: "6px" }}>{title}</h1>
-      <p style={{ color: "#64748b", fontSize: "0.88rem", marginBottom: "20px" }}>{subtitle}</p>
+    <div dir={dir} style={{ padding: "24px 26px 40px", maxWidth: "960px", margin: "0 auto", color: "#e2e8f0" }}>
+      <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#f8fafc", marginBottom: "6px" }}>{title}</h1>
+      <p style={{ color: "#94a3b8", fontSize: "0.88rem", marginBottom: "20px" }}>{subtitle}</p>
       {err && (
         <div
           style={{
-            background: "#fef2f2",
-            border: "1px solid #fecaca",
+            background: "rgba(69,10,10,0.55)",
+            border: "1px solid rgba(248,113,113,0.45)",
             borderRadius: "10px",
             padding: "12px",
             marginBottom: "16px",
-            color: "#b91c1c",
+            color: "#fecaca",
             fontSize: "0.85rem",
           }}
         >
@@ -62,14 +62,14 @@ export default function ClientsPage() {
           <div
             key={c.id}
             style={{
-              background: "#fff",
-              border: "1px solid #e2e8f0",
+              background: "#111118",
+              border: "1px solid #1e293b",
               borderRadius: "12px",
               padding: "14px 16px",
             }}
           >
-            <p style={{ fontWeight: 700, margin: "0 0 6px", color: "#0f172a" }}>{c.name}</p>
-            <p style={{ fontSize: "0.8rem", color: "#64748b", margin: 0 }}>
+            <p style={{ fontWeight: 700, margin: "0 0 6px", color: "#f1f5f9" }}>{c.name}</p>
+            <p style={{ fontSize: "0.8rem", color: "#94a3b8", margin: 0 }}>
               {lang === "he" ? "בריאות" : "Health"}: {c.health} · {lang === "he" ? "דלק" : "Fuel"}: {c.fuelStatus}
               {c.needsHumanHelp ? ` · ${lang === "he" ? "דורש טיפול אנושי" : "Needs human"}` : ""}
             </p>
@@ -81,7 +81,7 @@ export default function ClientsPage() {
           </div>
         ))}
         {!err && clients.length === 0 && (
-          <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>{lang === "he" ? "אין לקוחות." : "No clients."}</p>
+          <p style={{ color: "#64748b", fontSize: "0.88rem" }}>{lang === "he" ? "אין לקוחות." : "No clients."}</p>
         )}
       </div>
     </div>

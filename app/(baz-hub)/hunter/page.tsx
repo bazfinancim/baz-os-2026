@@ -8,6 +8,22 @@ import { runComparisonEngine } from "@/src/logic/hunter/comparison-engine";
 import { useBazCompanies } from "@/src/components/HubBazCompaniesProvider";
 import { buildBotEnvelope, serializeBotPayload } from "@/src/logic/bots/bot-template";
 
+/** ערכת צבעים — Hub כהה (Master Hub) */
+const D = {
+  page: "#07070f",
+  headerBg: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #0f172a 100%)",
+  headerBorder: "rgba(99,102,241,0.22)",
+  card: "#111118",
+  cardBorder: "#1e293b",
+  text: "#e2e8f0",
+  muted: "#94a3b8",
+  dim: "#64748b",
+  thead: "rgba(30,27,75,0.55)",
+  rowLine: "rgba(51,65,85,0.45)",
+  link: "#818cf8",
+  accent: "#60a5fa",
+};
+
 type Tool = {
   id?: string;
   _id?: string;
@@ -65,11 +81,11 @@ function calculateCredits(tools: Tool[]) {
 }
 
 const ST: Record<string, { label: string; bg: string; color: string }> = {
-  active: { label: "פעיל", bg: "#dcfce7", color: "#166534" },
-  registered: { label: "נרשם", bg: "#dbeafe", color: "#1d4ed8" },
-  discovered: { label: "התגלה", bg: "#fef9c3", color: "#a16207" },
-  pending_registration: { label: "ממתין לרישום", bg: "#ffedd5", color: "#c2410c" },
-  failed: { label: "נכשל", bg: "#fee2e2", color: "#b91c1c" },
+  active: { label: "פעיל", bg: "#14532d", color: "#4ade80" },
+  registered: { label: "נרשם", bg: "#1e3a5f", color: "#60a5fa" },
+  discovered: { label: "התגלה", bg: "#422006", color: "#facc15" },
+  pending_registration: { label: "ממתין לרישום", bg: "#431407", color: "#fb923c" },
+  failed: { label: "נכשל", bg: "#450a0a", color: "#f87171" },
 };
 
 type SortKey = "name" | "category" | "status" | "credit_value" | "priority";
@@ -139,8 +155,8 @@ export default function HunterPage() {
         textAlign: "right",
         fontSize: "0.72rem",
         fontWeight: 800,
-        color: "#475569",
-        borderBottom: "2px solid #e2e8f0",
+        color: D.muted,
+        borderBottom: `2px solid ${D.cardBorder}`,
         cursor: "pointer",
         userSelect: "none",
         whiteSpace: "nowrap",
@@ -153,35 +169,40 @@ export default function HunterPage() {
   );
 
   return (
-    <div dir="rtl" style={{ color: "#0f172a", minHeight: "100%" }}>
+    <div dir="rtl" style={{ color: D.text, minHeight: "100%", background: D.page }}>
       <header
         style={{
-          background: "#ffffff",
-          borderBottom: "1px solid #e2e8f0",
+          background: D.headerBg,
+          borderBottom: `1px solid ${D.headerBorder}`,
           padding: "18px 22px",
         }}
       >
         <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "14px" }}>
             <div>
-              <h1 style={{ margin: 0, fontSize: "1.35rem", fontWeight: 800 }}>Hunter — מנוע discovered_tools.json</h1>
-              <p style={{ margin: "6px 0 0", fontSize: "0.82rem", color: "#64748b", maxWidth: "720px", lineHeight: 1.5 }}>
-                מקור יחיד לרשימה: <code style={{ background: "#f1f5f9", padding: "2px 6px", borderRadius: "4px" }}>src/data/discovered_tools.json</code> —{" "}
-                {DISCOVERED.length} רשומות בקובץ. תצוגת טבלה לניתוח, בלי כרטיסי «פוסטר».
+              <h1 style={{ margin: 0, fontSize: "1.35rem", fontWeight: 800, color: D.text }}>
+                <span style={{ color: "#facc15" }}>🎯</span> Hunter — מנוע discovered_tools.json
+              </h1>
+              <p style={{ margin: "6px 0 0", fontSize: "0.82rem", color: D.muted, maxWidth: "720px", lineHeight: 1.5 }}>
+                מקור יחיד:{" "}
+                <code style={{ background: D.card, padding: "2px 8px", borderRadius: "6px", border: `1px solid ${D.cardBorder}` }}>
+                  src/data/discovered_tools.json
+                </code>{" "}
+                — {DISCOVERED.length} רשומות · טבלה מקצועית
               </p>
             </div>
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", fontSize: "0.78rem", color: "#64748b" }}>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", fontSize: "0.78rem", color: D.muted }}>
               <span>
-                <strong style={{ color: "#0f172a" }}>{DISCOVERED.length}</strong> כלים בקובץ
+                <strong style={{ color: D.text }}>{DISCOVERED.length}</strong> כלים
               </span>
               <span>
-                פעילים/נרשמים: <strong style={{ color: "#16a34a" }}>{credits.activeCount}</strong>
+                פעילים: <strong style={{ color: "#4ade80" }}>{credits.activeCount}</strong>
               </span>
               <span>
-                קרדיט משוער פעיל: <strong style={{ color: "#0f172a" }}>{formatCreditsCompact(credits.active)}</strong>
+                קרדיט פעיל: <strong style={{ color: "#facc15" }}>{formatCreditsCompact(credits.active)}</strong>
               </span>
-              <Link href="/apps" style={{ color: "#1d4ed8", fontWeight: 600 }}>
-                60 חברות BAZ ← /apps
+              <Link href="/apps" style={{ color: D.link, fontWeight: 600 }}>
+                60 חברות BAZ ←
               </Link>
             </div>
           </div>
@@ -189,7 +210,16 @@ export default function HunterPage() {
       </header>
 
       <div style={{ maxWidth: "1600px", margin: "0 auto", padding: "18px 22px 48px" }}>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap", borderBottom: "1px solid #e2e8f0", paddingBottom: "12px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+            marginBottom: "16px",
+            flexWrap: "wrap",
+            borderBottom: `1px solid ${D.cardBorder}`,
+            paddingBottom: "12px",
+          }}
+        >
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -201,9 +231,9 @@ export default function HunterPage() {
                 cursor: "pointer",
                 fontWeight: 700,
                 fontSize: "0.8rem",
-                border: activeTab === t.id ? "none" : "1px solid #e2e8f0",
-                background: activeTab === t.id ? "#1d4ed8" : "#fff",
-                color: activeTab === t.id ? "#fff" : "#64748b",
+                border: activeTab === t.id ? "none" : `1px solid ${D.cardBorder}`,
+                background: activeTab === t.id ? "rgba(99,102,241,0.45)" : D.card,
+                color: activeTab === t.id ? "#fff" : D.muted,
               }}
             >
               {t.label}
@@ -217,14 +247,17 @@ export default function HunterPage() {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="חיפוש בשם / קטגוריה / הערות / סוג קרדיט..."
+                placeholder="חיפוש..."
                 style={{
                   flex: "1 1 240px",
                   minWidth: "200px",
                   padding: "9px 14px",
                   borderRadius: "8px",
-                  border: "1px solid #e2e8f0",
+                  border: `1px solid ${D.cardBorder}`,
                   fontSize: "0.85rem",
+                  background: D.card,
+                  color: D.text,
+                  outline: "none",
                 }}
               />
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
@@ -239,42 +272,69 @@ export default function HunterPage() {
                       fontSize: "0.72rem",
                       fontWeight: 700,
                       cursor: "pointer",
-                      border: statusFilter === st ? "none" : "1px solid #e2e8f0",
-                      background: statusFilter === st ? "#0f172a" : "#fff",
-                      color: statusFilter === st ? "#fff" : "#64748b",
+                      border: statusFilter === st ? "none" : `1px solid ${D.cardBorder}`,
+                      background: statusFilter === st ? "rgba(99,102,241,0.55)" : D.card,
+                      color: statusFilter === st ? "#fff" : D.muted,
                     }}
                   >
                     {st === "הכל" ? "הכל" : ST[st]?.label ?? st}
                   </button>
                 ))}
               </div>
-              <span style={{ fontSize: "0.72rem", color: "#94a3b8" }}>{filtered.length} שורות אחרי סינון</span>
+              <span style={{ fontSize: "0.72rem", color: D.dim }}>{filtered.length} שורות</span>
             </div>
 
             <div
               style={{
-                background: "#ffffff",
-                border: "1px solid #e2e8f0",
+                background: D.card,
+                border: `1px solid ${D.cardBorder}`,
                 borderRadius: "12px",
                 overflow: "auto",
-                boxShadow: "0 1px 2px rgba(15,23,42,0.04)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
               }}
             >
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.8rem", minWidth: "900px" }}>
                 <thead>
-                  <tr style={{ background: "#f8fafc" }}>
+                  <tr style={{ background: D.thead }}>
                     {th("priority", "עדיפות")}
                     {th("name", "שם כלי")}
                     {th("category", "קטגוריה")}
                     {th("status", "סטטוס")}
-                    {th("credit_value", "קרדיט (טקסט)")}
-                    <th style={{ padding: "10px 12px", textAlign: "right", fontSize: "0.72rem", fontWeight: 800, color: "#475569", borderBottom: "2px solid #e2e8f0" }}>
+                    {th("credit_value", "קרדיט")}
+                    <th
+                      style={{
+                        padding: "10px 12px",
+                        textAlign: "right",
+                        fontSize: "0.72rem",
+                        fontWeight: 800,
+                        color: D.muted,
+                        borderBottom: `2px solid ${D.cardBorder}`,
+                      }}
+                    >
                       סוג קרדיט
                     </th>
-                    <th style={{ padding: "10px 12px", textAlign: "right", fontSize: "0.72rem", fontWeight: 800, color: "#475569", borderBottom: "2px solid #e2e8f0" }}>
+                    <th
+                      style={{
+                        padding: "10px 12px",
+                        textAlign: "right",
+                        fontSize: "0.72rem",
+                        fontWeight: 800,
+                        color: D.muted,
+                        borderBottom: `2px solid ${D.cardBorder}`,
+                      }}
+                    >
                       הערות
                     </th>
-                    <th style={{ padding: "10px 12px", textAlign: "right", fontSize: "0.72rem", fontWeight: 800, color: "#475569", borderBottom: "2px solid #e2e8f0" }}>
+                    <th
+                      style={{
+                        padding: "10px 12px",
+                        textAlign: "right",
+                        fontSize: "0.72rem",
+                        fontWeight: 800,
+                        color: D.muted,
+                        borderBottom: `2px solid ${D.cardBorder}`,
+                      }}
+                    >
                       קישור
                     </th>
                   </tr>
@@ -284,10 +344,10 @@ export default function HunterPage() {
                     const st = ST[t.status ?? "discovered"] ?? ST.discovered;
                     const rowKey = t.id ?? t._id ?? `row-${i}`;
                     return (
-                      <tr key={rowKey} style={{ borderTop: "1px solid #f1f5f9" }}>
-                        <td style={{ padding: "8px 12px", fontFamily: "monospace", color: "#64748b" }}>{t.priority ?? "—"}</td>
-                        <td style={{ padding: "8px 12px", fontWeight: 600 }}>{t.name ?? "—"}</td>
-                        <td style={{ padding: "8px 12px", color: "#475569" }}>{t.category ?? "—"}</td>
+                      <tr key={rowKey} style={{ borderTop: `1px solid ${D.rowLine}` }}>
+                        <td style={{ padding: "8px 12px", fontFamily: "monospace", color: D.dim }}>{t.priority ?? "—"}</td>
+                        <td style={{ padding: "8px 12px", fontWeight: 600, color: D.text }}>{t.name ?? "—"}</td>
+                        <td style={{ padding: "8px 12px", color: D.muted }}>{t.category ?? "—"}</td>
                         <td style={{ padding: "8px 12px" }}>
                           <span
                             style={{
@@ -302,14 +362,14 @@ export default function HunterPage() {
                             {st.label}
                           </span>
                         </td>
-                        <td style={{ padding: "8px 12px", fontFamily: "monospace", color: "#059669" }}>{t.credit_value ?? "—"}</td>
-                        <td style={{ padding: "8px 12px", color: "#64748b", fontSize: "0.75rem" }}>{t.credit_type ?? "—"}</td>
-                        <td style={{ padding: "8px 12px", color: "#64748b", fontSize: "0.75rem", maxWidth: "280px", lineHeight: 1.4 }}>
+                        <td style={{ padding: "8px 12px", fontFamily: "monospace", color: "#4ade80" }}>{t.credit_value ?? "—"}</td>
+                        <td style={{ padding: "8px 12px", color: D.dim, fontSize: "0.75rem" }}>{t.credit_type ?? "—"}</td>
+                        <td style={{ padding: "8px 12px", color: D.muted, fontSize: "0.75rem", maxWidth: "280px", lineHeight: 1.4 }}>
                           {t.notes ?? "—"}
                         </td>
                         <td style={{ padding: "8px 12px" }}>
                           {t.url ? (
-                            <a href={t.url} target="_blank" rel="noreferrer" style={{ color: "#2563eb", fontWeight: 600, fontSize: "0.75rem" }}>
+                            <a href={t.url} target="_blank" rel="noreferrer" style={{ color: D.accent, fontWeight: 600, fontSize: "0.75rem" }}>
                               אתר
                             </a>
                           ) : (
@@ -322,7 +382,7 @@ export default function HunterPage() {
                 </tbody>
               </table>
               {filtered.length === 0 && (
-                <p style={{ padding: "28px", textAlign: "center", color: "#64748b", margin: 0 }}>אין תוצאות — בדוק סינון או חיפוש.</p>
+                <p style={{ padding: "28px", textAlign: "center", color: D.muted, margin: 0 }}>אין תוצאות</p>
               )}
             </div>
           </>
@@ -330,40 +390,40 @@ export default function HunterPage() {
 
         {activeTab === "comparison" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ background: "#ffffff", border: "1px solid #bfdbfe", borderRadius: "12px", padding: "16px 18px" }}>
-              <p style={{ margin: "0 0 8px", fontWeight: 800, color: "#1e3a8a" }}>Comparison Engine (אותו מקור: discovered_tools.json)</p>
-              <p style={{ margin: 0, fontSize: "0.82rem", color: "#475569", lineHeight: 1.55, whiteSpace: "pre-wrap" }}>
+            <div style={{ background: D.card, border: `1px solid rgba(99,102,241,0.35)`, borderRadius: "12px", padding: "16px 18px" }}>
+              <p style={{ margin: "0 0 8px", fontWeight: 800, color: D.accent }}>Comparison Engine</p>
+              <p style={{ margin: 0, fontSize: "0.82rem", color: D.muted, lineHeight: 1.55, whiteSpace: "pre-wrap" }}>
                 {comparison.narrativeHe.join("\n")}
               </p>
-              <p style={{ margin: "10px 0 0", fontSize: "0.72rem", color: "#94a3b8" }}>עודכן: {comparison.generatedAt}</p>
+              <p style={{ margin: "10px 0 0", fontSize: "0.72rem", color: D.dim }}>עודכן: {comparison.generatedAt}</p>
             </div>
-            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", overflow: "hidden" }}>
+            <div style={{ background: D.card, border: `1px solid ${D.cardBorder}`, borderRadius: "12px", overflow: "hidden" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.8rem" }}>
                 <thead>
-                  <tr style={{ background: "#f8fafc" }}>
-                    <th style={{ padding: "10px", textAlign: "right" }}>קטגוריה</th>
-                    <th style={{ padding: "10px", textAlign: "right" }}>כמות</th>
-                    <th style={{ padding: "10px", textAlign: "right" }}>סכום קרדיט משוער</th>
-                    <th style={{ padding: "10px", textAlign: "right" }}>פעיל</th>
-                    <th style={{ padding: "10px", textAlign: "right" }}>פוטנציאל</th>
+                  <tr style={{ background: D.thead }}>
+                    <th style={{ padding: "10px", textAlign: "right", color: D.muted }}>קטגוריה</th>
+                    <th style={{ padding: "10px", textAlign: "right", color: D.muted }}>כמות</th>
+                    <th style={{ padding: "10px", textAlign: "right", color: D.muted }}>סכום</th>
+                    <th style={{ padding: "10px", textAlign: "right", color: D.muted }}>פעיל</th>
+                    <th style={{ padding: "10px", textAlign: "right", color: D.muted }}>פוטנציאל</th>
                   </tr>
                 </thead>
                 <tbody>
                   {comparison.categories.map((c) => (
-                    <tr key={c.category} style={{ borderTop: "1px solid #f1f5f9" }}>
-                      <td style={{ padding: "8px 10px", fontWeight: 600 }}>{c.category}</td>
-                      <td style={{ padding: "8px 10px" }}>{c.count}</td>
-                      <td style={{ padding: "8px 10px", fontFamily: "monospace" }}>{formatCreditsCompact(c.creditSum)}</td>
-                      <td style={{ padding: "8px 10px", color: "#16a34a", fontFamily: "monospace" }}>{formatCreditsCompact(c.activeCreditSum)}</td>
-                      <td style={{ padding: "8px 10px", color: "#ca8a04", fontFamily: "monospace" }}>{formatCreditsCompact(c.potentialCreditSum)}</td>
+                    <tr key={c.category} style={{ borderTop: `1px solid ${D.rowLine}` }}>
+                      <td style={{ padding: "8px 10px", fontWeight: 600, color: D.text }}>{c.category}</td>
+                      <td style={{ padding: "8px 10px", color: D.muted }}>{c.count}</td>
+                      <td style={{ padding: "8px 10px", fontFamily: "monospace", color: D.text }}>{formatCreditsCompact(c.creditSum)}</td>
+                      <td style={{ padding: "8px 10px", color: "#4ade80", fontFamily: "monospace" }}>{formatCreditsCompact(c.activeCreditSum)}</td>
+                      <td style={{ padding: "8px 10px", color: "#fbbf24", fontFamily: "monospace" }}>{formatCreditsCompact(c.potentialCreditSum)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "14px 16px" }}>
-              <p style={{ margin: "0 0 10px", fontWeight: 700 }}>הפרשים בין קטגוריות</p>
-              <ul style={{ margin: 0, paddingRight: "18px", color: "#64748b", fontSize: "0.8rem", lineHeight: 1.6 }}>
+            <div style={{ background: D.card, border: `1px solid ${D.cardBorder}`, borderRadius: "12px", padding: "14px 16px" }}>
+              <p style={{ margin: "0 0 10px", fontWeight: 700, color: D.text }}>הפרשים בין קטגוריות</p>
+              <ul style={{ margin: 0, paddingRight: "18px", color: D.muted, fontSize: "0.8rem", lineHeight: 1.6 }}>
                 {comparison.topCategoryGaps.map((g) => (
                   <li key={`${g.a}-${g.b}`}>
                     {g.a} ↔ {g.b}: {g.gapUsdApprox}
@@ -375,18 +435,18 @@ export default function HunterPage() {
         )}
 
         {activeTab === "credits" && (
-          <div style={{ maxWidth: "520px", background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "22px" }}>
-            <p style={{ fontWeight: 800, marginBottom: "14px", color: "#0f172a" }}>סיכום קרדיטים (discovered בלבד)</p>
+          <div style={{ maxWidth: "520px", background: D.card, border: `1px solid ${D.cardBorder}`, borderRadius: "12px", padding: "22px" }}>
+            <p style={{ fontWeight: 800, marginBottom: "14px", color: D.text }}>סיכום קרדיטים</p>
             {[
-              { label: "פעילים + נרשמים (ערך משוער)", value: formatCreditsCompact(credits.active), color: "#16a34a" },
-              { label: "פוטנציאל (discovered + pending)", value: formatCreditsCompact(credits.potential), color: "#ca8a04" },
-              { label: "סה״כ", value: formatCreditsCompact(credits.total), color: "#7c3aed" },
+              { label: "פעילים + נרשמים", value: formatCreditsCompact(credits.active), color: "#4ade80" },
+              { label: "פוטנציאל", value: formatCreditsCompact(credits.potential), color: "#fbbf24" },
+              { label: "סה״כ", value: formatCreditsCompact(credits.total), color: "#a78bfa" },
             ].map((row) => (
               <div
                 key={row.label}
-                style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid #f1f5f9", gap: "12px" }}
+                style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: `1px solid ${D.rowLine}`, gap: "12px" }}
               >
-                <span style={{ color: "#64748b", fontSize: "0.85rem" }}>{row.label}</span>
+                <span style={{ color: D.muted, fontSize: "0.85rem" }}>{row.label}</span>
                 <span style={{ color: row.color, fontFamily: "monospace", fontWeight: 800 }}>{row.value}</span>
               </div>
             ))}
@@ -394,22 +454,23 @@ export default function HunterPage() {
         )}
 
         {activeTab === "bots" && (
-          <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "22px" }}>
-            <p style={{ fontWeight: 800, marginBottom: "8px" }}>תבנית בוט → n8n</p>
-            <p style={{ color: "#64748b", fontSize: "0.85rem", marginBottom: "14px", lineHeight: 1.5 }}>
-              דוגמת JSON לחברה הראשונה מ־baz_companies (לא מהקובץ discovered).
+          <div style={{ background: D.card, border: `1px solid ${D.cardBorder}`, borderRadius: "12px", padding: "22px" }}>
+            <p style={{ fontWeight: 800, marginBottom: "8px", color: D.text }}>תבנית בוט → n8n</p>
+            <p style={{ color: D.muted, fontSize: "0.85rem", marginBottom: "14px", lineHeight: 1.5 }}>
+              דוגמת JSON לחברה הראשונה מ־baz_companies.
             </p>
             <pre
               style={{
                 direction: "ltr",
                 textAlign: "left",
-                background: "#0f172a",
+                background: "#020617",
                 color: "#a5f3fc",
                 padding: "14px",
                 borderRadius: "10px",
                 fontSize: "0.68rem",
                 overflow: "auto",
                 maxWidth: "800px",
+                border: `1px solid ${D.cardBorder}`,
               }}
             >
               {companies[0] ? serializeBotPayload(buildBotEnvelope(companies[0], "ping", { demo: true })) : "{}"}
