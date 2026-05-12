@@ -1,20 +1,16 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import DISCOVERED_RAW from "@/src/data/discovered_tools.json";
 import type { CreditTool } from "@/src/lib/credits-calculator";
-import { calculateCredits, formatCreditsCompact, parseCreditsValue } from "@/src/lib/credits-calculator";
 import { runComparisonEngine } from "@/src/logic/hunter/comparison-engine";
 import { useBazCompanies } from "@/src/components/HubBazCompaniesProvider";
 import { buildBotEnvelope, serializeBotPayload } from "@/src/logic/bots/bot-template";
 
-/** עומק מנוע — זהה ל־shell.mainBg ב־HubLayout (לא לערוך את HubLayout; רק שכפול ערך לעקביות) */
-const ENGINE_DEPTH_BG =
-  "radial-gradient(ellipse 100% 80% at 50% -10%, rgba(49, 46, 129, 0.35) 0%, #07070f 42%, #040406 100%)";
-
-/** ערכת צבעים — Hub כהה (Master Hub) — נשמר כמו ב־DNA של דף זה */
+/** ערכת צבעים — Hub כהה (Master Hub) */
 const D = {
+  page: "#07070f",
   headerBg: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #0f172a 100%)",
   headerBorder: "rgba(99,102,241,0.22)",
   card: "#111118",
@@ -28,9 +24,61 @@ const D = {
   accent: "#60a5fa",
 };
 
-type Tool = CreditTool;
+type Tool = {
+  id?: string;
+  _id?: string;
+  name?: string;
+  status?: string;
+  credit_value?: string;
+  category?: string;
+  notes?: string;
+  url?: string;
+  registration_email?: string;
+  company?: string;
+  tool_type?: string;
+  priority?: number;
+  credit_type?: string;
+};
 
 const DISCOVERED: Tool[] = Array.isArray(DISCOVERED_RAW) ? (DISCOVERED_RAW as Tool[]) : [];
+
+function parseCreditsValue(cv: string | null | undefined): number {
+  if (!cv) return 0;
+  const str = String(cv).replace(/,/g, "").trim();
+  const b = str.match(/\$?([\d.]+)\s*b/i);
+  if (b) return Math.round(parseFloat(b[1]) * 1_000_000_000);
+  const m = str.match(/\$?([\d.]+)\s*m/i);
+  if (m) return Math.round(parseFloat(m[1]) * 1_000_000);
+  const k = str.match(/\$?([\d.]+)\s*k/i);
+  if (k) return Math.round(parseFloat(k[1]) * 1_000);
+  const d = str.match(/\$?([\d.]+)/);
+  if (d) return Math.round(parseFloat(d[1]));
+  return 0;
+}
+
+function formatCreditsCompact(value: number): string {
+  if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}B`;
+  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `$${(value / 1_000).toFixed(0)}K`;
+  return `$${value.toLocaleString()}`;
+}
+
+const ACTIVE_STATUSES = ["active", "registered"];
+const POTENTIAL_STATUSES = ["discovered", "pending_registration"];
+
+function calculateCredits(tools: Tool[]) {
+  const byStatus: Record<string, { count: number; value: number }> = {};
+  for (const tool of tools) {
+    const s = tool.status ?? "discovered";
+    if (!byStatus[s]) byStatus[s] = { count: 0, value: 0 };
+    byStatus[s].count++;
+    byStatus[s].value += parseCreditsValue(tool.credit_value);
+  }
+  const active = ACTIVE_STATUSES.reduce((sum, s) => sum + (byStatus[s]?.value ?? 0), 0);
+  const potential = POTENTIAL_STATUSES.reduce((sum, s) => sum + (byStatus[s]?.value ?? 0), 0);
+  const activeCount = ACTIVE_STATUSES.reduce((sum, s) => sum + (byStatus[s]?.count ?? 0), 0);
+  return { active, potential, total: active + potential, activeCount };
+}
 
 const ST: Record<string, { label: string; bg: string; color: string }> = {
   active: { label: "פעיל", bg: "#14532d", color: "#4ade80" },
@@ -43,10 +91,8 @@ const ST: Record<string, { label: string; bg: string; color: string }> = {
 type SortKey = "name" | "category" | "status" | "credit_value" | "priority";
 type SortDir = "asc" | "desc";
 
-const TABLE_PAGE_SIZE = 150;
-
 const TABS = [
-  { id: "engine", label: "מנוע Intel" },
+  { id: "engine", label: "מנוע discovered" },
   { id: "comparison", label: "מנוע השוואה" },
   { id: "credits", label: "קרדיטים" },
   { id: "bots", label: "Bots" },
@@ -59,16 +105,9 @@ export default function HunterPage() {
   const [statusFilter, setStatusFilter] = useState("הכל");
   const [sortKey, setSortKey] = useState<SortKey>("priority");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
-  const [tablePage, setTablePage] = useState(0);
 
   const credits = useMemo(() => calculateCredits(DISCOVERED), []);
-  const comparison = useMemo(() => runComparisonEngine(DISCOVERED as CreditTool[]), []);
-
-  /** צריכת דלק: חלק הערך המוערך שנמצא בפעילות מול כל המאגר המוערך */
-  const fuelBurnRatio = useMemo(() => {
-    if (credits.total <= 0) return 0;
-    return Math.min(100, Math.round((credits.active / credits.total) * 100));
-  }, [credits.active, credits.total]);
+  const comparison = useMemo(() => runComparisonEngine(DISCOVERED as unknown as CreditTool[]), []);
 
   const filtered = useMemo(() => {
     let list = [...DISCOVERED];
@@ -100,18 +139,6 @@ export default function HunterPage() {
     return list;
   }, [search, statusFilter, sortKey, sortDir]);
 
-  const tablePageCount = Math.max(1, Math.ceil(filtered.length / TABLE_PAGE_SIZE));
-  const safeTablePage = Math.min(tablePage, tablePageCount - 1);
-
-  useEffect(() => {
-    setTablePage((p) => Math.min(p, Math.max(0, tablePageCount - 1)));
-  }, [tablePageCount]);
-
-  const pagedRows = useMemo(() => {
-    const start = safeTablePage * TABLE_PAGE_SIZE;
-    return filtered.slice(start, start + TABLE_PAGE_SIZE);
-  }, [filtered, safeTablePage]);
-
   const toggleSort = (key: SortKey) => {
     if (sortKey === key) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     else {
@@ -142,7 +169,7 @@ export default function HunterPage() {
   );
 
   return (
-    <div dir="rtl" style={{ color: D.text, minHeight: "100%", background: ENGINE_DEPTH_BG }}>
+    <div dir="rtl" style={{ color: D.text, minHeight: "100%", background: D.page }}>
       <header
         style={{
           background: D.headerBg,
@@ -154,63 +181,30 @@ export default function HunterPage() {
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "14px" }}>
             <div>
               <h1 style={{ margin: 0, fontSize: "1.35rem", fontWeight: 800, color: D.text }}>
-                <span style={{ color: "#facc15" }}>🎯</span> Hunter Intel Engine — Baz Empire
+                <span style={{ color: "#facc15" }}>🎯</span> Hunter — מנוע discovered_tools.json
               </h1>
-              <p style={{ margin: "6px 0 0", fontSize: "0.82rem", color: D.muted, maxWidth: "820px", lineHeight: 1.5 }}>
-                מקור מאגר:{" "}
+              <p style={{ margin: "6px 0 0", fontSize: "0.82rem", color: D.muted, maxWidth: "720px", lineHeight: 1.5 }}>
+                מקור יחיד:{" "}
                 <code style={{ background: D.card, padding: "2px 8px", borderRadius: "6px", border: `1px solid ${D.cardBorder}` }}>
                   src/data/discovered_tools.json
                 </code>{" "}
-                — <strong style={{ color: D.text }}>{DISCOVERED.length}</strong> כלים בזיכרון המנוע (טעינה מלאה של המערך) · טבלה עם עימוד
+                — {DISCOVERED.length} רשומות · טבלה מקצועית
               </p>
             </div>
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", fontSize: "0.78rem", color: D.muted, alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", fontSize: "0.78rem", color: D.muted }}>
+              <span>
+                <strong style={{ color: D.text }}>{DISCOVERED.length}</strong> כלים
+              </span>
               <span>
                 פעילים: <strong style={{ color: "#4ade80" }}>{credits.activeCount}</strong>
               </span>
               <span>
-                דלק פעיל ($): <strong style={{ color: "#facc15" }}>{formatCreditsCompact(credits.active)}</strong>
+                קרדיט פעיל: <strong style={{ color: "#facc15" }}>{formatCreditsCompact(credits.active)}</strong>
               </span>
-              <span>
-                מאגר גילוי ($): <strong style={{ color: "#fbbf24" }}>{formatCreditsCompact(credits.potential)}</strong>
-              </span>
-              <Link href="/credits-hub" style={{ color: D.link, fontWeight: 600 }}>
-                Credits Hub ←
-              </Link>
               <Link href="/apps" style={{ color: D.link, fontWeight: 600 }}>
                 60 חברות BAZ ←
               </Link>
             </div>
-          </div>
-
-          {/* צריכת דלק — לוגיקה מ־credits-calculator (אותו מודל כמו Credits Hub) */}
-          <div
-            style={{
-              marginTop: "14px",
-              maxWidth: "720px",
-              padding: "10px 12px",
-              borderRadius: "10px",
-              border: `1px solid ${D.cardBorder}`,
-              background: "rgba(15,23,42,0.55)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
-              <span style={{ fontSize: "0.72rem", fontWeight: 800, color: D.text }}>צריכת דלק (פעיל מול מאגר מוערך)</span>
-              <span style={{ fontSize: "0.68rem", color: D.dim }}>{fuelBurnRatio}% מהערך המוערך בפעילות</span>
-            </div>
-            <div style={{ height: "8px", borderRadius: "6px", background: "#0f172a", overflow: "hidden", border: `1px solid ${D.cardBorder}` }}>
-              <div
-                style={{
-                  height: "100%",
-                  width: `${fuelBurnRatio}%`,
-                  background: "linear-gradient(90deg, #4ade80, #22c55e)",
-                  transition: "width 0.35s ease",
-                }}
-              />
-            </div>
-            <p style={{ margin: "8px 0 0", fontSize: "0.68rem", color: D.dim, lineHeight: 1.45 }}>
-              סה״כ מאגר מוערך: {formatCreditsCompact(credits.total)} · כלים במסך מסוננים: {filtered.length}
-            </p>
           </div>
         </div>
       </header>
@@ -252,10 +246,7 @@ export default function HunterPage() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "14px", alignItems: "center" }}>
               <input
                 value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setTablePage(0);
-                }}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="חיפוש..."
                 style={{
                   flex: "1 1 240px",
@@ -274,10 +265,7 @@ export default function HunterPage() {
                   <button
                     key={st}
                     type="button"
-                    onClick={() => {
-                      setStatusFilter(st);
-                      setTablePage(0);
-                    }}
+                    onClick={() => setStatusFilter(st)}
                     style={{
                       padding: "6px 12px",
                       borderRadius: "6px",
@@ -293,47 +281,8 @@ export default function HunterPage() {
                   </button>
                 ))}
               </div>
-              <span style={{ fontSize: "0.72rem", color: D.dim }}>
-                {filtered.length} שורות · עמוד {safeTablePage + 1}/{tablePageCount}
-              </span>
+              <span style={{ fontSize: "0.72rem", color: D.dim }}>{filtered.length} שורות</span>
             </div>
-
-            {filtered.length > TABLE_PAGE_SIZE && (
-              <div style={{ display: "flex", gap: "8px", marginBottom: "10px", flexWrap: "wrap", alignItems: "center" }}>
-                <button
-                  type="button"
-                  disabled={safeTablePage <= 0}
-                  onClick={() => setTablePage(Math.max(0, safeTablePage - 1))}
-                  style={{
-                    padding: "6px 14px",
-                    borderRadius: "8px",
-                    border: `1px solid ${D.cardBorder}`,
-                    background: D.card,
-                    color: D.text,
-                    cursor: safeTablePage <= 0 ? "not-allowed" : "pointer",
-                    opacity: safeTablePage <= 0 ? 0.45 : 1,
-                  }}
-                >
-                  הקודם
-                </button>
-                <button
-                  type="button"
-                  disabled={safeTablePage >= tablePageCount - 1}
-                  onClick={() => setTablePage(Math.min(tablePageCount - 1, safeTablePage + 1))}
-                  style={{
-                    padding: "6px 14px",
-                    borderRadius: "8px",
-                    border: `1px solid ${D.cardBorder}`,
-                    background: D.card,
-                    color: D.text,
-                    cursor: safeTablePage >= tablePageCount - 1 ? "not-allowed" : "pointer",
-                    opacity: safeTablePage >= tablePageCount - 1 ? 0.45 : 1,
-                  }}
-                >
-                  הבא
-                </button>
-              </div>
-            )}
 
             <div
               style={{
@@ -391,9 +340,9 @@ export default function HunterPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {pagedRows.map((t, i) => {
+                  {filtered.map((t, i) => {
                     const st = ST[t.status ?? "discovered"] ?? ST.discovered;
-                    const rowKey = t.id ?? t._id ?? `row-${safeTablePage * TABLE_PAGE_SIZE + i}`;
+                    const rowKey = t.id ?? t._id ?? `row-${i}`;
                     return (
                       <tr key={rowKey} style={{ borderTop: `1px solid ${D.rowLine}` }}>
                         <td style={{ padding: "8px 12px", fontFamily: "monospace", color: D.dim }}>{t.priority ?? "—"}</td>
@@ -442,7 +391,7 @@ export default function HunterPage() {
         {activeTab === "comparison" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <div style={{ background: D.card, border: `1px solid rgba(99,102,241,0.35)`, borderRadius: "12px", padding: "16px 18px" }}>
-              <p style={{ margin: "0 0 8px", fontWeight: 800, color: D.accent }}>Hunter Intel — Comparison Engine</p>
+              <p style={{ margin: "0 0 8px", fontWeight: 800, color: D.accent }}>Comparison Engine</p>
               <p style={{ margin: 0, fontSize: "0.82rem", color: D.muted, lineHeight: 1.55, whiteSpace: "pre-wrap" }}>
                 {comparison.narrativeHe.join("\n")}
               </p>
@@ -487,11 +436,11 @@ export default function HunterPage() {
 
         {activeTab === "credits" && (
           <div style={{ maxWidth: "520px", background: D.card, border: `1px solid ${D.cardBorder}`, borderRadius: "12px", padding: "22px" }}>
-            <p style={{ fontWeight: 800, marginBottom: "14px", color: D.text }}>סיכום קרדיטים (מנוע Intel)</p>
+            <p style={{ fontWeight: 800, marginBottom: "14px", color: D.text }}>סיכום קרדיטים</p>
             {[
-              { label: "פעילים + נרשמים (דלק זמין)", value: formatCreditsCompact(credits.active), color: "#4ade80" },
-              { label: "פוטנציאל (מאגר גילוי)", value: formatCreditsCompact(credits.potential), color: "#fbbf24" },
-              { label: "סה״כ מאגר מוערך", value: formatCreditsCompact(credits.total), color: "#a78bfa" },
+              { label: "פעילים + נרשמים", value: formatCreditsCompact(credits.active), color: "#4ade80" },
+              { label: "פוטנציאל", value: formatCreditsCompact(credits.potential), color: "#fbbf24" },
+              { label: "סה״כ", value: formatCreditsCompact(credits.total), color: "#a78bfa" },
             ].map((row) => (
               <div
                 key={row.label}
@@ -501,9 +450,6 @@ export default function HunterPage() {
                 <span style={{ color: row.color, fontFamily: "monospace", fontWeight: 800 }}>{row.value}</span>
               </div>
             ))}
-            <p style={{ marginTop: "14px", fontSize: "0.75rem", color: D.dim, lineHeight: 1.5 }}>
-              חישוב זהה ל־<code>credits-calculator.ts</code> כמו ב־Credits Hub — ערכים מבוססי סטטוס ושדה <code>credit_value</code>.
-            </p>
           </div>
         )}
 
