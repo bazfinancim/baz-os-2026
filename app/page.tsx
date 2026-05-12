@@ -1066,9 +1066,9 @@ export default function Home() {
               onInjectVaultKeys={injectVaultKeys}
             />
           ) : null}
-          {activeTab === "base" ? <Base44MasterView /> : null}
+          {activeTab === "base" ? <AppsLauncherPanel /> : null}
           {activeTab === "lead_gen" ? <LeadGenPanel isReadOnlyMode={isReadOnlyMode} /> : null}
-          {activeTab === "comms" ? <CommsHub /> : null}
+          {activeTab === "comms" ? <WhatsAppHubInline /> : null}
           {activeTab === "arsenal" ? <EmpireInfrastructurePanel /> : null}
           {activeTab === "n8n_automations" ? <N8NAutomationsPanel /> : null}
           {activeTab === "server_infra" ? <ServerInfraPanel /> : null}
