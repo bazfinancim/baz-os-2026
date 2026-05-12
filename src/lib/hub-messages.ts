@@ -7,6 +7,9 @@ export type HubMessageKey =
   | "sectionCore"
   | "sectionFuel"
   | "sectionMore"
+  | "sectionCommand"
+  | "nav.geminiEyes"
+  | "nav.geminiEyesHint"
   | "nav.whatsapp"
   | "nav.whatsappHint"
   | "nav.projects"
@@ -35,6 +38,9 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     sectionCore: "ליבה",
     sectionFuel: "כסף ודלק",
     sectionMore: "עוד",
+    sectionCommand: "מפקדה",
+    "nav.geminiEyes": "Gemini · Eyes",
+    "nav.geminiEyesHint": "ניטור n8n · 60 חברות",
     "nav.whatsapp": "WhatsApp Hub",
     "nav.whatsappHint": "n8n · סטטוס",
     "nav.projects": "פרויקטים",
@@ -62,6 +68,9 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     sectionCore: "Core",
     sectionFuel: "Fuel & money",
     sectionMore: "More",
+    sectionCommand: "Command",
+    "nav.geminiEyes": "Gemini · Eyes",
+    "nav.geminiEyesHint": "n8n health · 60 companies",
     "nav.whatsapp": "WhatsApp Hub",
     "nav.whatsappHint": "n8n · status",
     "nav.projects": "Projects",

@@ -1,17 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import COMPANIES_RAW from "@/src/data/baz_companies.json";
-
-type Company = {
-  id: number;
-  name: string;
-  icon: string;
-  status: string;
-  group: string;
-  desc: string;
-};
-
-const COMPANIES = COMPANIES_RAW as Company[];
+import { useBazCompanies } from "@/src/components/HubBazCompaniesProvider";
 
 const GROUP_META: Record<string, { label: string; color: string }> = {
   CORE_INFRA: { label: "ליבה", color: "#d97706" },
@@ -24,6 +15,8 @@ const GROUP_META: Record<string, { label: string; color: string }> = {
 };
 
 export default function AppsPage() {
+  const COMPANIES = useBazCompanies();
+
   return (
     <div dir="rtl" style={{ padding: "24px 28px 48px", maxWidth: "1280px", margin: "0 auto" }}>
       <header style={{ marginBottom: "24px" }}>
@@ -31,7 +24,7 @@ export default function AppsPage() {
           אפליקציות BAZ
         </h1>
         <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
-          {COMPANIES.length} ישויות מקומיות מקובץ הנתונים baz_companies.json — כל שורה היא מוצר/אפליקציה באימפריה.
+          {COMPANIES.length} ישויות מקובץ הנתונים baz_companies.json (Knowledge Core ב-Hub) — כל שורה היא מוצר/אפליקציה באימפריה.
         </p>
         <p
           style={{
@@ -49,6 +42,10 @@ export default function AppsPage() {
           חיצוניות. לניהול כלים/קרדיטים שנצודו בשוק:{" "}
           <Link href="/hunter" style={{ color: "#1d4ed8", fontWeight: 700 }}>
             טאב Hunter
+          </Link>
+          . ניטור n8n לכל חברה:{" "}
+          <Link href="/admin/status" style={{ color: "#1d4ed8", fontWeight: 700 }}>
+            Gemini Eyes
           </Link>
           .
         </p>

@@ -13,6 +13,10 @@ type Section = { titleKey: HubMessageKey; items: NavItem[] };
 function buildSections(): Section[] {
   return [
     {
+      titleKey: "sectionCommand",
+      items: [{ href: "/admin/status", labelKey: "nav.geminiEyes", hintKey: "nav.geminiEyesHint", icon: "◆" }],
+    },
+    {
       titleKey: "sectionComm",
       items: [{ href: "/whatsapp", labelKey: "nav.whatsapp", hintKey: "nav.whatsappHint", icon: "💬" }],
     },
