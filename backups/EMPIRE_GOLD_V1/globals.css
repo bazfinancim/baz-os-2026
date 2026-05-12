@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/**
+ * Baz OS — Dark Panel (מקור הערכת הצבעים ל-Hub ול-Credits Hub).
+ * משתנים נוספים לשילוב עתידי עם Tailwind בלי לדרוס ערכים קיימים.
+ */
+:root {
+  --bg: #06060f;
+  --surface: #0f1118;
+  --surface-elevated: #141824;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #818cf8;
+  --accent-strong: #a5b4fc;
+  --yellow: #facc15;
+  --panel-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --sidebar-width: 260px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  direction: rtl;
+}
