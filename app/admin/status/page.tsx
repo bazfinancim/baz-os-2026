@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AutomationRunner } from "@/src/components/AutomationRunner";
 import { ActivitySpark } from "@/src/components/ActivitySpark";
+import { GeminiVoiceButton } from "@/src/components/GeminiVoiceButton";
 
 type HealthRow = {
   id: number;
@@ -54,6 +55,9 @@ export default function AdminStatusPage() {
         <h1 style={{ margin: "0 0 8px", fontSize: "1.55rem", fontWeight: 900, color: "#f8fafc" }}>Eyes · ניטור חברות</h1>
         <p style={{ margin: 0, color: "#94a3b8", fontSize: "0.86rem", maxWidth: "720px", lineHeight: 1.5 }}>
           טבלה דינמית של 60 החברות מ־baz_companies.json. חיווי ירוק/אדום מבוסס POST ל-webhook n8n (N8N_COMPANY_PING_WEBHOOK או מיפוי ב־company_n8n_webhooks.json).
+          <span style={{ display: "block", marginTop: "8px", color: "#a78bfa", fontSize: "0.8rem" }}>
+            פקודות קול (JARVIS): כפתור המיקרופון הצף בפינה — הקלטה מקומית ואישור מהשרת.
+          </span>
         </p>
         {data?.generatedAt && (
           <p style={{ marginTop: "8px", fontSize: "0.72rem", color: "#475569" }}>עדכון: {data.generatedAt}</p>
@@ -150,6 +154,8 @@ export default function AdminStatusPage() {
           <p style={{ padding: "24px", color: "#64748b", textAlign: "center", margin: 0 }}>אין נתוני חברות.</p>
         )}
       </div>
+
+      <GeminiVoiceButton />
     </div>
   );
 }
