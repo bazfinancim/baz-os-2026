@@ -1,30 +1,35 @@
 "use client";
-import COMPANIES from "@/src/data/baz_companies.json";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+import COMPANIES_RAW from "@/src/data/baz_companies.json";
 
 type Company = {
-  id?: string;
-  name?: string;
+  id: number | string;
+  name: string;
+  group?: string;
   category?: string;
   description?: string;
+  desc?: string;
   status?: string;
   url?: string;
   emoji?: string;
+  icon?: string;
 };
 
-const CATS: Record<string, string> = {
+const GROUP_LABELS: Record<string, string> = {
   live: "🔥 לייבה",
-  digital: "💻 דיגיטל וויזרה",
-  ai: "🤖 AI ואוטומציה",
+  digital: "💻 דיגיטל",
+  ai: "🤖 AI",
   automation: "⚙️ אוטומציה",
   finance: "💰 פיננסים",
   services: "🛠️ שירותים",
   other: "🏢 אחר",
 };
 
-const companies: Company[] = Array.isArray(COMPANIES) ? COMPANIES as Company[] : [];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const companies = (COMPANIES_RAW as any[]) as Company[];
 
 const grouped = companies.reduce<Record<string, Company[]>>((acc, c) => {
-  const cat = (c.category ?? "other").toLowerCase();
+  const cat = ((c.group ?? c.category) || "other").toLowerCase();
   if (!acc[cat]) acc[cat] = [];
   acc[cat].push(c);
   return acc;
@@ -41,7 +46,7 @@ export default function AppsPage() {
           אפליקציות BAZ
         </h1>
         <p style={{ color: "#64748b", marginTop: "6px", fontSize: "0.9rem" }}>
-          כל חברות ואפליקציות האימפריה — מחולקות לקטגוריות
+          כל חברות ואפליקציות האימפריה
         </p>
       </div>
 
@@ -52,38 +57,36 @@ export default function AppsPage() {
             textTransform: "uppercase", marginBottom: "16px", fontWeight: 600,
             borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px",
           }}>
-            {CATS[cat] ?? cat} — {items.length} אפליקציות
+            {GROUP_LABELS[cat] ?? cat} — {items.length} אפליקציות
           </div>
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
             gap: "14px",
           }}>
-            {items.map((c, i) => (
-              <div key={c.id ?? i} style={{
+            {items.map((c) => (
+              <div key={String(c.id)} style={{
                 background: "linear-gradient(135deg, #0d1117, #111827)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: "14px",
                 padding: "20px",
                 cursor: c.url ? "pointer" : "default",
-                transition: "border-color 0.15s",
               }}
                 onClick={() => c.url && window.open(c.url, "_blank")}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div style={{ fontSize: "1.6rem", marginBottom: "10px" }}>{c.emoji ?? "🏢"}</div>
+                  <div style={{ fontSize: "1.6rem", marginBottom: "8px" }}>{c.icon ?? c.emoji ?? "🏢"}</div>
                   <div style={{
                     fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em",
                     color: c.status === "active" ? "#22c55e" : "#64748b",
                     background: c.status === "active" ? "rgba(34,197,94,0.1)" : "rgba(100,116,139,0.1)",
-                    border: "1px solid currentColor",
                     borderRadius: "10px", padding: "2px 8px",
                   }}>
                     {c.status ?? "active"}
                   </div>
                 </div>
-                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#f1f5f9", marginBottom: "4px" }}>{c.name}</div>
-                <div style={{ fontSize: "0.75rem", color: "#475569", lineHeight: 1.4 }}>{c.description ?? ""}</div>
+                <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#f1f5f9", marginBottom: "4px" }}>{c.name}</div>
+                <div style={{ fontSize: "0.74rem", color: "#475569", lineHeight: 1.4 }}>{c.desc ?? c.description ?? ""}</div>
               </div>
             ))}
           </div>
