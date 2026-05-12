@@ -124,7 +124,7 @@ function CentralBrain() {
           BAZ OS Brain
         </p>
         <p className="mt-2 text-sm text-slate-300">
-          מרכז בקרה לחיבורי API בשבת
+          מרכז חיבורי API
         </p>
       </div>
     </div>
@@ -135,7 +135,7 @@ function MarketingCoreCard({ core }: { core: MarketingCore }) {
   const reachEfficiency = Math.min(100, Math.round(core.reach / Math.max(core.adSpend, 1)));
 
   function connectCore() {
-    alert("ממתין לחיבור בשבת (Saturday Sync)");
+    alert("נדרש קינפוג API — צור קשר עם מנהל המערכת");
   }
 
   return (
@@ -174,7 +174,7 @@ function MarketingCoreCard({ core }: { core: MarketingCore }) {
       </button>
       )}
       <p className="mt-3 text-center font-mono text-xs text-cyan-100">
-        ממתין לחיבור בשבת (Saturday Sync)
+        נדרש קינפוג API
       </p>
     </article>
   );

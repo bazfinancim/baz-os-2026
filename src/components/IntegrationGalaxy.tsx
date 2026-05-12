@@ -25,7 +25,7 @@ export function IntegrationGalaxy() {
   function triggerHandshake(nodeId: string) {
     setHandshakeNode(nodeId);
     window.setTimeout(() => setHandshakeNode(null), 1100);
-    alert("ממתין לחיבור בשבת (Saturday Sync)");
+    alert("נדרש קינפוג API — הגדר מפתח בהגדרות המערכת");
   }
 
   return (
@@ -122,7 +122,7 @@ function IntegrationPedestal({
         </div>
         <p className="mt-2 font-mono text-xs text-slate-300">מוכנות: {node.readiness}%</p>
         <div className="mt-4 hidden rounded-2xl border border-cyan-400/20 bg-black/80 p-3 font-mono text-xs leading-6 text-cyan-100 group-hover:block">
-          סטטוס: מוכן לסנכרון שבת | מקור דלק: {node.fuelSource}
+          סטטוס: סטטוס: לא מחובר | מקור דלק: {node.fuelSource}
         </div>
         <button
           type="button"
