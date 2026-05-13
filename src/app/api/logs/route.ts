@@ -1,49 +1,94 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const latestReportFile = join(process.cwd(), "public", "latest_report.txt");
-const idleMessage = "[SYSTEM] MONITORING VALVES... [OK]";
+/** בסיס N8N — מפתח ב-.env.local (N8N_API_KEY), לא בקוד */
+const N8N_API_DEFAULT = "https://n8n.baz-f.co.il/api/v1";
 
-async function readLatestReport() {
-  try {
-    const report = await readFile(latestReportFile, "utf8");
-    return report.trim() ? report : idleMessage;
-  } catch {
-    return idleMessage;
-  }
+export type N8nExecutionLog = {
+  id: string;
+  workflowName: string;
+  status: "success" | "error" | "running";
+  startedAt: string;
+  stoppedAt: string | null;
+};
+
+type N8nExecutionRow = {
+  id?: string;
+  status?: string;
+  startedAt?: string;
+  stoppedAt?: string | null;
+  workflowId?: string;
+  workflowName?: string;
+  workflowData?: { name?: string };
+};
+
+function mapN8nStatus(s: string | undefined): "success" | "error" | "running" {
+  if (s === "success" || s === "error" || s === "running") return s;
+  if (s === "crashed" || s === "failed") return "error";
+  if (s === "waiting" || s === "new" || s === "unknown") return "running";
+  return "running";
+}
+
+function rowToLog(row: N8nExecutionRow): N8nExecutionLog {
+  const wf =
+    row.workflowName ??
+    row.workflowData?.name ??
+    (row.workflowId ? `Workflow ${String(row.workflowId).slice(0, 8)}…` : "Unknown workflow");
+  return {
+    id: String(row.id ?? ""),
+    workflowName: wf,
+    status: mapN8nStatus(row.status),
+    startedAt: row.startedAt ?? new Date(0).toISOString(),
+    stoppedAt: row.stoppedAt ?? null,
+  };
 }
 
 export async function GET() {
-  const encoder = new TextEncoder();
-  let interval: ReturnType<typeof setInterval> | null = null;
-  const stream = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      async function pushReport() {
-        const report = await readLatestReport();
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ report })}\n\n`));
-      }
+  const n8nBase = (process.env.N8N_API_BASE ?? N8N_API_DEFAULT).replace(/\/$/, "");
+  const n8nKey = process.env.N8N_API_KEY ?? "";
 
-      await pushReport();
-      interval = setInterval(() => {
-        void pushReport();
-      }, 1_000);
-    },
-    cancel() {
-      if (interval) {
-        clearInterval(interval);
-        interval = null;
-      }
-    },
-  });
+  if (!n8nKey) {
+    return NextResponse.json(
+      { logs: [] as N8nExecutionLog[], error: "N8N_API_KEY חסר ב-.env.local" },
+      { status: 200 },
+    );
+  }
 
-  return new Response(stream, {
-    headers: {
-      "Cache-Control": "no-store, no-transform",
-      "Connection": "keep-alive",
-      "Content-Type": "text/event-stream; charset=utf-8",
-    },
-  });
+  const url = `${n8nBase}/executions?limit=20&includeData=false`;
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "X-N8N-API-KEY": n8nKey,
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      const errText = await res.text().catch(() => "");
+      return NextResponse.json(
+        {
+          logs: [] as N8nExecutionLog[],
+          error: `N8N HTTP ${res.status}: ${errText.slice(0, 200)}`,
+        },
+        { status: 200 },
+      );
+    }
+
+    const json = (await res.json()) as { data?: N8nExecutionRow[] };
+    const rows = Array.isArray(json.data) ? json.data : [];
+    const logs = rows.map(rowToLog);
+
+    return NextResponse.json({ logs });
+  } catch (e) {
+    const message = e instanceof Error ? e.message : "שגיאה לא ידועה";
+    return NextResponse.json(
+      { logs: [] as N8nExecutionLog[], error: message },
+      { status: 200 },
+    );
+  }
 }

@@ -18,14 +18,49 @@ const TABS: { id: PanelTab; label: string; icon: string }[] = [
 const PANEL_W = 400;
 const PANEL_H = 600;
 
-async function fetchSystemLogsText(): Promise<{ ok: true; text: string } | { ok: false; message: string }> {
+type N8nExecutionLog = {
+  id: string;
+  workflowName: string;
+  status: "success" | "error" | "running";
+  startedAt: string;
+  stoppedAt: string | null;
+};
+
+type LogsApiResponse = {
+  logs?: N8nExecutionLog[];
+  error?: string;
+};
+
+function hhmmssFromIso(iso: string): string {
   try {
-    const res = await fetch("/api/get-report", { cache: "no-store" });
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "??:??:??";
+    return d.toLocaleTimeString("he-IL", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+  } catch {
+    return "??:??:??";
+  }
+}
+
+function formatN8nTerminalLine(log: N8nExecutionLog): string {
+  const t = hhmmssFromIso(log.startedAt);
+  const icon = log.status === "success" ? "✅" : log.status === "error" ? "❌" : "⏳";
+  return `[${t}] ${icon} ${log.workflowName} — ${log.status}`;
+}
+
+async function fetchN8nLogs(): Promise<{ ok: true; logs: N8nExecutionLog[]; apiError?: string } | { ok: false; message: string }> {
+  try {
+    const res = await fetch("/api/logs", { cache: "no-store" });
     if (!res.ok) {
       return { ok: false, message: `HTTP ${res.status}` };
     }
-    const text = await res.text();
-    return { ok: true, text: text.trim() || "(דוח ריק)" };
+    const json = (await res.json()) as LogsApiResponse;
+    const logs = Array.isArray(json.logs) ? json.logs : [];
+    return { ok: true, logs, apiError: json.error };
   } catch (e) {
     const message = e instanceof Error ? e.message : "שגיאת רשת לא ידועה";
     return { ok: false, message };
@@ -60,31 +95,39 @@ function LightningStyles() {
 export function FloatingSystemPanel() {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<PanelTab>("council");
-  const [logText, setLogText] = useState<string>("טוען לוגים…");
+  const [n8nLogs, setN8nLogs] = useState<N8nExecutionLog[]>([]);
   const [logError, setLogError] = useState<string | null>(null);
+  const [logApiNote, setLogApiNote] = useState<string | null>(null);
   const [logUpdated, setLogUpdated] = useState<string>("");
   const [waDraft, setWaDraft] = useState("");
   const [waThread, setWaThread] = useState<{ id: string; from: string; body: string; at: string }[]>([
     { id: "1", from: "מערכת", body: "ערוץ WhatsApp — מוכן.", at: new Date().toLocaleTimeString("he-IL") },
   ]);
+  const [councilModel, setCouncilModel] = useState<"gemini" | "codex">("gemini");
+  const [councilBusy, setCouncilBusy] = useState(false);
   const [councilDraft, setCouncilDraft] = useState("");
-  const [councilMessages, setCouncilMessages] = useState<{ id: string; role: "council" | "you"; text: string; at: string }[]>([
+  const [councilMessages, setCouncilMessages] = useState<
+    { id: string; role: "avi" | "ai"; text: string; at: string; modelLabel?: string }[]
+  >([
     {
       id: "c0",
-      role: "council",
-      text: "מועצת המוחות פעילה. נסח החלטה או הנחיה — התיעוד נשמר מקומית בסשן זה.",
+      role: "ai",
+      text: "מועצת המוחות פעילה. בחרו Gemini או CodeX, כתבו הנחיה ושלחו.",
       at: new Date().toLocaleTimeString("he-IL"),
+      modelLabel: "מערכת",
     },
   ]);
 
   const refreshLogs = useCallback(async () => {
-    const r = await fetchSystemLogsText();
+    const r = await fetchN8nLogs();
     if (r.ok) {
-      setLogText(r.text);
+      setN8nLogs(r.logs);
       setLogError(null);
+      setLogApiNote(r.apiError ?? null);
     } else {
       setLogError(r.message);
-      setLogText("");
+      setN8nLogs([]);
+      setLogApiNote(null);
     }
     setLogUpdated(new Date().toLocaleString("he-IL"));
   }, []);
@@ -94,7 +137,7 @@ export function FloatingSystemPanel() {
     void refreshLogs();
     const id = window.setInterval(() => {
       void refreshLogs();
-    }, 12_000);
+    }, 10_000);
     return () => window.clearInterval(id);
   }, [open, tab, refreshLogs]);
 
@@ -113,22 +156,52 @@ export function FloatingSystemPanel() {
     setWaDraft("");
   }, [waDraft]);
 
-  const councilSend = useCallback(() => {
+  const councilSend = useCallback(async () => {
     const text = councilDraft.trim();
-    if (!text) return;
+    if (!text || councilBusy) return;
+    setCouncilBusy(true);
     const at = new Date().toLocaleTimeString("he-IL");
-    setCouncilMessages((prev) => [
-      ...prev,
-      { id: `u-${Date.now()}`, role: "you", text, at },
-      {
-        id: `c-${Date.now()}`,
-        role: "council",
-        text: "נקלט. (תגובת מועצה מקומית — אינטגרציית AI תתווסף בהמשך.)",
-        at,
-      },
-    ]);
+    const uid = `avi-${Date.now()}`;
+    setCouncilMessages((prev) => [...prev, { id: uid, role: "avi", text, at }]);
     setCouncilDraft("");
-  }, [councilDraft]);
+    try {
+      const res = await fetch("/api/council", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, model: councilModel }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        reply?: string;
+        model?: string;
+        timestamp?: string;
+      };
+      const reply = typeof data.reply === "string" ? data.reply : "שגיאת חיבור";
+      const modelName = data.model === "codex" ? "CodeX" : "Gemini";
+      setCouncilMessages((prev) => [
+        ...prev,
+        {
+          id: `ai-${Date.now()}`,
+          role: "ai",
+          text: reply,
+          at: new Date().toLocaleTimeString("he-IL"),
+          modelLabel: modelName,
+        },
+      ]);
+    } catch {
+      setCouncilMessages((prev) => [
+        ...prev,
+        {
+          id: `ai-${Date.now()}`,
+          role: "ai",
+          text: "שגיאת חיבור",
+          at: new Date().toLocaleTimeString("he-IL"),
+          modelLabel: councilModel === "codex" ? "CodeX" : "Gemini",
+        },
+      ]);
+    } finally {
+      setCouncilBusy(false);
+    }
+  }, [councilDraft, councilBusy, councilModel]);
 
   const panelTitle = useMemo(() => TABS.find((t) => t.id === tab)?.label ?? "", [tab]);
 
@@ -244,6 +317,46 @@ export function FloatingSystemPanel() {
               <div style={{ flex: 1, minHeight: 0, overflow: "auto", padding: 14 }}>
                 {tab === "council" && (
                   <div style={{ display: "flex", flexDirection: "column", height: "100%", gap: 12, minHeight: 0 }}>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                      <button
+                        type="button"
+                        onClick={() => setCouncilModel("gemini")}
+                        style={{
+                          border: councilModel === "gemini" ? "1px solid rgba(0,255,255,0.6)" : "1px solid rgba(71,85,105,0.5)",
+                          borderRadius: 10,
+                          padding: "8px 14px",
+                          cursor: "pointer",
+                          fontWeight: 800,
+                          fontSize: "0.75rem",
+                          background:
+                            councilModel === "gemini"
+                              ? "linear-gradient(135deg, rgba(0,255,255,0.2), rgba(99,102,241,0.35))"
+                              : "rgba(15,23,42,0.55)",
+                          color: councilModel === "gemini" ? "#ecfeff" : "#94a3b8",
+                        }}
+                      >
+                        🧠 Gemini
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCouncilModel("codex")}
+                        style={{
+                          border: councilModel === "codex" ? "1px solid rgba(168,85,247,0.65)" : "1px solid rgba(71,85,105,0.5)",
+                          borderRadius: 10,
+                          padding: "8px 14px",
+                          cursor: "pointer",
+                          fontWeight: 800,
+                          fontSize: "0.75rem",
+                          background:
+                            councilModel === "codex"
+                              ? "linear-gradient(135deg, rgba(168,85,247,0.25), rgba(99,102,241,0.3))"
+                              : "rgba(15,23,42,0.55)",
+                          color: councilModel === "codex" ? "#fae8ff" : "#94a3b8",
+                        }}
+                      >
+                        ⚡ CodeX
+                      </button>
+                    </div>
                     <div
                       style={{
                         flex: 1,
@@ -261,23 +374,25 @@ export function FloatingSystemPanel() {
                         <div
                           key={m.id}
                           style={{
-                            alignSelf: m.role === "you" ? "flex-end" : "flex-start",
+                            alignSelf: m.role === "avi" ? "flex-start" : "flex-end",
                             maxWidth: "92%",
                             borderRadius: 14,
                             padding: "10px 14px",
                             fontSize: "0.82rem",
                             lineHeight: 1.5,
-                            color: m.role === "you" ? "#0f172a" : "#e0e7ff",
+                            color: m.role === "avi" ? "#0f172a" : "#e0e7ff",
                             background:
-                              m.role === "you"
-                                ? "linear-gradient(135deg, #a5b4fc, #818cf8)"
-                                : "linear-gradient(135deg, rgba(30,27,75,0.9), rgba(49,46,129,0.75))",
+                              m.role === "avi"
+                                ? "linear-gradient(135deg, #fde68a, #fbbf24)"
+                                : "linear-gradient(135deg, rgba(30,27,75,0.95), rgba(49,46,129,0.8))",
                             border:
-                              m.role === "you" ? "1px solid rgba(99,102,241,0.35)" : "1px solid rgba(168,85,247,0.35)",
-                            boxShadow: m.role === "council" ? "0 0 20px rgba(168,85,247,0.12)" : "none",
+                              m.role === "avi" ? "1px solid rgba(234,179,8,0.45)" : "1px solid rgba(168,85,247,0.4)",
+                            boxShadow: m.role === "ai" ? "0 0 20px rgba(168,85,247,0.12)" : "none",
                           }}
                         >
-                          <div style={{ fontSize: "0.62rem", opacity: 0.85, marginBottom: 4 }}>{m.at}</div>
+                          <div style={{ fontSize: "0.62rem", opacity: 0.88, marginBottom: 4 }}>
+                            {m.role === "avi" ? "אבי" : m.modelLabel ?? "AI"} · {m.at}
+                          </div>
                           {m.text}
                         </div>
                       ))}
@@ -289,11 +404,12 @@ export function FloatingSystemPanel() {
                         onKeyDown={(e) => {
                           if (e.key === "Enter" && !e.shiftKey) {
                             e.preventDefault();
-                            councilSend();
+                            void councilSend();
                           }
                         }}
                         placeholder="הנחיה למועצה… (Enter לשליחה)"
                         rows={2}
+                        disabled={councilBusy}
                         style={{
                           flex: 1,
                           resize: "none",
@@ -304,23 +420,26 @@ export function FloatingSystemPanel() {
                           background: "rgba(2,6,23,0.75)",
                           color: "#f8fafc",
                           outline: "none",
+                          opacity: councilBusy ? 0.6 : 1,
                         }}
                       />
                       <button
                         type="button"
-                        onClick={councilSend}
+                        onClick={() => void councilSend()}
+                        disabled={councilBusy}
                         style={{
                           border: "none",
                           borderRadius: 12,
                           padding: "12px 16px",
                           fontWeight: 800,
-                          cursor: "pointer",
+                          cursor: councilBusy ? "wait" : "pointer",
                           background: "linear-gradient(135deg, #a855f7, #6366f1)",
                           color: "#fff",
                           boxShadow: "0 8px 24px rgba(168,85,247,0.35)",
+                          opacity: councilBusy ? 0.7 : 1,
                         }}
                       >
-                        שלח
+                        {councilBusy ? "…" : "שלח"}
                       </button>
                     </div>
                   </div>
@@ -386,8 +505,9 @@ export function FloatingSystemPanel() {
                 {tab === "logs" && (
                   <div style={{ height: "100%", display: "flex", flexDirection: "column", gap: 8 }}>
                     <div style={{ fontSize: "0.65rem", color: "#22c55e", fontFamily: "ui-monospace, monospace" }}>
-                      [SYS] עדכון: {logUpdated || "—"}
+                      [SYS] N8N executions · עדכון: {logUpdated || "—"}
                       {logError ? ` | ERR: ${logError}` : ""}
+                      {logApiNote ? ` | ${logApiNote}` : ""}
                     </div>
                     <pre
                       style={{
@@ -397,7 +517,7 @@ export function FloatingSystemPanel() {
                         whiteSpace: "pre-wrap",
                         wordBreak: "break-word",
                         fontSize: "0.72rem",
-                        lineHeight: 1.5,
+                        lineHeight: 1.55,
                         color: "#4ade80",
                         background: "#020617",
                         fontFamily: "ui-monospace, Consolas, monospace",
@@ -409,7 +529,13 @@ export function FloatingSystemPanel() {
                         boxShadow: "inset 0 0 24px rgba(34,197,94,0.08)",
                       }}
                     >
-                      {logError ? `>> ERROR: ${logError}` : logText}
+                      {logError
+                        ? `>> ERROR: ${logError}`
+                        : n8nLogs.length === 0
+                          ? logApiNote
+                            ? `>> (ריק) ${logApiNote}`
+                            : ">> (אין הרצות להצגה)"
+                          : n8nLogs.map(formatN8nTerminalLine).join("\n")}
                     </pre>
                   </div>
                 )}
