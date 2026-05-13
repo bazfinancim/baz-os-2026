@@ -109,6 +109,26 @@ export function Base44MasterView() {
           <p style={{ margin: 0, fontSize: "0.72rem", color: "#64748b", textAlign: "center" }}>
             נפתח בטאב חדש · app.base44.com
           </p>
+          <a
+            href="https://app.base44.com/apps/69f0ecbea8b87cb75fe513c9/editor/preview/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-block",
+              marginTop: "12px",
+              padding: "10px 28px",
+              borderRadius: "10px",
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              color: "#94a3b8",
+              background: "rgba(148,163,184,0.08)",
+              border: "1px solid rgba(148,163,184,0.25)",
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+          >
+            ⚙️ פתח Builder (עריכה)
+          </a>
         </div>
       </section>
     </div>
