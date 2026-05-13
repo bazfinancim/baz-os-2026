@@ -6,14 +6,63 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 const ENGINE_DEPTH_BG =
   "radial-gradient(ellipse 100% 80% at 50% -10%, rgba(49, 46, 129, 0.35) 0%, #07070f 42%, #040406 100%)";
 
-type PanelTab = "council" | "vision" | "logs" | "whatsapp";
+type PanelTab = "council" | "vision" | "logs" | "whatsapp" | "missions";
 
 const TABS: { id: PanelTab; label: string; icon: string }[] = [
   { id: "council", label: "AI Council", icon: "🧠" },
   { id: "vision", label: "Vision", icon: "👁️" },
-  { id: "logs", label: "Logs", icon: "📋" },
+  { id: "logs", label: "Logs", icon: "📡" },
   { id: "whatsapp", label: "WhatsApp", icon: "💬" },
+  { id: "missions", label: "Missions", icon: "📋" },
 ];
+
+/** מסלולי Mission Control — הפרדה ברורה בין סוגי משימות */
+type MissionLane =
+  | "lane_council"
+  | "lane_personal"
+  | "lane_projects"
+  | "lane_reminders"
+  | "lane_strategic";
+
+type MissionTask = { id: string; text: string; done: boolean };
+
+const MISSION_NAV: { id: MissionLane; icon: string; title: string; subtitle: string }[] = [
+  { id: "lane_council", icon: "🤖", title: "Council", subtitle: "מועצה · AI · תשתית" },
+  { id: "lane_personal", icon: "👤", title: "Personal", subtitle: "אישי · אדמין · לקוחות" },
+  { id: "lane_projects", icon: "🏗️", title: "Projects", subtitle: "פרויקטים ספציפיים" },
+  { id: "lane_reminders", icon: "🧠", title: "Reminders", subtitle: "תזכורות מכונה" },
+  { id: "lane_strategic", icon: "📜", title: "Strategic", subtitle: "חוקי ברזל · ארוך טווח" },
+];
+
+function initialMissions(): Record<MissionLane, MissionTask[]> {
+  return {
+    lane_council: [
+      { id: "mc1", text: "ייצוב /api/logs מול N8N Executions — בדיקה אחרי deploy", done: true },
+      { id: "mc2", text: "Council /api/council — אימות Gemini + CodeX בסביבה חיה", done: false },
+      { id: "mc3", text: "FloatingSystemPanel — ערוצים + Mission Control בלי לשבור Lightning", done: false },
+    ],
+    lane_personal: [
+      { id: "mp1", text: "מעקב בנקים — סנכרון דוחות וזיהוי חריגות", done: false },
+      { id: "mp2", text: "ניהול לקוחות — עדכון סטטוסים ב-Hub / clients", done: false },
+      { id: "mp3", text: "אדמין: וידוא ש-.env.local לא עולה ל-Git", done: true },
+    ],
+    lane_projects: [
+      { id: "mj1", text: "מיון תמונות P0 — ארגון Media לפרויקט (עדיפות גבוהה)", done: false },
+      { id: "mj2", text: "Base44 Hunter Intel — בדיקת זרימה אחרי שינויי golden-empire-final", done: false },
+      { id: "mj3", text: "אינטגרציית WhatsApp Hub — הודעות ו-webhook n8n", done: false },
+    ],
+    lane_reminders: [
+      { id: "mr1", text: "מערכת: לרענן מפתחות API בשרת — תזכורת לעוד 30 יום", done: false },
+      { id: "mr2", text: "אחרי כל push — npm run build לפני סגירת גרסה", done: true },
+      { id: "mr3", text: "בדיקת Lightning FAB במובייל (viewport צר)", done: false },
+    ],
+    lane_strategic: [
+      { id: "ms1", text: "חוק ברזל: לא לגעת ב-DNA (globals / HubLayout) ללא אישור", done: true },
+      { id: "ms2", text: "Append-only לעיצוב Empire — רק הרחבות מבוקרות", done: true },
+      { id: "ms3", text: "שלב הבא: חיבור משימות ל-DB / persistence מחוץ ל-local state", done: false },
+    ],
+  };
+}
 
 const PANEL_W = 400;
 const PANEL_H = 600;
@@ -117,6 +166,28 @@ export function FloatingSystemPanel() {
       modelLabel: "מערכת",
     },
   ]);
+
+  const [missionLane, setMissionLane] = useState<MissionLane>("lane_council");
+  const [missions, setMissions] = useState<Record<MissionLane, MissionTask[]>>(() => initialMissions());
+  const [missionNewText, setMissionNewText] = useState("");
+
+  const toggleMissionTask = useCallback((lane: MissionLane, id: string) => {
+    setMissions((prev) => ({
+      ...prev,
+      [lane]: prev[lane].map((t) => (t.id === id ? { ...t, done: !t.done } : t)),
+    }));
+  }, []);
+
+  const addMissionTask = useCallback(() => {
+    const text = missionNewText.trim();
+    if (!text) return;
+    const id = `m-${missionLane}-${Date.now()}`;
+    setMissions((prev) => ({
+      ...prev,
+      [missionLane]: [...prev[missionLane], { id, text, done: false }],
+    }));
+    setMissionNewText("");
+  }, [missionNewText, missionLane]);
 
   const refreshLogs = useCallback(async () => {
     const r = await fetchN8nLogs();
@@ -602,6 +673,153 @@ export function FloatingSystemPanel() {
                         }}
                       >
                         שלח
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {tab === "missions" && (
+                  <div style={{ display: "flex", flexDirection: "column", height: "100%", gap: 10, minHeight: 0 }}>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: "0.68rem",
+                        color: "#a5b4fc",
+                        fontWeight: 700,
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Mission Control
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: 6,
+                        paddingBottom: 8,
+                        borderBottom: "1px solid rgba(168,85,247,0.22)",
+                      }}
+                    >
+                      {MISSION_NAV.map((nav) => (
+                        <button
+                          key={nav.id}
+                          type="button"
+                          onClick={() => setMissionLane(nav.id)}
+                          style={{
+                            border:
+                              missionLane === nav.id
+                                ? "1px solid rgba(0,255,255,0.55)"
+                                : "1px solid rgba(71,85,105,0.45)",
+                            borderRadius: 10,
+                            padding: "6px 9px",
+                            cursor: "pointer",
+                            fontSize: "0.65rem",
+                            fontWeight: 700,
+                            textAlign: "right",
+                            background:
+                              missionLane === nav.id
+                                ? "linear-gradient(135deg, rgba(0,255,255,0.12), rgba(168,85,247,0.18))"
+                                : "rgba(15,23,42,0.55)",
+                            color: missionLane === nav.id ? "#ecfeff" : "#94a3b8",
+                            maxWidth: "48%",
+                            flex: "1 1 42%",
+                          }}
+                        >
+                          <span style={{ display: "block" }}>
+                            {nav.icon} {nav.title}
+                          </span>
+                          <span style={{ display: "block", fontSize: "0.58rem", fontWeight: 500, opacity: 0.85, marginTop: 2 }}>
+                            {nav.subtitle}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                    <div
+                      style={{
+                        flex: 1,
+                        overflow: "auto",
+                        borderRadius: 12,
+                        padding: 10,
+                        background: "rgba(2,6,23,0.45)",
+                        border: "1px solid rgba(0,255,255,0.12)",
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                      }}
+                    >
+                      {missions[missionLane].map((task) => (
+                        <label
+                          key={task.id}
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 10,
+                            marginBottom: 10,
+                            padding: "8px 10px",
+                            borderRadius: 10,
+                            cursor: "pointer",
+                            background: "rgba(0,255,255,0.05)",
+                            border: "1px solid rgba(168,85,247,0.18)",
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={task.done}
+                            onChange={() => toggleMissionTask(missionLane, task.id)}
+                            style={{ marginTop: 3, width: 16, height: 16, accentColor: "#22d3ee", flexShrink: 0 }}
+                          />
+                          <span
+                            style={{
+                              fontSize: "0.78rem",
+                              lineHeight: 1.45,
+                              color: task.done ? "#64748b" : "#e0e7ff",
+                              textDecoration: task.done ? "line-through" : "none",
+                            }}
+                          >
+                            {task.text}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
+                      <input
+                        value={missionNewText}
+                        onChange={(e) => setMissionNewText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") addMissionTask();
+                        }}
+                        placeholder="משימה חדשה…"
+                        style={{
+                          flex: 1,
+                          borderRadius: 10,
+                          border: "1px solid rgba(0,255,255,0.25)",
+                          padding: "8px 10px",
+                          fontSize: "0.78rem",
+                          background: "rgba(15,23,42,0.75)",
+                          color: "#f8fafc",
+                          outline: "none",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={addMissionTask}
+                        aria-label="הוסף משימה"
+                        title="הוסף משימה"
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          border: "1px solid rgba(168,85,247,0.45)",
+                          cursor: "pointer",
+                          fontSize: "1.15rem",
+                          fontWeight: 800,
+                          lineHeight: 1,
+                          color: "#e0e7ff",
+                          background: "linear-gradient(145deg, rgba(168,85,247,0.35), rgba(99,102,241,0.35))",
+                          flexShrink: 0,
+                        }}
+                      >
+                        +
                       </button>
                     </div>
                   </div>
