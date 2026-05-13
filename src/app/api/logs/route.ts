@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 
+import n8nWorkflowNames from "@/src/data/n8n_workflow_names.json";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+const N8N_WORKFLOW_NAME_BY_ID = n8nWorkflowNames as Record<string, string>;
 
 /** בסיס N8N — מפתח ב-.env.local (N8N_API_KEY), לא בקוד */
 const N8N_API_DEFAULT = "https://n8n.baz-f.co.il/api/v1";
@@ -32,10 +36,13 @@ function mapN8nStatus(s: string | undefined): "success" | "error" | "running" {
 }
 
 function rowToLog(row: N8nExecutionRow): N8nExecutionLog {
+  const wfId = row.workflowId != null ? String(row.workflowId) : "";
+  const mapped = wfId && N8N_WORKFLOW_NAME_BY_ID[wfId] ? N8N_WORKFLOW_NAME_BY_ID[wfId] : null;
   const wf =
+    mapped ??
     row.workflowName ??
     row.workflowData?.name ??
-    (row.workflowId ? `Workflow ${String(row.workflowId).slice(0, 8)}…` : "Unknown workflow");
+    (wfId ? `Workflow ${wfId.slice(0, 8)}…` : "Unknown workflow");
   return {
     id: String(row.id ?? ""),
     workflowName: wf,

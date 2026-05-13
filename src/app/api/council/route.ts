@@ -13,6 +13,12 @@ type CouncilBody = {
   model?: "gemini" | "codex";
 };
 
+const GEMINI_SYSTEM_PROMPT =
+  "אתה ג'יימס, האסטרטג הראשי של BAZ Empire. אתה מכיר את 61 החברות ואת החזון של אבי. עונה בעברית, קצר ומדויק.";
+
+const CLAUDE_SYSTEM_PROMPT =
+  "אתה CodeX, המהנדס הטכני. תפקידך לפתור בעיות קוד ולנתח בוטים ב-N8N. עונה בעברית, קצר וטכני.";
+
 function failReply(model: "gemini" | "codex", ts: string) {
   return { reply: "שגיאת חיבור", model, timestamp: ts };
 }
@@ -25,6 +31,7 @@ async function callGemini(message: string, apiKey: string): Promise<string> {
       "x-goog-api-key": apiKey,
     },
     body: JSON.stringify({
+      systemInstruction: { parts: [{ text: GEMINI_SYSTEM_PROMPT }] },
       contents: [{ parts: [{ text: message }] }],
     }),
     cache: "no-store",
@@ -52,6 +59,7 @@ async function callAnthropic(message: string, apiKey: string): Promise<string> {
     body: JSON.stringify({
       model: "claude-3-5-sonnet-20241022",
       max_tokens: 1024,
+      system: CLAUDE_SYSTEM_PROMPT,
       messages: [{ role: "user", content: message }],
     }),
     cache: "no-store",
