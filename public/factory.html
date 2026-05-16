@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ BAZ-P — מפעל החי</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #050a14;
+    color: #e0e8ff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0a1628 0%, #0d1f3c 100%);
+    border-bottom: 1px solid #1a3a6a;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-size: 22px; font-weight: 900; color: #ffd700; letter-spacing: 2px; }
+  .logo span { color: #4a9eff; }
+  .clock { font-size: 13px; color: #6a9fd8; font-variant-numeric: tabular-nums; }
+  .live-dot { 
+    display: inline-block; width:8px; height:8px; 
+    background:#00ff88; border-radius:50%; margin-left:6px;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    padding: 20px 28px 0;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #0d1f3c, #0a1628);
+    border: 1px solid #1a3a6a;
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: center;
+    transition: border-color .3s;
+  }
+  .stat-card:hover { border-color: #4a9eff; }
+  .stat-num { font-size: 36px; font-weight: 900; color: #ffd700; }
+  .stat-label { font-size: 11px; color: #6a9fd8; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-card.green .stat-num { color: #00ff88; }
+  .stat-card.blue .stat-num { color: #4a9eff; }
+  .stat-card.red .stat-num { color: #ff6b6b; }
+
+  /* SECTION */
+  .section { padding: 20px 28px; }
+  .section-title { 
+    font-size: 13px; font-weight: 700; 
+    color: #ffd700; text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::after { content:''; flex:1; height:1px; background: linear-gradient(90deg,#1a3a6a,transparent); }
+
+  /* PIPELINE GRID */
+  .pipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .pipe-card {
+    background: #0a1628;
+    border: 1px solid #1a3a6a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: all .2s;
+    cursor: default;
+  }
+  .pipe-card:hover { border-color: #4a9eff; transform: translateY(-1px); background: #0d1f3c; }
+  .pipe-status {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .pipe-status.green { background: #00ff88; box-shadow: 0 0 8px #00ff88; }
+  .pipe-status.gray { background: #3a5a8a; }
+  .pipe-name { font-size: 13px; font-weight: 600; flex: 1; }
+  .pipe-id { font-size: 10px; color: #3a6a9a; font-family: monospace; }
+
+  /* CRM SECTION */
+  .crm-card {
+    background: linear-gradient(135deg, #0d1f3c, #0a1628);
+    border: 1px solid #1a3a6a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .crm-row { 
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid #1a3a6a;
+    font-size: 13px;
+  }
+  .crm-row:last-child { border-bottom: none; }
+  .crm-key { color: #6a9fd8; }
+  .crm-val { color: #e0e8ff; font-weight: 600; }
+
+  /* REFRESH */
+  .refresh-bar {
+    text-align: center;
+    padding: 14px;
+    font-size: 11px;
+    color: #2a5a8a;
+    border-top: 1px solid #0d1f3c;
+  }
+  .refresh-bar a { color: #4a9eff; text-decoration: none; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 20px;
+    font-size: 10px; font-weight: 700;
+    background: #003320; color: #00ff88; border: 1px solid #00cc66;
+  }
+  .badge.yellow { background: #2a2000; color: #ffd700; border-color: #aa8800; }
+  .badge.red { background: #2a0000; color: #ff6b6b; border-color: #aa2222; }
+
+  .divider { height:1px; background: linear-gradient(90deg,transparent,#1a3a6a,transparent); margin: 4px 0 16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">⚡ BAZ<span>-P</span> FACTORY</div>
+  <div class="clock">
+    <span class="live-dot"></span>
+    <span id="clock">טוען...</span>
+    &nbsp;|&nbsp; Hetzner CAX31 &nbsp;|&nbsp; 178.105.75.214
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-card green">
+    <div class="stat-num">42</div>
+    <div class="stat-label">ברזלים פעילים</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-num">7</div>
+    <div class="stat-label">ברזלים ממתינים</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">49</div>
+    <div class="stat-label">סה"כ ברזלים</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="leadCount">1</div>
+    <div class="stat-label">לידים היום</div>
+  </div>
+</div>
+
+<!-- CORE PIPELINES -->
+<div class="section">
+  <div class="section-title">🔥 ברזלי ליבה — Core Engines</div>
+  <div class="pipes-grid" id="core-pipes">
+    <!-- Core engines -->
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🏭 MASTER HUB — Production Router</div><div class="pipe-id">3E8WuzEFQuXgwMf0</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">💰 BAZ Quotes Pro — PDF + Link</div><div class="pipe-id">WG1V3Dpi4Y6i2IoL</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🏗️ CRM Intake — Central</div><div class="pipe-id">ugVOYPpuXjOYi6NM</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">💾 CRM Save → Drive Sheet</div><div class="pipe-id">EalSu0fgzVELFQqo</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🔄 CRM Stage Manager</div><div class="pipe-id">RoxFuSPCkeWVNX1F</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📊 CRM Daily Digest 08:00</div><div class="pipe-id">NOObyv3lN3TDZwbY</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">✍️ Copy Engine — Content Generator</div><div class="pipe-id">KQetKPYdbSsOOy9K</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📋 Tasks Auto-Create</div><div class="pipe-id">SgsaHsGgDId4H1Py</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🎭 Avatar Prep — Face Analysis</div><div class="pipe-id">T4T4hRNtZqtmJv22</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🎙️ Voice Router v2</div><div class="pipe-id">W8ZUNEVoSJKMXuWx</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📝 Transcribe — Voice to Drive</div><div class="pipe-id">v8CfWl1KuIkTsA6t</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🎬 BAZ Studio — Content Pipeline v2</div><div class="pipe-id">qAkaNx4nn9argcuQ</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🤖 אוטומציות — Automation Layer</div>
+  <div class="pipes-grid">
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📊 JAMES — Daily Report 08:00</div><div class="pipe-id">QLIF7TKMUW5Hkepv</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">☀️ Daily Brief — Morning Report</div><div class="pipe-id">ONc6owDdgEdHXm13</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🔒 N8N Auto Backup → Drive</div><div class="pipe-id">FgkoRDnKwqAeObdE</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🗂️ BAZ OS Logger — Drive Upload</div><div class="pipe-id">zsyO7d4ddnkOXFu8</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📧 Email Sender — AI Powered</div><div class="pipe-id">bKZIINSqb00i0Mch</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🎯 Lead Catcher — Email to CRM</div><div class="pipe-id">zWpK6Wg1wppePK0e</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🔍 Hunter Bridge → Hetzner</div><div class="pipe-id">Ln7mZqqF6v9GYG6r</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🧪 QA Engine — E2E Tests</div><div class="pipe-id">3Ey3Vzvsgw8ZWPgK</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🔍 Terms Reader — API Analyzer</div><div class="pipe-id">aMPnrJW0p3fLXSLr</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">⚡ Arsenal v2 — API Health</div><div class="pipe-id">TfJUXdw6T9riIrpU</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">📱 ערוצי תקשורת — Channels</div>
+  <div class="pipes-grid">
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📱 WhatsApp Meta — 054-555-9934 Service</div><div class="pipe-id">8TD1vTFPLVAgLATA</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📱 WhatsApp Meta — 054-829-4343 Marketing</div><div class="pipe-id">XMtmaBBaMneSJUdI</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📱 WhatsApp 052 — Green API Bot</div><div class="pipe-id">aQcVUWcMGZ98T9dT</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">🤖 WhatsApp Fallback — CodeX/Claude</div><div class="pipe-id">HGShqnlv7z48L1QA</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">📱 WA AVI → Dashboard Live Feed</div><div class="pipe-id">4xscMyg4eX62Lh86</div></div></div>
+    <div class="pipe-card"><div class="pipe-status green"></div><div><div class="pipe-name">✉️ Auto-Verify — Gmail → Click → WA</div><div class="pipe-id">BdOcHDtxglUa04vf</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">⏸️ ברזלים ממתינים — Standby</div>
+  <div class="pipes-grid">
+    <div class="pipe-card"><div class="pipe-status gray"></div><div><div class="pipe-name">📸 Photo Scanner — חשבוניות</div><div class="pipe-id">TA6ibIOcMwz0Irkg</div><span class="badge yellow">בפיתוח</span></div></div>
+    <div class="pipe-card"><div class="pipe-status gray"></div><div><div class="pipe-name">🤖 Auto Register Bot</div><div class="pipe-id">RIrhIEzH2359GuWD</div><span class="badge yellow">ממתין</span></div></div>
+    <div class="pipe-card"><div class="pipe-status gray"></div><div><div class="pipe-name">🎬 Studio — Kling AI Video</div><div class="pipe-id">qs9kNprTjONfjEQb</div><span class="badge yellow">ממתין API</span></div></div>
+  </div>
+</div>
+
+<!-- CRM STATUS -->
+<div class="section">
+  <div class="section-title">💾 CRM — Drive Sheet Live</div>
+  <div class="crm-card">
+    <div class="crm-row">
+      <span class="crm-key">📊 Sheet</span>
+      <span class="crm-val"><a href="https://docs.google.com/spreadsheets/d/11N6PMBzYqE8eGlNnsEzBBHodpOltE4hYD1_8naGnows" target="_blank" style="color:#4a9eff">BAZ_CRM_LEADS ↗</a></span>
+    </div>
+    <div class="crm-row">
+      <span class="crm-key">💾 Storage</span>
+      <span class="crm-val">Google Drive — avi@baz-f.co.il <span class="badge">100% Owned</span></span>
+    </div>
+    <div class="crm-row">
+      <span class="crm-key">🔗 Webhook</span>
+      <span class="crm-val">https://n8n.baz-f.co.il/webhook/baz-crm-save</span>
+    </div>
+    <div class="crm-row">
+      <span class="crm-key">⚡ Base44 in pipeline?</span>
+      <span class="crm-val"><span class="badge red">❌ ZERO — הוסר לחלוטין</span></span>
+    </div>
+    <div class="crm-row">
+      <span class="crm-key">✅ Status</span>
+      <span class="crm-val"><span class="badge">🟢 GREEN — Production Ready</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="refresh-bar">
+  ⚡ BAZ-P Factory Dashboard v1.0 | 
+  <a href="https://n8n.baz-f.co.il">N8N Console</a> | 
+  <a href="https://panel.baz-f.co.il">Panel</a> | 
+  Hetzner CAX31 — 178.105.75.214
+  &nbsp;|&nbsp; <span id="lastUpdate"></span>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const opts = {timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false};
+  document.getElementById('clock').textContent = now.toLocaleTimeString('he-IL',opts) + ' IL';
+  document.getElementById('lastUpdate').textContent = 'עדכון אחרון: ' + now.toLocaleTimeString('he-IL',opts);
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// Animate counters
+function animateCounter(el, target) {
+  let current = 0;
+  const step = Math.ceil(target / 30);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current;
+    if (current >= target) clearInterval(timer);
+  }, 40);
+}
+document.querySelectorAll('.stat-num').forEach(el => {
+  const val = parseInt(el.textContent);
+  if (!isNaN(val)) animateCounter(el, val);
+});
+</script>
+</body>
+</html>
