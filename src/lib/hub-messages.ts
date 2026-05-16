@@ -32,6 +32,8 @@ export type HubMessageKey =
   | "nav.vaultHint"
   | "nav.wip"
   | "nav.wipHint"
+  | "nav.missions"
+  | "nav.missionsHint"
   | "langHe"
   | "langEn"
   | "footer";
@@ -67,6 +69,8 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     "nav.vault": "כספת",
     "nav.vaultHint": "מפתחות בשרת",
     "nav.wip": "WIP",
+    "nav.missions": "Missions",
+    "nav.missionsHint": "Personal, system and client tasks",
     "nav.wipHint": "בפיתוח",
     langHe: "עברית",
     langEn: "English",
@@ -102,6 +106,8 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     "nav.vault": "Vault",
     "nav.vaultHint": "Keys on server",
     "nav.wip": "WIP",
+    "nav.missions": "Missions",
+    "nav.missionsHint": "Personal, system and client tasks",
     "nav.wipHint": "In development",
     langHe: "עברית",
     langEn: "English",
