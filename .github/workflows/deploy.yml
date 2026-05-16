@@ -2,23 +2,29 @@ name: Deploy to Hetzner
 
 on:
   push:
-    branches: [main, golden-empire-final]
+    branches:
+      - main
+      - golden-empire-final
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 178.105.75.214
           username: root
           key: ${{ secrets.HETZNER_SSH_KEY }}
+          timeout: 300s
           script: |
+            echo "BAZ Deploy Started"
             cd /var/www/baz-panel
             git fetch origin
             git reset --hard origin/golden-empire-final
-            npm ci
-            npm run build
+            npm ci 2>&1 | tail -3
+            npm run build 2>&1 | tail -5
             pm2 restart baz-panel
+            pm2 save
+            echo "Deploy Done"
