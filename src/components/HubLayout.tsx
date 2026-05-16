@@ -46,7 +46,7 @@ function buildSections(): Section[] {
     },
     {
       titleKey: "sectionMore",
-      items: [{ href: "/wip", labelKey: "nav.wip", hintKey: "nav.wipHint", icon: "🛠️" }],
+      items: [{ href: "/wip", labelKey: "nav.missions", hintKey: "nav.missionsHint", icon: "⚡" }],
     },
   ];
 }
