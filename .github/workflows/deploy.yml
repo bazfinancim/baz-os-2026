@@ -1,0 +1,24 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main, golden-empire-final]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 178.105.75.214
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script: |
+            cd /var/www/baz-panel
+            git fetch origin
+            git reset --hard origin/golden-empire-final
+            npm ci
+            npm run build
+            pm2 restart baz-panel
