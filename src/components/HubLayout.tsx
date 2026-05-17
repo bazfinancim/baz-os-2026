@@ -6,9 +6,7 @@ import type { ReactNode } from "react";
 import { useHubLang } from "@/src/components/HubLanguageProvider";
 import type { HubMessageKey } from "@/src/lib/hub-messages";
 
-/** מבנה Heritage מ־152b2f8 — קטגוריית מפקדה + רשתות (לינקים פנימיים) נוספו אחרי השחזור */
 type NavItem = { href: string; labelKey: HubMessageKey; hintKey: HubMessageKey; icon: string };
-
 type Section = { titleKey: HubMessageKey; items: NavItem[] };
 
 function buildSections(): Section[] {
@@ -46,12 +44,14 @@ function buildSections(): Section[] {
     },
     {
       titleKey: "sectionMore",
-      items: [{ href: "/wip", labelKey: "nav.missions", hintKey: "nav.missionsHint", icon: "⚡" }],
+      items: [
+        { href: "/wip", labelKey: "nav.missions", hintKey: "nav.missionsHint", icon: "⚡" },
+        { href: "/voice-studio", labelKey: "nav.voiceStudio", hintKey: "nav.voiceStudioHint", icon: "🎙" },
+      ],
     },
   ];
 }
 
-/** פאנל כהה — לא ערכת Apple לבנה (שמירה על מראה Baz OS) */
 const shell = {
   pageBg: "#07070f",
   asideBg: "linear-gradient(180deg, #0a0a14 0%, #06060f 55%, #050508 100%)",
@@ -177,6 +177,7 @@ export function HubLayout({ children }: { children: ReactNode }) {
                 <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                   {sec.items.map((item) => {
                     const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    const isVoice = item.href === "/voice-studio";
                     return (
                       <Link
                         key={item.href}
@@ -190,9 +191,9 @@ export function HubLayout({ children }: { children: ReactNode }) {
                           textDecoration: "none",
                           fontSize: "0.88rem",
                           fontWeight: active ? 700 : 500,
-                          color: active ? shell.navActiveText : shell.navIdle,
-                          background: active ? shell.navActiveBg : "transparent",
-                          border: active ? `1px solid ${shell.navActiveBorder}` : "1px solid transparent",
+                          color: active ? shell.navActiveText : isVoice ? "#c084fc" : shell.navIdle,
+                          background: active ? shell.navActiveBg : isVoice ? "rgba(192,132,252,0.08)" : "transparent",
+                          border: active ? `1px solid ${shell.navActiveBorder}` : isVoice ? "1px solid rgba(192,132,252,0.25)" : "1px solid transparent",
                         }}
                       >
                         <span aria-hidden>{item.icon}</span>
