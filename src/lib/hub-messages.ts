@@ -34,6 +34,8 @@ export type HubMessageKey =
   | "nav.wipHint"
   | "nav.missions"
   | "nav.missionsHint"
+  | "nav.voiceStudio"
+  | "nav.voiceStudioHint"
   | "langHe"
   | "langEn"
   | "footer";
@@ -48,7 +50,7 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     sectionCore: "ליבה",
     sectionFuel: "כסף ודלק",
     sectionMore: "עוד",
-    "nav.geminiEyes": "מפקדת ג׳מיני — Eyes",
+    "nav.geminiEyes": "מפקדת ג\u05F4מיני — Eyes",
     "nav.geminiEyesHint": "ניטור n8n · /admin/status",
     "nav.whatsapp": "WhatsApp Hub",
     "nav.whatsappHint": "n8n · סטטוס",
@@ -72,6 +74,8 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     "nav.missions": "Missions",
     "nav.missionsHint": "Personal, system and client tasks",
     "nav.wipHint": "בפיתוח",
+    "nav.voiceStudio": "🎙 Voice Studio",
+    "nav.voiceStudioHint": "הקלטת קול · AI Voice",
     langHe: "עברית",
     langEn: "English",
     footer: "Baz-F Tech · 2026",
@@ -109,6 +113,8 @@ const M: Record<HubLang, Record<HubMessageKey, string>> = {
     "nav.missions": "Missions",
     "nav.missionsHint": "Personal, system and client tasks",
     "nav.wipHint": "In development",
+    "nav.voiceStudio": "🎙 Voice Studio",
+    "nav.voiceStudioHint": "Record voice · AI clone",
     langHe: "עברית",
     langEn: "English",
     footer: "Baz-F Tech · 2026",
