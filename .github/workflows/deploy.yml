@@ -1,1 +1,33 @@
-test
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches:
+      - golden-empire-final
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HETZNER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 178.105.75.214 >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Deploy via SSH Key
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@178.105.75.214 "
+            echo Deploy Started &&
+            cd /var/www/baz-panel &&
+            git fetch origin &&
+            git reset --hard origin/golden-empire-final &&
+            npm ci --prefer-offline 2>&1 | tail -3 &&
+            npm run build 2>&1 | tail -5 &&
+            pm2 restart baz-panel &&
+            pm2 save &&
+            echo DEPLOY_DONE_at_\$(date +%Y%m%d_%H%M%S)
+          "
+
