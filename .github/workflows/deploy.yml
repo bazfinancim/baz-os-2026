@@ -16,15 +16,13 @@ jobs:
         with:
           host: 178.105.75.214
           username: root
-          key: ${{ secrets.HETZNER_SSH_KEY }}
+          key: \${{ secrets.HETZNER_SSH_KEY }}
           timeout: 300s
           script: |
-            echo "BAZ Deploy Started"
             cd /var/www/baz-panel
             git fetch origin
             git reset --hard origin/golden-empire-final
             npm ci 2>&1 | tail -3
             npm run build 2>&1 | tail -5
-            pm2 restart baz-panel
-            pm2 save
-            echo "Deploy Done"
+            pm2 restart baz-panel && pm2 save
+            echo BAZ_DEPLOYED_OK
