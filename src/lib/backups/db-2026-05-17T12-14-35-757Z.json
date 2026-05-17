@@ -1,0 +1,2113 @@
+{
+  "lastSync": "2026-05-17T12:14:25.185Z",
+  "clients": [
+    {
+      "id": "somer",
+      "name": "Somer",
+      "health": 82,
+      "fuelStatus": 42,
+      "activeAutomations": [
+        "Lead Funnel",
+        "WhatsApp Follow-Up",
+        "Invoice Sync"
+      ],
+      "needsHumanHelp": true
+    },
+    {
+      "id": "or-digital",
+      "name": "Or Digital",
+      "health": 91,
+      "fuelStatus": 78,
+      "activeAutomations": [
+        "Meta Campaigns",
+        "Landing Page",
+        "CRM Intake"
+      ],
+      "needsHumanHelp": false
+    },
+    {
+      "id": "tal-assets",
+      "name": "Tal Assets",
+      "health": 64,
+      "fuelStatus": 18,
+      "activeAutomations": [
+        "Drive Archive",
+        "Base44 Portal",
+        "Monthly Reports"
+      ],
+      "needsHumanHelp": true
+    },
+    {
+      "id": "lev-finance",
+      "name": "Lev Finance",
+      "health": 76,
+      "fuelStatus": 66,
+      "activeAutomations": [
+        "Invoice Sweep",
+        "Payment Reminder",
+        "VAT Report"
+      ],
+      "needsHumanHelp": false
+    },
+    {
+      "id": "north-build",
+      "name": "North Build",
+      "health": 88,
+      "fuelStatus": 73,
+      "activeAutomations": [
+        "Lead Capture",
+        "Hunter Enrichment",
+        "WhatsApp Nurture"
+      ],
+      "needsHumanHelp": false
+    }
+  ],
+  "vault_assets": [
+    {
+      "id": "hunter-primary",
+      "tool_name": "Hunter",
+      "api_key": "HUNTER_KEY_PRIMARY",
+      "expiry_date": "2026-05-10",
+      "credit_balance": 3850,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "gemini-primary",
+      "tool_name": "Gemini",
+      "api_key": "GEMINI_KEY_PRIMARY",
+      "expiry_date": "2026-07-01",
+      "credit_balance": 75000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "gemini-backup-a",
+      "tool_name": "Gemini",
+      "api_key": "GEMINI_KEY_BACKUP_A",
+      "expiry_date": "2026-07-18",
+      "credit_balance": 55000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "gemini-backup-b",
+      "tool_name": "Gemini",
+      "api_key": "GEMINI_KEY_BACKUP_B",
+      "expiry_date": "2026-05-13",
+      "credit_balance": 15000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "nvidia-factory",
+      "tool_name": "NVIDIA",
+      "api_key": "NVIDIA_CORE_01",
+      "expiry_date": "2026-06-22",
+      "credit_balance": 120000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "claude-primary",
+      "tool_name": "Claude",
+      "api_key": "ANTHROPIC_KEY_PRIMARY",
+      "expiry_date": "2026-06-12",
+      "credit_balance": 62000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "claude-backup",
+      "tool_name": "Claude",
+      "api_key": "ANTHROPIC_KEY_BACKUP",
+      "expiry_date": "2026-05-14",
+      "credit_balance": 22000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "meta-whatsapp",
+      "tool_name": "Meta WhatsApp",
+      "api_key": "META_WHATSAPP_PRIMARY",
+      "expiry_date": "2026-05-28",
+      "credit_balance": 10000,
+      "status": "LOW_FUEL"
+    },
+    {
+      "id": "integrately-main",
+      "tool_name": "Integrately",
+      "api_key": "INTEGRATELY_PIPE_MAIN",
+      "expiry_date": "2026-08-08",
+      "credit_balance": 30000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "base44-main",
+      "tool_name": "Base44",
+      "api_key": "BASE44_FACTORY_MAIN",
+      "expiry_date": "2026-09-01",
+      "credit_balance": 44000,
+      "status": "ACTIVE"
+    }
+  ],
+  "vault": [
+    {
+      "id": "v1",
+      "name": "Hunter.io",
+      "key": "H_KEY_01",
+      "credits": 4850,
+      "expiry": "2026-05-10"
+    },
+    {
+      "id": "v2",
+      "name": "Gemini_Pro",
+      "key": "G_KEY_MASTER",
+      "credits": 10000,
+      "expiry": "2026-12-31"
+    }
+  ],
+  "projects": [
+    {
+      "id": "beni",
+      "name": "האתר של בני",
+      "context": "שותפות שיווק פייסבוק עם אבי וניהול פעילות החברה",
+      "platform": "Base44",
+      "assignedTo": "Alon",
+      "status": "active"
+    },
+    {
+      "id": "avi",
+      "name": "אימפריית אבי",
+      "context": "ניהול על של כל זרועות האימפריה ושליטה מרכזית בבוטים",
+      "platform": "Drive",
+      "assignedTo": "Itay",
+      "status": "active"
+    },
+    {
+      "id": "global-bot-network",
+      "name": "רשת בוטים",
+      "context": "תשתית בוטים גלובלית לניהול אוטומציות, לקוחות ודוחות בזמן אמת",
+      "platform": "Tipur",
+      "assignedTo": "Alon",
+      "status": "pending"
+    },
+    {
+      "id": "website-asset-project-1",
+      "name": "Website Asset Project 1",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 62,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-2",
+      "name": "WhatsApp Bot Automation 2",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 89,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-3",
+      "name": "Meta Marketing Campaign 3",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 90,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-4",
+      "name": "SEO Organic Forge 4",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 65,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-5",
+      "name": "Finance Invoice Automation 5",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 92,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-6",
+      "name": "Meta Marketing Campaign 6",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 93,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-7",
+      "name": "Website Asset Project 7",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 68,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-8",
+      "name": "SEO Organic Forge 8",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 69,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-9",
+      "name": "Meta Marketing Campaign 9",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 96,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-10",
+      "name": "Finance Invoice Automation 10",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 97,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-11",
+      "name": "Website Asset Project 11",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 72,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-12",
+      "name": "SEO Organic Forge 12",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 73,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-13",
+      "name": "Website Asset Project 13",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 74,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-14",
+      "name": "WhatsApp Bot Automation 14",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 89,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-15",
+      "name": "Finance Invoice Automation 15",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 90,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-16",
+      "name": "SEO Organic Forge 16",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 77,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-17",
+      "name": "Website Asset Project 17",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 78,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-18",
+      "name": "Meta Marketing Campaign 18",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 93,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-19",
+      "name": "Website Asset Project 19",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 62,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-20",
+      "name": "Finance Invoice Automation 20",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 95,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-21",
+      "name": "Meta Marketing Campaign 21",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 96,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-22",
+      "name": "WhatsApp Bot Automation 22",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 97,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-23",
+      "name": "Website Asset Project 23",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 66,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-24",
+      "name": "SEO Organic Forge 24",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 67,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-25",
+      "name": "Finance Invoice Automation 25",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 88,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-26",
+      "name": "WhatsApp Bot Automation 26",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 89,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-27",
+      "name": "Meta Marketing Campaign 27",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 90,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-28",
+      "name": "SEO Organic Forge 28",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 71,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-29",
+      "name": "Website Asset Project 29",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 72,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-30",
+      "name": "Finance Invoice Automation 30",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 93,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-31",
+      "name": "Website Asset Project 31",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 74,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-32",
+      "name": "SEO Organic Forge 32",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 75,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-33",
+      "name": "Meta Marketing Campaign 33",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 96,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-34",
+      "name": "WhatsApp Bot Automation 34",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 97,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-35",
+      "name": "Finance Invoice Automation 35",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 98,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-36",
+      "name": "SEO Organic Forge 36",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 79,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-37",
+      "name": "Website Asset Project 37",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 62,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-38",
+      "name": "WhatsApp Bot Automation 38",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 89,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-39",
+      "name": "Meta Marketing Campaign 39",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 90,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-40",
+      "name": "Finance Invoice Automation 40",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 91,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-41",
+      "name": "Website Asset Project 41",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 66,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-42",
+      "name": "Meta Marketing Campaign 42",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 93,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-43",
+      "name": "Website Asset Project 43",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 68,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-44",
+      "name": "SEO Organic Forge 44",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 69,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-45",
+      "name": "Finance Invoice Automation 45",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 96,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-46",
+      "name": "WhatsApp Bot Automation 46",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 97,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-47",
+      "name": "Website Asset Project 47",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 72,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-48",
+      "name": "SEO Organic Forge 48",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 73,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-49",
+      "name": "Website Asset Project 49",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 74,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-50",
+      "name": "Finance Invoice Automation 50",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 89,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-51",
+      "name": "Meta Marketing Campaign 51",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 90,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-52",
+      "name": "SEO Organic Forge 52",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 77,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-53",
+      "name": "Website Asset Project 53",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 78,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-54",
+      "name": "Meta Marketing Campaign 54",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 93,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-55",
+      "name": "Finance Invoice Automation 55",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 94,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-56",
+      "name": "SEO Organic Forge 56",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 63,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-57",
+      "name": "Meta Marketing Campaign 57",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 96,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-58",
+      "name": "WhatsApp Bot Automation 58",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 97,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-59",
+      "name": "Website Asset Project 59",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 66,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-60",
+      "name": "Finance Invoice Automation 60",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 99,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-61",
+      "name": "Website Asset Project 61",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 68,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "whatsapp-bot-automation-62",
+      "name": "WhatsApp Bot Automation 62",
+      "context": "Factory generated Automation briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Automation",
+      "fuelPriority": "High",
+      "fuelLevel": 89,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-63",
+      "name": "Meta Marketing Campaign 63",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 90,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-64",
+      "name": "SEO Organic Forge 64",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 71,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-65",
+      "name": "Finance Invoice Automation 65",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 92,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-66",
+      "name": "Meta Marketing Campaign 66",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 93,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "website-asset-project-67",
+      "name": "Website Asset Project 67",
+      "context": "Factory generated Web Assets briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Web Assets",
+      "fuelPriority": "Medium",
+      "fuelLevel": 74,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "seo-organic-forge-68",
+      "name": "SEO Organic Forge 68",
+      "context": "Factory generated SEO briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "SEO",
+      "fuelPriority": "Medium",
+      "fuelLevel": 75,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "meta-marketing-campaign-69",
+      "name": "Meta Marketing Campaign 69",
+      "context": "Factory generated Marketing briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Alon",
+      "status": "factory-ready",
+      "sector": "Marketing",
+      "fuelPriority": "High",
+      "fuelLevel": 96,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    },
+    {
+      "id": "finance-invoice-automation-70",
+      "name": "Finance Invoice Automation 70",
+      "context": "Factory generated Finance briefcase. Ready for Saturday data injection.",
+      "platform": "BAZ_PROJECTS_2026",
+      "assignedTo": "Itay",
+      "status": "factory-ready",
+      "sector": "Finance",
+      "fuelPriority": "High",
+      "fuelLevel": 97,
+      "protectionStatus": "LOCKED",
+      "isLocked": true,
+      "needsAttention": false
+    }
+  ],
+  "leads": [
+    {
+      "id": "lead-0001",
+      "companyName": "B2B Lead 01",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0002",
+      "companyName": "B2B Lead 02",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0003",
+      "companyName": "B2B Lead 03",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0004",
+      "companyName": "B2B Lead 04",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0005",
+      "companyName": "B2B Lead 05",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0006",
+      "companyName": "B2B Lead 06",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0007",
+      "companyName": "B2B Lead 07",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0008",
+      "companyName": "B2B Lead 08",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0009",
+      "companyName": "B2B Lead 09",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0010",
+      "companyName": "B2B Lead 10",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0011",
+      "companyName": "B2B Lead 11",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0012",
+      "companyName": "B2B Lead 12",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0013",
+      "companyName": "B2B Lead 13",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0014",
+      "companyName": "B2B Lead 14",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0015",
+      "companyName": "B2B Lead 15",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0016",
+      "companyName": "B2B Lead 16",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0017",
+      "companyName": "B2B Lead 17",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0018",
+      "companyName": "B2B Lead 18",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0019",
+      "companyName": "B2B Lead 19",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0020",
+      "companyName": "B2B Lead 20",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0021",
+      "companyName": "B2B Lead 21",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0022",
+      "companyName": "B2B Lead 22",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0023",
+      "companyName": "B2B Lead 23",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0024",
+      "companyName": "B2B Lead 24",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0025",
+      "companyName": "B2B Lead 25",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0026",
+      "companyName": "B2B Lead 26",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0027",
+      "companyName": "B2B Lead 27",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0028",
+      "companyName": "B2B Lead 28",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0029",
+      "companyName": "B2B Lead 29",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0030",
+      "companyName": "B2B Lead 30",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0031",
+      "companyName": "B2B Lead 31",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0032",
+      "companyName": "B2B Lead 32",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0033",
+      "companyName": "B2B Lead 33",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0034",
+      "companyName": "B2B Lead 34",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0035",
+      "companyName": "B2B Lead 35",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0036",
+      "companyName": "B2B Lead 36",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0037",
+      "companyName": "B2B Lead 37",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0038",
+      "companyName": "B2B Lead 38",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0039",
+      "companyName": "B2B Lead 39",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0040",
+      "companyName": "B2B Lead 40",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0041",
+      "companyName": "B2B Lead 41",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0042",
+      "companyName": "B2B Lead 42",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0043",
+      "companyName": "B2B Lead 43",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0044",
+      "companyName": "B2B Lead 44",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0045",
+      "companyName": "B2B Lead 45",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0046",
+      "companyName": "B2B Lead 46",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0047",
+      "companyName": "B2B Lead 47",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0048",
+      "companyName": "B2B Lead 48",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0049",
+      "companyName": "B2B Lead 49",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0050",
+      "companyName": "B2B Lead 50",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0051",
+      "companyName": "B2B Lead 01",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0052",
+      "companyName": "B2B Lead 02",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0053",
+      "companyName": "B2B Lead 03",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0054",
+      "companyName": "B2B Lead 04",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0055",
+      "companyName": "B2B Lead 05",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0056",
+      "companyName": "B2B Lead 06",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0057",
+      "companyName": "B2B Lead 07",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0058",
+      "companyName": "B2B Lead 08",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0059",
+      "companyName": "B2B Lead 09",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0060",
+      "companyName": "B2B Lead 10",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0061",
+      "companyName": "B2B Lead 11",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0062",
+      "companyName": "B2B Lead 12",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0063",
+      "companyName": "B2B Lead 13",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0064",
+      "companyName": "B2B Lead 14",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0065",
+      "companyName": "B2B Lead 15",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0066",
+      "companyName": "B2B Lead 16",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0067",
+      "companyName": "B2B Lead 17",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0068",
+      "companyName": "B2B Lead 18",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0069",
+      "companyName": "B2B Lead 19",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0070",
+      "companyName": "B2B Lead 20",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0071",
+      "companyName": "B2B Lead 21",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0072",
+      "companyName": "B2B Lead 22",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0073",
+      "companyName": "B2B Lead 23",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0074",
+      "companyName": "B2B Lead 24",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0075",
+      "companyName": "B2B Lead 25",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0076",
+      "companyName": "B2B Lead 26",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0077",
+      "companyName": "B2B Lead 27",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0078",
+      "companyName": "B2B Lead 28",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0079",
+      "companyName": "B2B Lead 29",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0080",
+      "companyName": "B2B Lead 30",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0081",
+      "companyName": "B2B Lead 31",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0082",
+      "companyName": "B2B Lead 32",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0083",
+      "companyName": "B2B Lead 33",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0084",
+      "companyName": "B2B Lead 34",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0085",
+      "companyName": "B2B Lead 35",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0086",
+      "companyName": "B2B Lead 36",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0087",
+      "companyName": "B2B Lead 37",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0088",
+      "companyName": "B2B Lead 38",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0089",
+      "companyName": "B2B Lead 39",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0090",
+      "companyName": "B2B Lead 40",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0091",
+      "companyName": "B2B Lead 41",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0092",
+      "companyName": "B2B Lead 42",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0093",
+      "companyName": "B2B Lead 43",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0094",
+      "companyName": "B2B Lead 44",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0095",
+      "companyName": "B2B Lead 45",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0096",
+      "companyName": "B2B Lead 46",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0097",
+      "companyName": "B2B Lead 47",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0098",
+      "companyName": "B2B Lead 48",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0099",
+      "companyName": "B2B Lead 49",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0100",
+      "companyName": "B2B Lead 50",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0101",
+      "companyName": "B2B Lead 51",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0102",
+      "companyName": "B2B Lead 52",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0103",
+      "companyName": "B2B Lead 53",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0104",
+      "companyName": "B2B Lead 54",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0105",
+      "companyName": "B2B Lead 55",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0106",
+      "companyName": "B2B Lead 56",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0107",
+      "companyName": "B2B Lead 57",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0108",
+      "companyName": "B2B Lead 58",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0109",
+      "companyName": "B2B Lead 59",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0110",
+      "companyName": "B2B Lead 60",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0111",
+      "companyName": "B2B Lead 61",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0112",
+      "companyName": "B2B Lead 62",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0113",
+      "companyName": "B2B Lead 63",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0114",
+      "companyName": "B2B Lead 64",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0115",
+      "companyName": "B2B Lead 65",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0116",
+      "companyName": "B2B Lead 66",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0117",
+      "companyName": "B2B Lead 67",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0118",
+      "companyName": "B2B Lead 68",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0119",
+      "companyName": "B2B Lead 69",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0120",
+      "companyName": "B2B Lead 70",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0121",
+      "companyName": "B2B Lead 71",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0122",
+      "companyName": "B2B Lead 72",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0123",
+      "companyName": "B2B Lead 73",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0124",
+      "companyName": "B2B Lead 74",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0125",
+      "companyName": "B2B Lead 75",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0126",
+      "companyName": "B2B Lead 76",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0127",
+      "companyName": "B2B Lead 77",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0128",
+      "companyName": "B2B Lead 78",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0129",
+      "companyName": "B2B Lead 79",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0130",
+      "companyName": "B2B Lead 80",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0131",
+      "companyName": "B2B Lead 81",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0132",
+      "companyName": "B2B Lead 82",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0133",
+      "companyName": "B2B Lead 83",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0134",
+      "companyName": "B2B Lead 84",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0135",
+      "companyName": "B2B Lead 85",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0136",
+      "companyName": "B2B Lead 86",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0137",
+      "companyName": "B2B Lead 87",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0138",
+      "companyName": "B2B Lead 88",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0139",
+      "companyName": "B2B Lead 89",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0140",
+      "companyName": "B2B Lead 90",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0141",
+      "companyName": "B2B Lead 91",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0142",
+      "companyName": "B2B Lead 92",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0143",
+      "companyName": "B2B Lead 93",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0144",
+      "companyName": "B2B Lead 94",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0145",
+      "companyName": "B2B Lead 95",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0146",
+      "companyName": "B2B Lead 96",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0147",
+      "companyName": "B2B Lead 97",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0148",
+      "companyName": "B2B Lead 98",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0149",
+      "companyName": "B2B Lead 99",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    },
+    {
+      "id": "lead-0150",
+      "companyName": "B2B Lead 100",
+      "source": "Hunter.io Matrix Scan",
+      "status": "new"
+    }
+  ],
+  "finance_logs": [
+    {
+      "id": "rev-001",
+      "type": "revenue",
+      "clientId": "somer",
+      "amount": 82000,
+      "status": "collected",
+      "description": "Lead generation retainer"
+    },
+    {
+      "id": "rev-002",
+      "type": "revenue",
+      "clientId": "or-digital",
+      "amount": 146000,
+      "status": "collected",
+      "description": "Campaign automation package"
+    },
+    {
+      "id": "inv-001",
+      "type": "invoice",
+      "clientId": "tal-assets",
+      "amount": 39000,
+      "status": "pending",
+      "description": "Monthly report automation"
+    },
+    {
+      "id": "inv-002",
+      "type": "invoice",
+      "clientId": "lev-finance",
+      "amount": 26000,
+      "status": "pending",
+      "description": "Finance flow setup"
+    },
+    {
+      "id": "rev-003",
+      "type": "revenue",
+      "clientId": "north-build",
+      "amount": 160000,
+      "status": "collected",
+      "description": "Hunter lead generation sprint"
+    }
+  ]
+}

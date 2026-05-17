@@ -1,0 +1,44 @@
+import { appendFileSync, mkdirSync } from "fs";
+import { join } from "path";
+import { type NextRequest, NextResponse } from "next/server";
+
+function logChronicle(model: string, input: string, output: string) {
+  try {
+    const dir = join(process.cwd(), "data");
+    mkdirSync(dir, { recursive: true });
+    const entry = JSON.stringify({ ts: new Date().toISOString(), model, input, output }) + "\n";
+    appendFileSync(join(dir, "chronicles_log.jsonl"), entry);
+  } catch {}
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json() as { message?: string };
+  const message = body.message ?? "";
+  const apiKey = process.env.ANTHROPIC_API_KEY ?? "";
+
+  if (!apiKey) return NextResponse.json({ reply: "מפתח Claude חסר" }, { status: 500 });
+  if (!message) return NextResponse.json({ reply: "הודעה ריקה" }, { status: 400 });
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5",
+        max_tokens: 1024,
+        system: "אתה CodeX, המהנדס הטכני של BAZ Empire. עונה בעברית, קצר וטכני.",
+        messages: [{ role: "user", content: message }]
+      })
+    });
+    const data = await res.json() as { content?: { text?: string }[] };
+    const text = data?.content?.[0]?.text ?? "שגיאה בתשובה";
+    logChronicle("claude", message, text);
+    return NextResponse.json({ reply: text });
+  } catch (e) {
+    return NextResponse.json({ reply: "שגיאת חיבור Claude" }, { status: 500 });
+  }
+}

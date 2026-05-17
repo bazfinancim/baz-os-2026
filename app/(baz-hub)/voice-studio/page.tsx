@@ -288,7 +288,7 @@ export default function VoiceStudioPage() {
       {/* Info */}
       <div style={{ marginTop: "32px", background: "rgba(30,27,75,0.4)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "12px", padding: "16px 20px" }}>
         <p style={{ fontSize: "0.78rem", color: "#94a3b8", fontWeight: 700, marginBottom: "8px" }}>💡 הנחיות להקלטה איכותית:</p>
-        <ul style={{ color: "#64748b", fontSize: "0.78rem", lineSpace: "1.6", paddingRight: "16px", margin: 0 }}>
+        <ul style={{ color: "#64748b", fontSize: "0.78rem", lineHeight: "1.6", paddingRight: "16px", margin: 0 }}>
           <li>הקלט לפחות 30 שניות של דיבור טבעי</li>
           <li>דבר בנחת ובבהירות, ממרחק 20-30 ס"מ מהמיק</li>
           <li>נסה לגוון — שאלות, משפטים, רגשות שונים</li>

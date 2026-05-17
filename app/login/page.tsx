@@ -1,6 +1,6 @@
 
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 // 🔐 Hash פשוט — תשובות לא plain-text
@@ -37,7 +37,7 @@ async function setAuthCookie() {
   await fetch("/api/auth/login", { method: "POST" });
 }
 
-export default function LoginPage() {
+function LoginPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [questions] = useState(pickQuestions);
@@ -167,3 +167,9 @@ export default function LoginPage() {
     </div>
   );
 }
+
+
+export default function LoginPage() {
+  return <Suspense fallback={<div style={{background:"#0f172a",minHeight:"100vh"}}/>}><LoginPageInner /></Suspense>;
+}
+
