@@ -1,0 +1,18 @@
+name: Backup Panel to baz-frozen-backup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HETZNER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 178.105.75.214 >> ~/.ssh/known_hosts 2>/dev/null || true
+      - name: Git Tag + rsync + Lock
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@178.105.75.214 "cd /var/www/baz-panel && git tag production-frozen-22052026 2>/dev/null || echo tag_exists && rsync -av --checksum --exclude=.next --exclude=node_modules --exclude=.git /var/www/baz-panel/ /var/www/baz-frozen-backup/ && chmod -R a-w /var/www/baz-frozen-backup && echo BACKUP_DONE"
