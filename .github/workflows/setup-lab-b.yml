@@ -13,6 +13,6 @@ jobs:
           echo "${{ secrets.HETZNER_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 178.105.75.214 >> ~/.ssh/known_hosts 2>/dev/null || true
-      - name: Create Lab B
+      - name: Add missing 5 files to Lab B
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@178.105.75.214 "mkdir -p /tmp/baz-lab-b && cd /tmp/baz-lab-b && git init 2>/dev/null; git remote remove origin 2>/dev/null; git remote add origin https://github.com/bazfinancim/baz-os-2026.git && git fetch origin empire-full --depth=1 2>&1 | tail -2 && git checkout FETCH_HEAD -- app/globals.css app/layout.tsx app/page.tsx src/components/HubLayout.tsx && find /tmp/baz-lab-b -type f -not -path */.git/* | sort && echo LAB_B_READY"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@178.105.75.214 "cd /tmp/baz-lab-b && git fetch origin empire-full --depth=1 2>&1 | tail -1 && git checkout FETCH_HEAD -- src/components/LocalHunterView.tsx src/components/BillingPipeline.tsx src/components/CommsHub.tsx \"app/(baz-hub)/layout.tsx\" \"app/(baz-hub)/apps/page.tsx\" && echo === כל קבצי Lab B === && find /tmp/baz-lab-b -type f -not -path '*/.git/*' | sort && echo LAB_B_COMPLETE"
